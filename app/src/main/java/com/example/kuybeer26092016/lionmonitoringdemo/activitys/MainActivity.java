@@ -1,7 +1,9 @@
 package com.example.kuybeer26092016.lionmonitoringdemo.activitys;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,22 +12,34 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.kuybeer26092016.lionmonitoringdemo.R;
 import com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentAccount;
 import com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentDk100;
 import com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentTower2;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private String username;
+    private String mUsername,mImage,mPosition;
     private AlertDialog.Builder mAlertDialog;
+    private SharedPreferences sp;
+    private  SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sp = getSharedPreferences("DataAccount", Context.MODE_PRIVATE);
+        editor = sp.edit();
+        mUsername = getIntent().getExtras().getString("username");
+        mImage = getIntent().getExtras().getString("imageUrl");
+        mPosition = getIntent().getExtras().getString("position");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -33,10 +47,17 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        View Nav_view = navigationView.getHeaderView(0);
+        ImageView imageView = (ImageView) Nav_view.findViewById(R.id.imageView);
+        TextView name = (TextView) Nav_view.findViewById(R.id.name);
+        TextView position = (TextView) Nav_view.findViewById(R.id.position);
+        name.setText(mUsername);
+        position.setText(mPosition);
+        Picasso.with(this).load(mImage)
+                .placeholder(R.drawable.ic_me).error(R.drawable.ic_me).into(imageView);
         navigationView.setNavigationItemSelectedListener(this);
-        username = getIntent().getExtras().getString("username");
+
     }
 
     @Override
@@ -106,7 +127,7 @@ public class MainActivity extends AppCompatActivity
         ft.commit();
     }
     public void FragAccount(){
-        FragmentAccount fragAcc = FragmentAccount.newInstent(username);
+        FragmentAccount fragAcc = FragmentAccount.newInstent(mUsername);
         android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.MainlayoutFragments,fragAcc);
@@ -126,6 +147,9 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent i = new Intent(MainActivity.this,LoginActivity.class);
+                i.putExtra("ClearDataAccount" , true);
+                editor.putBoolean("mLogin_Again",false);
+                editor.commit();
                 startActivity(i);
                 finish();
             }

@@ -1,6 +1,7 @@
 package com.example.kuybeer26092016.lionmonitoringdemo.service;
 
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_detail;
+import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_history;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_login;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_monitoringitem;
 
@@ -24,10 +25,11 @@ public interface Service {
     Call<List<Mis_detail>> Callback_Detail(@Field("mc_id") String mc_id);
 
     @FormUrlEncoded
-    @POST("/service/json/peerapong/mis_monitoritem.php")
-    Call<List<Mis_detail>> Callback_Story(@Field("mc_id") String mc_id);
+    @POST("/service/json/peerapong/mis_history.php")
+    Call<List<Mis_history>> Callback_History(@Field("mc_id") String mc_id);
 
     @FormUrlEncoded
     @POST("/service/json/peerapong/mis_login.php")
     Call<List<Mis_login>> Callback_Login(@Field("username") String username, @Field("password") String password);
+
 }

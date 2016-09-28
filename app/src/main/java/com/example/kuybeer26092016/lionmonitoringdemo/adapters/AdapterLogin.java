@@ -26,7 +26,7 @@ public class AdapterLogin extends RecyclerView.Adapter<AdapterLogin.ViewHolder>{
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_story,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_history,parent,false);
         return new ViewHolder(view);
     }
 

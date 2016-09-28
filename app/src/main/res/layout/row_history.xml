@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/colorControlHighlight"
+    android:orientation="vertical">
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:elevation="50dp"
+        app:cardCornerRadius="10dp">
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="5dp"
+      android:orientation="vertical">
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="horizontal">
+
+          <TextView
+    android:id="@+id/pram"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+          android:background="@color/colorPrimary"
+          android:text="PRAM"
+              android:textAlignment="center"
+              android:textColor="@android:color/black" />
+
+          <TextView
+            android:id="@+id/act"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+              android:background="@color/colorPrimary"
+              android:text="ACT"
+              android:textAlignment="center"
+              android:textColor="@android:color/black" />
+
+          <TextView
+              android:id="@+id/startdatetime"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:background="@color/colorPrimary"
+              android:text="START"
+              android:textColor="@android:color/black"
+              android:textAlignment="center" />
+
+          <TextView
+              android:id="@+id/enddatetime"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_weight="1"
+              android:background="@color/colorPrimary"
+              android:text="END"
+              android:textColor="@android:color/black"
+              android:textAlignment="center" />
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="?attr/colorButtonNormal"
+          android:orientation="horizontal" >
+
+          <TextView
+              android:id="@+id/mo_pram"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="10dp"
+              android:layout_weight="1"
+              android:textColor="@android:color/black" />
+
+          <TextView
+              android:id="@+id/mo_act"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="10dp"
+              android:layout_weight="1"
+              android:textColor="@android:color/black" />
+
+          <TextView
+            android:id="@+id/mo_datestart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+              android:layout_weight="1"
+              android:background="?attr/colorButtonNormal"
+              android:textAlignment="center"
+              android:textColor="@android:color/black" />
+
+          <TextView
+              android:id="@+id/mo_dateend"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="10dp"
+              android:layout_weight="1"
+              android:background="?attr/colorButtonNormal"
+              android:textAlignment="center"
+              android:textColor="@android:color/black" />
+
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="horizontal">
+
+      </LinearLayout>
+
+  </LinearLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

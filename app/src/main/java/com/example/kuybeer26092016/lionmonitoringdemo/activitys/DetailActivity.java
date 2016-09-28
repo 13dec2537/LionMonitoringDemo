@@ -3,19 +3,14 @@ package com.example.kuybeer26092016.lionmonitoringdemo.activitys;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import com.example.kuybeer26092016.lionmonitoringdemo.R;
 import com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentDescription;
-import com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentStory;
+import com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentHistory;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.OnTabSelectListener;
 
@@ -61,7 +56,7 @@ public class DetailActivity extends AppCompatActivity {
         ft.commit();
     }
     public void Tran_Story(){
-        FragmentStory fs = FragmentStory.newInstant(mMc_name,mMc_id);
+        FragmentHistory fs = FragmentHistory.newInstant(mMc_name,mMc_id);
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.contentContainer,fs);

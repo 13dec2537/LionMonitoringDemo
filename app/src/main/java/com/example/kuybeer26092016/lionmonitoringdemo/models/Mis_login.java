@@ -5,7 +5,15 @@ package com.example.kuybeer26092016.lionmonitoringdemo.models;
  */
 
 public class Mis_login {
-    private String username,password;
+    private String username,password,image,position;
+
+    public String getImage() {
+        return image;
+    }
+
+    public String getPosition() {
+        return position;
+    }
 
     public String getUsername() {
         return username;
