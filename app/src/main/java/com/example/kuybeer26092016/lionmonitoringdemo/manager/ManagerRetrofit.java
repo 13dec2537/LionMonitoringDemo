@@ -1,6 +1,7 @@
 package com.example.kuybeer26092016.lionmonitoringdemo.manager;
 
 import com.example.kuybeer26092016.lionmonitoringdemo.service.Service;
+import com.squareup.picasso.Picasso;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

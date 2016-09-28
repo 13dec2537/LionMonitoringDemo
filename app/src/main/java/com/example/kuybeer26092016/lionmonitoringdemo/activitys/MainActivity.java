@@ -1,21 +1,27 @@
 package com.example.kuybeer26092016.lionmonitoringdemo.activitys;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.kuybeer26092016.lionmonitoringdemo.R;
+import com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentAccount;
+import com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentDk100;
 import com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentTower2;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    private String username;
+    private AlertDialog.Builder mAlertDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +36,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        username = getIntent().getExtras().getString("username");
     }
 
     @Override
@@ -73,11 +80,11 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_tower2) {
             FragTower2();
         } else if (id == R.id.nav_dk100) {
-
+            FragDk100();
         } else if (id == R.id.nav_me) {
-
+            FragAccount();
         } else if (id == R.id.nav_logout) {
-
+            mAlertDialogLogout();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -92,10 +99,39 @@ public class MainActivity extends AppCompatActivity
         ft.commit();
     }
     public void FragDk100(){
-        FragmentTower2 fragtw2 = new FragmentTower2();
+        FragmentDk100 fragdk100 = new FragmentDk100();
         android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
-        ft.replace(R.id.MainlayoutFragments,fragtw2);
+        ft.replace(R.id.MainlayoutFragments,fragdk100);
         ft.commit();
+    }
+    public void FragAccount(){
+        FragmentAccount fragAcc = FragmentAccount.newInstent(username);
+        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+        android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.MainlayoutFragments,fragAcc);
+        ft.commit();
+    }
+    public void mAlertDialogLogout(){
+        mAlertDialog = new AlertDialog.Builder(MainActivity.this);
+        mAlertDialog.setTitle("Logout !");
+        mAlertDialog.setMessage("Logout... Yes/No");
+        mAlertDialog.setPositiveButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                arg0.cancel();
+            }
+        });
+        mAlertDialog.setNegativeButton("Yes",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent i = new Intent(MainActivity.this,LoginActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+
+        AlertDialog alertDialog = mAlertDialog.create();
+        alertDialog.show();
     }
 }
