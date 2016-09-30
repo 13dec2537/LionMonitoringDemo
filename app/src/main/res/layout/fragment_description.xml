@@ -38,7 +38,16 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
-
+<LinearLayout
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <ProgressBar
+    style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+    android:layout_width="match_parent"
+    android:id="@+id/progressBarDes"
+    android:layout_height="wrap_content" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
@@ -46,11 +55,5 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
     </android.support.v7.widget.RecyclerView>
 
-    <ProgressBar
-        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
-        android:layout_width="match_parent"
-        android:id="@+id/progressBarDes"
-        android:layout_weight="1"
-        android:layout_margin = "100dp"
-        android:layout_height="364dp" />
+   </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

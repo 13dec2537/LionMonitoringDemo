@@ -81,21 +81,37 @@
                         android:text="Amp :"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/textView3"
-                        android:layout_weight="1"
+                        android:id="@+id/pram_1"
+                        android:layout_weight="1.5"
                         android:width="1dp"
-                        android:textAlignment="center"
-                        android:textColor="@android:color/background_dark" />
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@android:color/black" />
 
                     <TextView
-                        android:text="0"
+                        android:text=" : "
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/act_1"
-                        android:layout_weight="1"
+                        android:layout_weight="0.75"
                         android:width="1dp"
                         android:textAlignment="center"
-                        android:textColor="@android:color/background_dark" />
+                        android:textColor="@android:color/holo_red_dark"
+                        android:text="0" />
+
+                    <TextView
+                        android:text="RPM"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/unit_1"
+                        android:textColor="@android:color/black"
+                        android:layout_weight="0.10"
+                        android:layout_width="35dp" />
 
                 </LinearLayout>
 
@@ -109,21 +125,37 @@
                         android:text="Apm :"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/textView4"
-                        android:layout_weight="1"
+                        android:id="@+id/pram_2"
+                        android:layout_weight="1.5"
                         android:width="1dp"
-                        android:textAlignment="center"
-                        android:textColor="@android:color/background_dark" />
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@android:color/black" />
 
                     <TextView
-                        android:text="0"
+                        android:text=" : "
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView2"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/act_2"
-                        android:layout_weight="1"
+                        android:layout_weight="0.75"
                         android:width="1dp"
                         android:textAlignment="center"
-                        android:textColor="@android:color/background_dark" />
+                        android:textColor="@android:color/holo_red_dark"
+                        android:text="0" />
+
+                    <TextView
+                        android:text="RPM"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/unit_2"
+                        android:textColor="@android:color/black"
+                        android:layout_weight="0.10"
+                        android:layout_width="35dp" />
 
                 </LinearLayout>
 
@@ -137,21 +169,37 @@
                         android:text="Apm :"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/textView5"
-                        android:layout_weight="1"
+                        android:id="@+id/pram_3"
+                        android:layout_weight="1.5"
                         android:width="1dp"
-                        android:textAlignment="center"
-                        android:textColor="@android:color/background_dark" />
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@android:color/black" />
 
                     <TextView
-                        android:text="0"
+                        android:text=" : "
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView4"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/act_3"
-                        android:layout_weight="1"
+                        android:layout_weight="0.75"
                         android:width="1dp"
                         android:textAlignment="center"
-                        android:textColor="@android:color/background_dark" />
+                        android:textColor="@android:color/holo_red_dark"
+                        android:text="0" />
+
+                    <TextView
+                        android:text="RPM"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/unit_3"
+                        android:textColor="@android:color/black"
+                        android:layout_width="35dp"
+                        android:layout_weight="0.10" />
 
                 </LinearLayout>
 
@@ -165,21 +213,37 @@
                         android:text="Apm :"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/textView6"
-                        android:layout_weight="1"
+                        android:id="@+id/pram_4"
+                        android:layout_weight="1.5"
                         android:width="1dp"
-                        android:textAlignment="center"
-                        android:textColor="@android:color/background_dark" />
+                        android:layout_marginStart="5dp"
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@android:color/black" />
 
                     <TextView
-                        android:text="0"
+                        android:text=" : "
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView3"
+                        android:textColor="@android:color/black" />
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/act_4"
-                        android:layout_weight="1"
+                        android:layout_weight="0.75"
                         android:width="1dp"
                         android:textAlignment="center"
-                        android:textColor="@android:color/background_dark" />
+                        android:textColor="@android:color/holo_red_dark"
+                        android:text="0" />
+
+                    <TextView
+                        android:text="RPM"
+                        android:layout_width="35dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/unit_4"
+                        android:textColor="@android:color/black"
+                        android:layout_weight="0.09" />
 
                 </LinearLayout>
             </LinearLayout>

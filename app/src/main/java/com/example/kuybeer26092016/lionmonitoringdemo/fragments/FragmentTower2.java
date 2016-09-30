@@ -96,7 +96,7 @@ public class FragmentTower2 extends Fragment {
             running = true;
             while (running){
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(5000);
                     CallData();
                 } catch (InterruptedException e) {
                     e.printStackTrace();

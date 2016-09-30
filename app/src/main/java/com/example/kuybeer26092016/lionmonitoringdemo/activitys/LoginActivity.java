@@ -5,11 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +18,7 @@ import com.example.kuybeer26092016.lionmonitoringdemo.R;
 import com.example.kuybeer26092016.lionmonitoringdemo.adapters.AdapterLogin;
 import com.example.kuybeer26092016.lionmonitoringdemo.manager.ManagerRetrofit;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_login;
+import com.example.kuybeer26092016.lionmonitoringdemo.service.BackgroundService;
 
 import java.util.List;
 
@@ -68,6 +66,13 @@ public class LoginActivity extends AppCompatActivity {
             ClearDataAccount = getIntent().getExtras().getBoolean("ClearDataAccount",false);
         }
     }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+//        startService(new Intent(getBaseContext(), BackgroundService.class));
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -170,4 +175,5 @@ public class LoginActivity extends AppCompatActivity {
         AlertDialog alertDialog = mAlertDialog.create();
         alertDialog.show();
     }
+
 }

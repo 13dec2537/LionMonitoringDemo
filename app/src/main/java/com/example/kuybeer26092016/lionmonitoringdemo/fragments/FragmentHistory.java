@@ -15,11 +15,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.kuybeer26092016.lionmonitoringdemo.R;
 import com.example.kuybeer26092016.lionmonitoringdemo.adapters.AdapterHistory;
 import com.example.kuybeer26092016.lionmonitoringdemo.manager.ManagerRetrofit;
-import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_detail;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_history;
 import com.squareup.picasso.Picasso;
 
@@ -42,17 +42,21 @@ public class FragmentHistory extends Fragment {
     MyThread myThread;
     MyHandler myHandler;
     private boolean running;
-    private String mMc_name,mMc_id;
+    private String mMc_name,mMc_id,mMin,mMax,mPram;
+    private TextView txtMc_name,txt_mMinMix,txtMo_pram;
     private ImageView mImageToobar;
     public FragmentHistory() {
         // Required empty public constructor
     }
 
-    public static FragmentHistory newInstant(String mMc_name, String mMc_id) {
+    public static FragmentHistory newInstant(String mMc_name, String mMc_id, String mMo_min, String mMo_max , String mMo_pram) {
         FragmentHistory fd = new FragmentHistory();
         Bundle bundle = new Bundle();
         bundle.putString("mc_name" ,mMc_name);
         bundle.putString("mc_id" ,mMc_id);
+        bundle.putString("mo_pram" ,mMo_pram);
+        bundle.putString("mo_min" ,mMo_min);
+        bundle.putString("mo_max" ,mMo_max);
         fd.setArguments(bundle);
         return fd;
     }
@@ -60,17 +64,28 @@ public class FragmentHistory extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_description, container, false);
+        View view = inflater.inflate(R.layout.fragment_history, container, false);
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        progressBar = (ProgressBar) getView().findViewById(R.id.progressBarDes);
-        toolbar = (Toolbar)getView().findViewById(R.id.toolbar);
         mMc_name = getArguments().getString("mc_name");
         mMc_id = getArguments().getString("mc_id");
+        mPram = getArguments().getString("mo_pram");
+        mMin = getArguments().getString("mo_min");
+        mMax = getArguments().getString("mo_max");
+        progressBar = (ProgressBar) getView().findViewById(R.id.progressBar);
+        txtMc_name = (TextView)getView().findViewById(R.id.mc_name_his);
+        txtMo_pram = (TextView)getView().findViewById(R.id.pram_his);
+        txt_mMinMix = (TextView)getView().findViewById(R.id.min_max_his);
+        toolbar = (Toolbar)getView().findViewById(R.id.toolbar);
+        //Set Data to TextView
+            txtMc_name.setText(String.valueOf(mMc_name));
+            txtMo_pram.setText(String.valueOf(mPram));
+            txt_mMinMix.setText(String.valueOf(mMin + "-" + mMax));
+        //End
         toolbar.setTitle(mMc_name);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -124,7 +139,7 @@ public class FragmentHistory extends Fragment {
     }
 
     private void CallData() {
-        Call<List<Mis_history>> call = mManeger.getmService().Callback_History(mMc_id);
+        Call<List<Mis_history>> call = mManeger.getmService().Callback_History("1");
         call.enqueue(new Callback<List<Mis_history>>() {
             @Override
             public void onResponse(Call<List<Mis_history>> call, Response<List<Mis_history>> response) {

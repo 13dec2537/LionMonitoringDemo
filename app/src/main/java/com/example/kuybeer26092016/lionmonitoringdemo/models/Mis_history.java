@@ -5,8 +5,20 @@ package com.example.kuybeer26092016.lionmonitoringdemo.models;
  */
 
 public class Mis_history {
-    private Integer mo_id,mc_id,mo_act;
-    private String mc_name,mo_pram,start_datetime,end_datetime;
+    private Integer mo_id,mc_id,mo_act,status;
+    private String mc_name,mo_pram,start_datetime,end_datetime,mo_min,mo_max;
+
+    public String getMo_min() {
+        return mo_min;
+    }
+
+    public String getMo_max() {
+        return mo_max;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
 
     public Integer getMo_id() {
         return mo_id;

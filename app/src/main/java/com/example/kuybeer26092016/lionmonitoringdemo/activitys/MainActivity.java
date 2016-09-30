@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.example.kuybeer26092016.lionmonitoringdemo.R;
 import com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentAccount;
 import com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentDk100;
+import com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentHistory;
 import com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentTower2;
 import com.squareup.picasso.Picasso;
 
@@ -120,7 +121,7 @@ public class MainActivity extends AppCompatActivity
         ft.commit();
     }
     public void FragDk100(){
-        FragmentDk100 fragdk100 = new FragmentDk100();
+        FragmentHistory fragdk100 = new FragmentHistory();
         android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
         android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
         ft.replace(R.id.MainlayoutFragments,fragdk100);
