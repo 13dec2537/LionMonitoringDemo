@@ -1,7 +1,6 @@
 package com.example.kuybeer26092016.lionmonitoringdemo.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kuybeer26092016.lionmonitoringdemo.R;
-import com.example.kuybeer26092016.lionmonitoringdemo.activitys.PopActivity;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_history;
 
 import java.util.ArrayList;

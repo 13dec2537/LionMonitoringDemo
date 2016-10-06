@@ -1,6 +1,7 @@
 package com.example.kuybeer26092016.lionmonitoringdemo.service;
 
-import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_detail;
+import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_adddata;
+import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_descrip;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_history;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_login;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_monitoringitem;
@@ -22,11 +23,11 @@ public interface    Service {
     Call<List<Mis_monitoringitem>> CallbackTower2();
     @FormUrlEncoded
     @POST("/service/json/peerapong/mis_monitoritem.php")
-    Call<List<Mis_detail>> Callback_Detail(@Field("mc_id") String mc_id);
+    Call<List<Mis_descrip>> Callback_Detail(@Field("mc_id") String mc_id);
 
     @FormUrlEncoded
     @POST("/service/json/peerapong/mis_history.php")
-    Call<List<Mis_history>> Callback_History(@Field("mc_id") String mc_id);
+    Call<List<Mis_history>> Callback_History(@Field("mo_pram") String mo_pram);
 
     @FormUrlEncoded
     @POST("/service/json/peerapong/mis_login.php")
@@ -34,4 +35,9 @@ public interface    Service {
 
     @POST("/service/json/peerapong/service.php")
     Call<List<Mis_service>> CallbackService();
+
+    @FormUrlEncoded
+    @POST("/service/json/peerapong/adddata.php")
+    Call<Mis_adddata> Callback_AddData(@Field("NotificationStatus") String statusNotification,
+                                       @Field("mo_id") String mo_id);
 }

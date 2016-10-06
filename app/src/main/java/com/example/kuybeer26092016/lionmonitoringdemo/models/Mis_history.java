@@ -12,6 +12,10 @@ public class Mis_history {
         return mo_min;
     }
 
+    public void setMo_max(String mo_max) {
+        this.mo_max = mo_max;
+    }
+
     public String getMo_max() {
         return mo_max;
     }

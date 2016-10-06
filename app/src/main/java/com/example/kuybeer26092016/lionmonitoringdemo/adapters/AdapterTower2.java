@@ -1,29 +1,27 @@
 package com.example.kuybeer26092016.lionmonitoringdemo.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.kuybeer26092016.lionmonitoringdemo.R;
-import com.example.kuybeer26092016.lionmonitoringdemo.activitys.DetailActivity;
+import com.example.kuybeer26092016.lionmonitoringdemo.activitys.DescripActivity;
 import com.example.kuybeer26092016.lionmonitoringdemo.manager.ManagerRetrofit;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_monitoringitem;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by KuyBeer26092016 on 27/9/2559.
@@ -66,10 +64,11 @@ public class AdapterTower2  extends RecyclerView.Adapter<AdapterTower2.ViewHolde
             holder.mlinearOnclick.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(v.getContext(),DetailActivity.class);
+                    Intent i = new Intent(v.getContext(),DescripActivity.class);
                     i.putExtra("mc_id",setList.getMc_id());
                     i.putExtra("mc_name",setList.getMc_name());
                     v.getContext().startActivity(i);
+                    ((Activity)context).finish();
                 }
             });
             if(holder.mAct_1.getText().equals("") || holder.mAct_1.getText().equals(null)){
@@ -149,7 +148,7 @@ public class AdapterTower2  extends RecyclerView.Adapter<AdapterTower2.ViewHolde
         Double max_int = Double.valueOf(max);
         String color = "";
         if(act_int>=min_int && act_int<= max_int){
-            color = "#64DD17";
+            color = "#2E7D32";
         }
         else{
             color = "#d81114";

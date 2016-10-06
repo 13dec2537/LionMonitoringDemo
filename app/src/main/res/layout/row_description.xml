@@ -73,7 +73,8 @@
               android:layout_weight="1"
               android:textAlignment="center"
               android:background="?attr/colorButtonNormal"
-              android:textColor="@android:color/black" />
+              android:textColor="@android:color/black"
+              android:textStyle="bold" />
 
       </LinearLayout>
 

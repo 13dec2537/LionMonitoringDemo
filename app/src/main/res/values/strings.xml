@@ -12,4 +12,5 @@
     <string name="title_activity_login">Sign in</string>
     <string name="title_activity_pop">PopActivity</string>
     <string name="title_activity_history">HistoryActivity</string>
+    <string name="title_activity_test">TEST</string>
 </resources>

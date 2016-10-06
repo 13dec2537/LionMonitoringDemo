@@ -1,6 +1,8 @@
 package com.example.kuybeer26092016.lionmonitoringdemo.fragments;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,7 +13,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ProgressBar;
+import android.widget.Switch;
 
 import com.example.kuybeer26092016.lionmonitoringdemo.R;
 import com.example.kuybeer26092016.lionmonitoringdemo.adapters.AdapterTower2;
@@ -29,13 +33,15 @@ import retrofit2.Response;
  * A simple {@link Fragment} subclass.
  */
 public class FragmentTower2 extends Fragment {
+    private boolean isRunning  = true;
     private ProgressBar progressBar;
     private RecyclerView mRecyclerView;
+    private Switch mSwitch;
     private ManagerRetrofit mManager;
     private AdapterTower2 mAdapter;
-    MyThread myThread;
-    MyHandler myHandler;
     private boolean running;
+    private SharedPreferences spApp_Gone;
+    private  SharedPreferences.Editor editor_App_Gone;
     public FragmentTower2() {
     }
     @Override
@@ -50,18 +56,51 @@ public class FragmentTower2 extends Fragment {
         progressBar = (ProgressBar)getView().findViewById(R.id.progessbar);
         mManager = new ManagerRetrofit();
         mRecyclerView = (RecyclerView)getView().findViewById(R.id.recycleviewTower2);
+        mSwitch = (Switch)getView().findViewById(R.id.switch_nt);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setRecycledViewPool(new RecyclerView.RecycledViewPool());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         mAdapter = new AdapterTower2();
         mRecyclerView.setAdapter(mAdapter);
-        myHandler = new MyHandler(this);
-        running = true;
-        if(myThread != null){
-            setRunning(false);
+        spApp_Gone = getActivity().getSharedPreferences("App_Gone", Context.MODE_PRIVATE);
+        editor_App_Gone  = spApp_Gone.edit();
+        String CheckSwitch = spApp_Gone.getString("switch_nt","false");
+        if(CheckSwitch.equals("1")){
+            mSwitch.setChecked(true);
         }
-        myThread = new MyThread(myHandler);
-        myThread.start();
+        else if(CheckSwitch.equals("2")){
+            mSwitch.setChecked(false);
+        }
+        mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    editor_App_Gone.putString("switch_nt" , "1");
+                    editor_App_Gone.commit();
+                }
+                else {
+                    editor_App_Gone.putString("switch_nt" , "0");
+                    editor_App_Gone.commit();
+                }
+            }
+        });
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true){
+                    try {
+                        Thread.sleep(1000);
+                    } catch (Exception e) {
+                    }
+
+                    if(isRunning){
+                       CallData();
+                    }
+                }
+
+
+            }
+        }).start();
     }
 
     private void CallData() {
@@ -81,54 +120,5 @@ public class FragmentTower2 extends Fragment {
 
             }
         });
-    }
-    public class MyThread extends  Thread {
-        private int cnt;
-        private boolean running;
-        MyHandler mainHandler;
-
-        public MyThread(MyHandler myHandler) {
-            super();
-        }
-
-        @Override
-        public void run() {
-            running = true;
-            while (running){
-                try {
-                    Thread.sleep(5000);
-                    CallData();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-    public static class MyHandler extends Handler {
-        public static final int UPDATE_CNT = 0;
-        private FragmentTower2 parent;
-
-        public MyHandler(FragmentTower2 parent) {
-            super();
-            this.parent = parent;
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-
-            switch (msg.what){
-                case UPDATE_CNT:
-                    int c = (int)msg.obj;
-                    Log.d("TEST",String.valueOf(c) );
-
-                    break;
-                default:
-                    super.handleMessage(msg);
-            }
-
-        }
-    }
-    public void setRunning(boolean running){
-        this.running = running;
     }
 }

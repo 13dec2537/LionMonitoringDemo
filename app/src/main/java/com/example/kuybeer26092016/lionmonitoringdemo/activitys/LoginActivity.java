@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-//        startService(new Intent(getBaseContext(), BackgroundService.class));
+      startService(new Intent(getBaseContext(), BackgroundService.class));
     }
 
     @Override
@@ -119,9 +119,13 @@ public class LoginActivity extends AppCompatActivity {
                         Mis_login misMclist = tower2List.get(i);
                         mAdapter.addLogin(misMclist);
                         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-                        intent.putExtra("username",Username);
-                        intent.putExtra("imageUrl",imageUrl);
-                        intent.putExtra("position",Position);
+//                        intent.putExtra("username",Username);
+//                        intent.putExtra("imageUrl",imageUrl);
+//                        intent.putExtra("position",Position);
+                        editor.putString("username",Username);
+                        editor.putString("imageUrl",imageUrl);
+                        editor.putString("position",Position);
+                        editor.commit();
                         startActivity(intent);
                         finish();
                     }

@@ -19,7 +19,8 @@
         <activity
             android:name=".activitys.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,9 +28,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activitys.DetailActivity"
+            android:name=".activitys.DescripActivity"
             android:label="@string/title_activity_detail"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activitys.LoginActivity"
             android:label="@string/title_activity_login"
@@ -40,17 +41,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activitys.PopActivity"
-            android:label="@string/title_activity_pop"
-            android:theme="@style/AppTheme.CustomTheme" />
 
         <service android:name=".service.BackgroundService" />
 
         <activity
             android:name=".activitys.HistoryActivity"
             android:label="@string/title_activity_history"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <receiver android:name=".service.NotificationBoradcast"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="READ_MESSAGE_ACTION"/>
+                <action android:name="EXIT_MESSAGE_ACTION"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
