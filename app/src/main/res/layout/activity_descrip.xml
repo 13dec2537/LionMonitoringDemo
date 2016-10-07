@@ -10,9 +10,9 @@
         <android.support.design.widget.AppBarLayout
             android:id="@+id/app_bar"
             android:layout_width="match_parent"
-            android:fitsSystemWindows="true"
-            android:theme="@style/AppTheme.AppBarOverlay"
-            android:layout_height="180dp">
+            android:theme="@style/AppTheme.AppBarDiscription"
+            android:layout_height="180dp"
+            android:fitsSystemWindows="true">
 
                 <android.support.design.widget.CollapsingToolbarLayout
                     android:id="@+id/toolbar_layout"
@@ -27,7 +27,6 @@
                             android:layout_height="match_parent"
                             android:fitsSystemWindows="true"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/ic_me"
                             app:layout_collapseMode="parallax" />
                         <android.support.v7.widget.Toolbar
                             android:id="@+id/toolbar"
@@ -38,23 +37,22 @@
 
                 </android.support.design.widget.CollapsingToolbarLayout>
         </android.support.design.widget.AppBarLayout>
+
         <LinearLayout
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-                <TextView
-                    android:text="Description"
-                    android:layout_width="match_parent"
+                <Button
+                    android:id="@+id/btnlogin"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/textView6"
-                    android:textStyle="bold"
-                    android:textColor="@android:color/black"
-                    android:background="@android:color/white"
-                    android:textAlignment="center"
-                    android:textSize="30sp" />
-
+                    android:background="@color/btn_login_bg"
+                    android:text="DESCRIPTION"
+                    android:textColor="@color/btn_login"
+                    android:textSize="30dp"
+                    android:textStyle="normal|bold" />
                 <ProgressBar
                     style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
                     android:layout_width="match_parent"

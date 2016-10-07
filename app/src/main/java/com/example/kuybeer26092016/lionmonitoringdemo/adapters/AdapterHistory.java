@@ -40,10 +40,10 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.ViewHold
         holder.mMo_act.setText(String.valueOf(setList.getMo_act()));
         Integer mStatus = setList.getStatus();
         if(mStatus == 0){
-            holder.Status.setBackgroundColor(Color.RED);
+            holder.Status.setImageResource(R.drawable.ic_ok);
         }
         else if(mStatus == 1){
-            holder.Status.setBackgroundColor(Color.GREEN);
+            holder.Status.setImageResource(R.drawable.ic_cancel);
         }
     }
 

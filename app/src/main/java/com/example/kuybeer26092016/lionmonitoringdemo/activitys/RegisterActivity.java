@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -38,12 +39,15 @@ public class RegisterActivity extends AppCompatActivity {
     private ManagerRetrofit mManager;
     private Snackbar snackbar;
     private RelativeLayout relativeLayout;
+    private ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         mManager = new ManagerRetrofit();
         //*********** Set XML ************************************//
+        progressBar = (ProgressBar)findViewById(R.id.Pgregister);
+        progressBar.setVisibility(View.GONE);
         relativeLayout = (RelativeLayout)findViewById(R.id.activity_register);
         edUsername = (EditText) findViewById(R.id.edUsername);
         edPassword = (EditText) findViewById(R.id.edPassword);
@@ -85,10 +89,12 @@ public class RegisterActivity extends AppCompatActivity {
                 division = spDivision.getSelectedItem().toString();
                 if(username.length()>5 && (password.length()>5 && password.equals(password_again)) && division != ""){
                     CheckUsername(username,password,division);
+                    progressBar.setVisibility(View.VISIBLE);
                 }
                 else{
                     snackbar = Snackbar.make(relativeLayout,"Register unsuccessful",Snackbar.LENGTH_LONG);
                     snackbar.show();
+                    progressBar.setVisibility(View.GONE);
                 }
             }
         });
@@ -107,6 +113,7 @@ public class RegisterActivity extends AppCompatActivity {
                     for(int i = 0 ; i<ListItem.size();i++){
                         snackbar = Snackbar.make(relativeLayout,"Username has already",Snackbar.LENGTH_LONG);
                         snackbar.show();
+                        progressBar.setVisibility(View.GONE);
                     }
                     if(ListItem.size() == 0){
                         snackbar = Snackbar.make(relativeLayout,"Register successful",Snackbar.LENGTH_LONG);
@@ -115,6 +122,21 @@ public class RegisterActivity extends AppCompatActivity {
                         edUsername.setText("");
                         edPassword_again.setText("");
                         Add_Account(mUsername,mPassword,mDivision);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                while (true){
+                                    try {
+                                        Thread.sleep(4000);
+                                        finish();
+                                        progressBar.setVisibility(View.GONE);
+                                    } catch (Exception e) {
+                                    }
+                                }
+
+
+                            }
+                        }).start();
                     }
                 }
             }

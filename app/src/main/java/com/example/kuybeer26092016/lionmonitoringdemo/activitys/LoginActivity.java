@@ -73,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
         if(bundle != null){
             ClearDataAccount = getIntent().getExtras().getBoolean("ClearDataAccount",false);
         }
+        SetEnable(true);
     }
 
     @Override
@@ -85,7 +86,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         mLogin_Again = sp.getBoolean("mLogin_Again",false);
-        Log.d("TEST",String.valueOf(mLogin_Again));
         if(ClearDataAccount.equals(true)){
             edUsername.setText("");
             edPassword.setText("");
@@ -103,7 +103,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void ShowListMc(){
+        SetEnable(false);
         progressBar.setVisibility(View.VISIBLE);
+
         Call<List<Mis_login>> call = mManager.getmService().Callback_Login(edUsername.getText().toString(),
                 edPassword.getText().toString());
         call.enqueue(new Callback<List<Mis_login>>() {
@@ -113,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
                     List<Mis_login> tower2List = response.body();
                     for(int i = 0 ; i < tower2List.size();i++){
+                        SetEnable(true);
                         editor.putBoolean("mLogin_Again",true);
                         editor.commit();
                         Username = tower2List.get(i).getUsername();
@@ -139,6 +142,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     if(tower2List.size() == 0){
                         Toast.makeText(LoginActivity.this,"Your Login Name or Password is invalid !",Toast.LENGTH_SHORT).show();
+                        SetEnable(true);
                     }
 
                 }
@@ -153,7 +157,11 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
+    public void SetEnable(Boolean bl){
+        edUsername.setEnabled(bl);
+        edPassword.setEnabled(bl);
+        btnlogin.setEnabled(bl);
+    }
     @Override
     public void onBackPressed() {
         mAlertDialog();

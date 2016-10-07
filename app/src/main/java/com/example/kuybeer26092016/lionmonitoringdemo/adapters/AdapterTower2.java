@@ -3,10 +3,13 @@ package com.example.kuybeer26092016.lionmonitoringdemo.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.TransitionDrawable;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +34,8 @@ public class AdapterTower2  extends RecyclerView.Adapter<AdapterTower2.ViewHolde
     private static final String IMAGEURL = "http://www.thaidate4u.com/service/json/images/";
     private List<Mis_monitoringitem> mList = new ArrayList<>();
     private String act,min,max;;
+    private SharedPreferences sp;
+    private SharedPreferences.Editor editor;
     ManagerRetrofit mManager = new ManagerRetrofit();
     Context context;
     ColorDrawable[] AnimaBackColor;
@@ -53,6 +58,8 @@ public class AdapterTower2  extends RecyclerView.Adapter<AdapterTower2.ViewHolde
 
     @Override
     public void onBindViewHolder(final AdapterTower2.ViewHolder holder, int position) {
+        sp = context.getSharedPreferences("DataAccount",Context.MODE_PRIVATE);
+        editor = sp.edit();
         final Mis_monitoringitem setList = mList.get(position);
             holder.mMc_name.setText(setList.getMc_name());
             holder.mAct_1.setText(setList.getMo_act().getAct_1());
@@ -67,6 +74,8 @@ public class AdapterTower2  extends RecyclerView.Adapter<AdapterTower2.ViewHolde
                     Intent i = new Intent(v.getContext(),DescripActivity.class);
                     i.putExtra("mc_id",setList.getMc_id());
                     i.putExtra("mc_name",setList.getMc_name());
+                    editor.putString("division",setList.getMc_division());
+                    editor.commit();
                     v.getContext().startActivity(i);
                     ((Activity)context).finish();
                 }
@@ -123,6 +132,19 @@ public class AdapterTower2  extends RecyclerView.Adapter<AdapterTower2.ViewHolde
                 holder.mAct_4.setBackground(TranAnimaBackColor);
                 TranAnimaBackColor.startTransition(2000);
             }
+             if(String.valueOf(holder.mAct_1.getTextColors().getDefaultColor()).equals("-2617068")
+                     ||String.valueOf(holder.mAct_2.getTextColors().getDefaultColor()).equals("-2617068")
+                     ||String.valueOf(holder.mAct_3.getTextColors().getDefaultColor()).equals("-2617068")
+                     ||String.valueOf(holder.mAct_4.getTextColors().getDefaultColor()).equals("-2617068")){
+                 holder.Icon.setImageResource(R.drawable.shape_round_ofline);
+             }
+            if(String.valueOf(holder.mAct_1.getTextColors().getDefaultColor()).equals("-13730510")
+                    && String.valueOf(holder.mAct_2.getTextColors().getDefaultColor()).equals("-13730510")
+                    && String.valueOf(holder.mAct_3.getTextColors().getDefaultColor()).equals("-13730510")
+                    && String.valueOf(holder.mAct_4.getTextColors().getDefaultColor()).equals("-13730510")){
+                holder.Icon.setImageResource(R.drawable.shape_round_online);
+            }
+        Log.d("TEST",String.valueOf(holder.mAct_1.getTextColors().getDefaultColor()));
             holder.mPram_1.setText(setList.getMo_pram().getPram_1());
             holder.mPram_2.setText(setList.getMo_pram().getPram_2());
             holder.mPram_3.setText(setList.getMo_pram().getPram_3());
@@ -186,11 +208,12 @@ public class AdapterTower2  extends RecyclerView.Adapter<AdapterTower2.ViewHolde
         private TextView mMc_name,mAct_1,mAct_2,mAct_3,mAct_4;
         private TextView mUnit_1,mUnit_2,mUnit_3,mUnit_4;
         private TextView mPram_1,mPram_2,mPram_3,mPram_4;
-        private ImageView mImvMachine;
+        private ImageView mImvMachine,Icon;
         private LinearLayout mlinearOnclick,mLinearAll_txt_1,mLinearAll_txt_2,mLinearAll_txt_3,mLinearAll_txt_4;
         public ViewHolder(View itemView) {
             super(itemView);
             mImvMachine = (ImageView)itemView.findViewById(R.id.imvMachine);
+            Icon = (ImageView)itemView.findViewById(R.id.shapeIconOnline);
             mMc_name = (TextView)itemView.findViewById(R.id.mc_name);
             mlinearOnclick = (LinearLayout)itemView.findViewById(R.id.Linearalltower2);
             mLinearAll_txt_1 = (LinearLayout)itemView.findViewById(R.id.LinearAll_txt_1);

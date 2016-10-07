@@ -13,8 +13,9 @@
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        android:layout_height="180dp">
+        android:theme="@style/AppTheme.AppBarDiscription"
+        android:layout_height="180dp"
+        android:background="?attr/colorControlActivated">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/toolbar_layout"
@@ -29,7 +30,6 @@
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_me"
                 app:layout_collapseMode="parallax"
                 android:contentDescription=""
                 tools:ignore="ContentDescription" />
@@ -55,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <TextView
+                <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Exuast Fun"
@@ -63,10 +63,10 @@
                     android:id="@+id/mc_name_his"
                     android:textAlignment="center"
                     android:textSize="18sp"
-                    android:textColor="@android:color/black"
-                    android:background="@android:color/white"
+                    android:textColor="@color/btn_login"
+                    android:background="@drawable/menu_history"
                     android:textStyle="bold" />
-                <TextView
+                <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Amp"
@@ -74,25 +74,25 @@
                     android:id="@+id/pram_his"
                     android:textAlignment="center"
                     android:textSize="18sp"
-                    android:textColor="@android:color/black"
-                    android:background="@android:color/white"
+                    android:textColor="@color/btn_login"
+                    android:background="@drawable/menu_history"
                     android:textStyle="bold" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-                <TextView
+                <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Standard"
                     android:layout_weight="1"
                     android:textAlignment="center"
                     android:textSize="18sp"
-                    android:textColor="@android:color/black"
-                    android:background="@android:color/white"
+                    android:textColor="@color/btn_login"
+                    android:background="@drawable/menu_history"
                     android:textStyle="bold" />
-                <TextView
+                <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="50-100"
@@ -100,8 +100,8 @@
                     android:id="@+id/min_max_his"
                     android:textAlignment="center"
                     android:textSize="18sp"
-                    android:textColor="@android:color/black"
-                    android:background="@android:color/white"
+                    android:textColor="@color/btn_login"
+                    android:background="@drawable/menu_history"
                     android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>

@@ -23,6 +23,7 @@ import com.example.kuybeer26092016.lionmonitoringdemo.R;
 import com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentAccount;
 import com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentDk100;
 import com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentTower2;
+import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity
@@ -48,7 +49,8 @@ public class MainActivity extends AppCompatActivity
         //************************ Get View Navigation ******************************************//
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View Nav_view = navigationView.getHeaderView(0);
-        ImageView imageView = (ImageView) Nav_view.findViewById(R.id.imageView);
+        CircularImageView imageView = (CircularImageView) Nav_view.findViewById(R.id.imageView);
+        imageView.setImageResource(R.drawable.bgnavigation);
         TextView txtname = (TextView) Nav_view.findViewById(R.id.name);
         TextView txtposition = (TextView) Nav_view.findViewById(R.id.position);
         //************************ Get View Navigation ******************************************/
@@ -69,6 +71,14 @@ public class MainActivity extends AppCompatActivity
             FragTower2();
             toolbar.setTitle("TOWER 2");
         }else if(mPosition.equals("admin")){
+            FragDk100();
+            toolbar.setTitle("DK 100");
+        }
+        else if(mPosition.equals("TW2")){
+            FragTower2();
+            toolbar.setTitle("TOWER 2");
+        }
+        else if(mPosition.equals("DK100")){
             FragDk100();
             toolbar.setTitle("DK 100");
         }

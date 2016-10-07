@@ -5,8 +5,14 @@ package com.example.kuybeer26092016.lionmonitoringdemo.models;
  */
 
 public class Mis_monitoringitem {
+    private String mc_division;
     private String mc_name;
     private String mc_id;
+
+    public String getMc_division() {
+        return mc_division;
+    }
+
     public Act mo_act;
     public class Act{
         private String act_1,act_2,act_3,act_4;

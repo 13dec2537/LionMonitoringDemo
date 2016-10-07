@@ -53,7 +53,7 @@ public class FragmentTower2 extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        progressBar = (ProgressBar)getView().findViewById(R.id.progessbar);
+            progressBar = (ProgressBar)getView().findViewById(R.id.progessbar);
         mManager = new ManagerRetrofit();
         mRecyclerView = (RecyclerView)getView().findViewById(R.id.recycleviewTower2);
         mSwitch = (Switch)getView().findViewById(R.id.switch_nt);

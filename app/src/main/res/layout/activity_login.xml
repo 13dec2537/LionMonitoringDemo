@@ -23,7 +23,9 @@
         android:layout_gravity="center"
         android:orientation="vertical"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp" >
+        android:layout_marginTop="40dp"
+        android:paddingRight="20dp"
+        android:weightSum="1">
 
         <EditText
             android:id="@+id/edUsername"
@@ -49,7 +51,9 @@
             android:padding="10dp"
             android:maxLines="1"
             android:textColor="@color/input_login"
-            android:textColorHint="@color/input_login_hint" />
+            android:textColorHint="@color/input_login_hint"
+            android:visibility="visible"
+            android:enabled="false" />
 
         <!-- Login Button -->
 
@@ -74,11 +78,15 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="15dp" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/PBLogin"
+            android:layout_marginTop="15dp"
+            android:layout_weight="1.08" />
+
     </LinearLayout>
 
-    <ProgressBar
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/PBLogin" />
 </android.support.design.widget.CoordinatorLayout>
