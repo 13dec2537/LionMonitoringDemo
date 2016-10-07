@@ -43,6 +43,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+                <TextView
+                    android:text="Description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView6"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:background="@android:color/white"
+                    android:textAlignment="center"
+                    android:textSize="30sp" />
+
                 <ProgressBar
                     style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
                     android:layout_width="match_parent"

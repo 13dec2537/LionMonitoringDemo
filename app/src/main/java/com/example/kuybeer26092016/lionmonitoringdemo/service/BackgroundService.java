@@ -78,7 +78,6 @@ public class BackgroundService extends android.app.Service {
         /*****************************status Activity & run service if *************************/
         sp_NT = getSharedPreferences("NOTIFICATION",Context.MODE_PRIVATE);
         editor_NT = sp_NT.edit();
-        Log.d("TEST" , Main_Gone  + " " + Detail_Gone + " "  +History_Gone + " " + Switch_nt);
         if(Main_Gone.equals("1") && Detail_Gone.equals("1") && History_Gone.equals("1") && Switch_nt.equals("1")){
             Call<List<Mis_service>> call = mManager.getmService().CallbackService();
             call.enqueue(new Callback<List<Mis_service>>() {

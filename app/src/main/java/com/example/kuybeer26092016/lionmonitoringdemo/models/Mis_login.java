@@ -5,14 +5,14 @@ package com.example.kuybeer26092016.lionmonitoringdemo.models;
  */
 
 public class Mis_login {
-    private String username,password,image,position;
+    private String username,password,image,division;
 
     public String getImage() {
         return image;
     }
 
-    public String getPosition() {
-        return position;
+    public String getDivision() {
+        return division;
     }
 
     public String getUsername() {

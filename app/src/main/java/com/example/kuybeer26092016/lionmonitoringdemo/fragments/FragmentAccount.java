@@ -1,21 +1,27 @@
 package com.example.kuybeer26092016.lionmonitoringdemo.fragments;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kuybeer26092016.lionmonitoringdemo.R;
+import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class FragmentAccount extends Fragment {
     private String mUsername;
-    private TextView txtUsername;
+    private ImageView image;
+    private SharedPreferences sp;
+    private SharedPreferences.Editor editor;
     public FragmentAccount() {
         // Required empty public constructor
     }
@@ -31,9 +37,13 @@ public class FragmentAccount extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        txtUsername = (TextView)getView().findViewById(R.id.txtUsername);
-        mUsername = getArguments().getString("username");
-        txtUsername.setText(mUsername);
+        sp = getActivity().getSharedPreferences("DataAccount", Context.MODE_PRIVATE);
+        editor = sp.edit();
+        ((TextView)getView().findViewById(R.id.txtUsername)).setText(sp.getString("username",""));
+        ((TextView)getView().findViewById(R.id.txtDivision)).setText(sp.getString("division",""));
+        ImageView mImage = (ImageView)getView().findViewById(R.id.image);
+        Picasso.with(getContext()).load(sp.getString("imageUrl",""))
+                .placeholder(R.drawable.ic_me).error(R.drawable.ic_me).into(mImage);
     }
 
     public static FragmentAccount newInstent(String username) {

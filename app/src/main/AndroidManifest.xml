@@ -19,8 +19,8 @@
         <activity
             android:name=".activitys.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,7 +30,7 @@
         <activity
             android:name=".activitys.DescripActivity"
             android:label="@string/title_activity_detail"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activitys.LoginActivity"
             android:label="@string/title_activity_login"
@@ -48,15 +48,19 @@
             android:name=".activitys.HistoryActivity"
             android:label="@string/title_activity_history"
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <receiver android:name=".service.NotificationBoradcast"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <receiver
+            android:name=".service.NotificationBoradcast"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="READ_MESSAGE_ACTION"/>
-                <action android:name="EXIT_MESSAGE_ACTION"/>
+                <action android:name="READ_MESSAGE_ACTION" />
+                <action android:name="EXIT_MESSAGE_ACTION" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".activitys.RegisterActivity"></activity>
     </application>
 
 </manifest>

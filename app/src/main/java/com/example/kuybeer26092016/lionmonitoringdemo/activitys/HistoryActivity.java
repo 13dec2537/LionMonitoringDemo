@@ -138,7 +138,13 @@ public class HistoryActivity extends AppCompatActivity {
         }).start();
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(HistoryActivity.this,DescripActivity.class);
+        startActivity(i);
+        finish();
+    }
     private void CallData() {
         Log.d("TEST",mPram);
         Call<List<Mis_history>> call = mManeger.getmService().Callback_History(mPram);

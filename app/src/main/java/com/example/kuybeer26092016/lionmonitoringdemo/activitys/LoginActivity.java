@@ -27,10 +27,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
-    private String Username, Password, imageUrl, Position = "0";
+    private String Username, Password, imageUrl, Division = "0";
     private Boolean ClearDataAccount = false;
     private Boolean mLogin_Again;
-    private Button btnlogin;
+    private Button btnlogin,btnregister;
     private EditText edUsername,edPassword;
     private ProgressBar progressBar;
     //Manager
@@ -53,6 +53,14 @@ public class LoginActivity extends AppCompatActivity {
         progressBar = (ProgressBar)findViewById(R.id.PBLogin);
         progressBar.setVisibility(View.GONE);
         btnlogin = (Button) findViewById(R.id.btnlogin);
+        btnregister = (Button)findViewById(R.id.btnLinkToRegisterScreen);
+        btnregister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this,RegisterActivity.class);
+                startActivity(i);
+            }
+        });
         sp = getSharedPreferences("DataAccount", Context.MODE_PRIVATE);
         editor = sp.edit();
         btnlogin.setOnClickListener(new View.OnClickListener() {
@@ -70,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-      startService(new Intent(getBaseContext(), BackgroundService.class));
+          startService(new Intent(getBaseContext(), BackgroundService.class));
     }
 
     @Override
@@ -113,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                         if(imageUrl.trim().length()<0){
                             imageUrl = "http://www.thaidate4u.com/service/json/images/aoh.jpg";
                         }
-                        Position = tower2List.get(i).getPosition();
+                        Division = tower2List.get(i).getDivision();
                         Toast.makeText(LoginActivity.this,"Login compile !",Toast.LENGTH_SHORT).show();
                         Log.d("TEST" , "image : " + String.valueOf(imageUrl));
                         Mis_login misMclist = tower2List.get(i);
@@ -124,7 +132,7 @@ public class LoginActivity extends AppCompatActivity {
 //                        intent.putExtra("position",Position);
                         editor.putString("username",Username);
                         editor.putString("imageUrl",imageUrl);
-                        editor.putString("position",Position);
+                        editor.putString("division",Division);
                         editor.commit();
                         startActivity(intent);
                         finish();

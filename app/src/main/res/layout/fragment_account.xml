@@ -1,17 +1,64 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentAccount">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Account"
-        android:textAlignment="center"
-        android:textSize="36sp"
-        android:textStyle="normal|bold"
-        android:id="@+id/txtUsername" />
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:weightSum="1">
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="10dp"
+                android:elevation="20dp">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="137dp"
+                    app:srcCompat="@drawable/bb_bottom_bar_top_shadow"
+                    android:id="@+id/image"
+                    android:layout_weight="0.15" />
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginStart="5dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="5dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Username"
+                android:textAlignment="center"
+                android:textSize="36sp"
+                android:textStyle="normal|bold"
+                android:id="@+id/txtUsername" />
+
+            <TextView
+                android:text="DIVISION"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtDivision"
+                android:textSize="36sp"
+                android:textStyle="normal|bold"/>
+        </LinearLayout>
+    </LinearLayout>
 
 </FrameLayout>

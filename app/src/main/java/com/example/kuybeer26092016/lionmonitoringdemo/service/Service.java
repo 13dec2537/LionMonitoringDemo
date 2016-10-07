@@ -5,6 +5,7 @@ import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_descrip;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_history;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_login;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_monitoringitem;
+import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_register;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_service;
 
 import java.util.List;
@@ -40,4 +41,15 @@ public interface    Service {
     @POST("/service/json/peerapong/adddata.php")
     Call<Mis_adddata> Callback_AddData(@Field("NotificationStatus") String statusNotification,
                                        @Field("mo_id") String mo_id);
+
+    @FormUrlEncoded
+    @POST("/service/json/peerapong/check_register.php")
+    Call<List<Mis_register>> Callback_CheckRegister( @Field("username") String username);
+
+    @FormUrlEncoded
+    @POST("/service/json/peerapong/add_register.php")
+    Call<List<Mis_register>> Callback_AddRegister(    @Field("username") String username,
+                                                      @Field("password") String password,
+                                                      @Field("division") String division);
+
 }

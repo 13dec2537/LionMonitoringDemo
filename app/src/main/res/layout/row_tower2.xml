@@ -33,7 +33,7 @@
                     <ImageView
                         android:id="@+id/imvMachine"
                         android:layout_width="80dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="80dp"
                         android:layout_marginRight="16dp" />
 
                     <ImageView
@@ -50,7 +50,8 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:layout_weight="1"
-                android:layout_marginStart="3dp">
+                android:layout_marginStart="3dp"
+                android:layout_marginLeft="3dp">
 
 
                 <LinearLayout
@@ -66,7 +67,7 @@
                         android:id="@+id/mc_name"
                         android:layout_weight="1"
                         android:textSize="18sp"
-                        android:textAlignment="center"
+                        android:layout_marginLeft="10dp"
                         android:textColor="@android:color/background_dark"
                         android:textStyle="normal|bold" />
                 </LinearLayout>
@@ -103,7 +104,8 @@
                         android:width="1dp"
                         android:textAlignment="center"
                         android:textColor="@android:color/holo_red_dark"
-                        android:text="0" />
+                        android:text="0"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:text="RPM"
@@ -147,7 +149,8 @@
                         android:width="1dp"
                         android:textAlignment="center"
                         android:textColor="@android:color/holo_red_dark"
-                        android:text="0" />
+                        android:text="0"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:text="RPM"
@@ -191,7 +194,8 @@
                         android:width="1dp"
                         android:textAlignment="center"
                         android:textColor="@android:color/holo_red_dark"
-                        android:text="0" />
+                        android:text="0"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:text="RPM"
@@ -235,7 +239,8 @@
                         android:width="1dp"
                         android:textAlignment="center"
                         android:textColor="@android:color/holo_red_dark"
-                        android:text="0" />
+                        android:text="0"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:text="RPM"

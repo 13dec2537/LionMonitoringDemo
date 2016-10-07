@@ -130,6 +130,15 @@ public class DescripActivity extends AppCompatActivity {
         }).start();
         /**************** Thread ************/
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(DescripActivity.this,MainActivity.class);
+        startActivity(i);
+        finish();
+    }
+
     private void CallData() {
 //        mMc_id = getIntent().getExtras().getString("mc_id");
         Call<List<Mis_descrip>> call = mManeger.getmService().Callback_Detail(mMc_id);

@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity
         sp = getSharedPreferences("DataAccount", Context.MODE_PRIVATE);
         editor = sp.edit();
         mUsername = sp.getString("username","No Information");
-        mPosition = sp.getString("position","No Information");
+        mPosition = sp.getString("division","No Information");
         mImage = sp.getString("imageUrl","No Information");
 //        mUsername = getIntent().getExtras().getString("username");
 //        mImage = getIntent().getExtras().getString("imageUrl");
@@ -67,22 +67,26 @@ public class MainActivity extends AppCompatActivity
         /**************************** Check Position Detail and Set Profile Account  *********************/
         if(mPosition.equals("staff")){
             FragTower2();
+            toolbar.setTitle("TOWER 2");
         }else if(mPosition.equals("admin")){
             FragDk100();
+            toolbar.setTitle("DK 100");
         }
-        txtname.setText(mUsername);
-        txtposition.setText(mPosition);
+        txtname.setText(mUsername.toUpperCase());
+        txtposition.setText(mPosition.toUpperCase());
         Picasso.with(this).load(mImage)
                 .placeholder(R.drawable.ic_me).error(R.drawable.ic_me).into(imageView);
         navigationView.setNavigationItemSelectedListener(this);
         /**************************** Check Position Detail and Set Profile Account  *********************/
 
-        //*************** SharedPreferences ***********************************//
+        //*************** SharedPreferences And Set ViewGone  ***********************************//
         spApp_Gone = getSharedPreferences("App_Gone", Context.MODE_PRIVATE);
         editor_App_Gone  = spApp_Gone.edit();
         editor_App_Gone.putString("Main_Gone" , "0");
+        editor_App_Gone.putString("Detail_Gone" , "1");
+        editor_App_Gone.putString("History_Gone" , "1");
         editor_App_Gone.commit();
-        //*************** SharedPreferences ***********************************//
+        //*************** SharedPreferences And Set ViewGone  ***********************************//
 
     }
 

@@ -63,7 +63,9 @@
                     android:id="@+id/mc_name_his"
                     android:textAlignment="center"
                     android:textSize="18sp"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/black"
+                    android:background="@android:color/white"
+                    android:textStyle="bold" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -72,7 +74,9 @@
                     android:id="@+id/pram_his"
                     android:textAlignment="center"
                     android:textSize="18sp"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/black"
+                    android:background="@android:color/white"
+                    android:textStyle="bold" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -85,7 +89,9 @@
                     android:layout_weight="1"
                     android:textAlignment="center"
                     android:textSize="18sp"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/black"
+                    android:background="@android:color/white"
+                    android:textStyle="bold" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -94,7 +100,9 @@
                     android:id="@+id/min_max_his"
                     android:textAlignment="center"
                     android:textSize="18sp"
-                    android:textColor="@android:color/black" />
+                    android:textColor="@android:color/black"
+                    android:background="@android:color/white"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
         <ProgressBar
