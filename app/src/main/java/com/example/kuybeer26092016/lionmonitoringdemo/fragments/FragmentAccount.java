@@ -39,8 +39,8 @@ public class FragmentAccount extends Fragment {
         super.onStart();
         sp = getActivity().getSharedPreferences("DataAccount", Context.MODE_PRIVATE);
         editor = sp.edit();
-        ((TextView)getView().findViewById(R.id.txtUsername)).setText(sp.getString("username",""));
-        ((TextView)getView().findViewById(R.id.txtDivision)).setText(sp.getString("division",""));
+        ((TextView)getView().findViewById(R.id.txtUsername)).setText("Username : " + sp.getString("username",""));
+        ((TextView)getView().findViewById(R.id.txtDivision)).setText("Division : " + sp.getString("division",""));
         ImageView mImage = (ImageView)getView().findViewById(R.id.image);
         Picasso.with(getContext()).load(sp.getString("imageUrl",""))
                 .placeholder(R.drawable.ic_me).error(R.drawable.ic_me).into(mImage);

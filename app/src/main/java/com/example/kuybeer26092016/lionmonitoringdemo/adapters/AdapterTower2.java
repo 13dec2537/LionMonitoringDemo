@@ -144,7 +144,6 @@ public class AdapterTower2  extends RecyclerView.Adapter<AdapterTower2.ViewHolde
                     && String.valueOf(holder.mAct_4.getTextColors().getDefaultColor()).equals("-13730510")){
                 holder.Icon.setImageResource(R.drawable.shape_round_online);
             }
-        Log.d("TEST",String.valueOf(holder.mAct_1.getTextColors().getDefaultColor()));
             holder.mPram_1.setText(setList.getMo_pram().getPram_1());
             holder.mPram_2.setText(setList.getMo_pram().getPram_2());
             holder.mPram_3.setText(setList.getMo_pram().getPram_3());

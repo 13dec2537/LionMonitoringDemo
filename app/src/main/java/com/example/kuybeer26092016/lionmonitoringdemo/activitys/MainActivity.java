@@ -49,38 +49,42 @@ public class MainActivity extends AppCompatActivity
         //************************ Get View Navigation ******************************************//
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         View Nav_view = navigationView.getHeaderView(0);
-        CircularImageView imageView = (CircularImageView) Nav_view.findViewById(R.id.imageView);
-        imageView.setImageResource(R.drawable.bgnavigation);
+        ImageView imageView = (ImageView) Nav_view.findViewById(R.id.imageView);
+        imageView.setImageResource(R.drawable.ic_me);
         TextView txtname = (TextView) Nav_view.findViewById(R.id.name);
         TextView txtposition = (TextView) Nav_view.findViewById(R.id.position);
         //************************ Get View Navigation ******************************************/
 
         //*************************** SharedPreferences Get Data Account form LoginActivity *******************/
-        sp = getSharedPreferences("DataAccount", Context.MODE_PRIVATE);
-        editor = sp.edit();
+            sp = getSharedPreferences("DataAccount", Context.MODE_PRIVATE);
+            editor = sp.edit();
         mUsername = sp.getString("username","No Information");
         mPosition = sp.getString("division","No Information");
         mImage = sp.getString("imageUrl","No Information");
 //        mUsername = getIntent().getExtras().getString("username");
 //        mImage = getIntent().getExtras().getString("imageUrl");
 //        mPosition = getIntent().getExtras().getString("position");
-        //*************************** SharedPreferences Get Data Account form LoginActivity *******************/
-
-        /**************************** Check Position Detail and Set Profile Account  *********************/
+//        //*************************** SharedPreferences Get Data Account form LoginActivity *******************/
+//
+//        /**************************** Check Position Detail and Set Profile Account  *********************/
         if(mPosition.equals("staff")){
             FragTower2();
             toolbar.setTitle("TOWER 2");
+            Log.d("TEST","TOWER2");
         }else if(mPosition.equals("admin")){
             FragDk100();
             toolbar.setTitle("DK 100");
+            Log.d("TEST","DK 100");
         }
         else if(mPosition.equals("TW2")){
             FragTower2();
             toolbar.setTitle("TOWER 2");
+            Log.d("TEST","TOWER2");
         }
         else if(mPosition.equals("DK100")){
             FragDk100();
             toolbar.setTitle("DK 100");
+            Log.d("TEST","DK 100");
         }
         txtname.setText(mUsername.toUpperCase());
         txtposition.setText(mPosition.toUpperCase());
@@ -204,6 +208,10 @@ public class MainActivity extends AppCompatActivity
             public void onClick(DialogInterface dialog, int which) {
                 Intent i = new Intent(MainActivity.this,LoginActivity.class);
                 i.putExtra("ClearDataAccount" , true);
+                editor_App_Gone.putString("Main_Gone","0");
+                editor_App_Gone.putString("Detail_Gone","0");
+                editor_App_Gone.putString("History_Gone","0");
+                editor_App_Gone.commit();
                 editor.putBoolean("mLogin_Again",false);
                 editor.commit();
                 startActivity(i);

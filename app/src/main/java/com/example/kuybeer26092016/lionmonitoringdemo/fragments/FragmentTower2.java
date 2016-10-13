@@ -89,13 +89,11 @@ public class FragmentTower2 extends Fragment {
             public void run() {
                 while (true){
                     try {
-                        Thread.sleep(1000);
+                        CallData();
+                        Thread.sleep(5000);
                     } catch (Exception e) {
                     }
 
-                    if(isRunning){
-                       CallData();
-                    }
                 }
 
 

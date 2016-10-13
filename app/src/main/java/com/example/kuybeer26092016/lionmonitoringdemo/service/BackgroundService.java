@@ -54,9 +54,8 @@ public class BackgroundService extends android.app.Service {
             @Override
             public void run() {
                 while (true){
-                    try {
-                        Thread.sleep(5000);
-                        Run_service();
+                     try {
+                        Run_service();  Thread.sleep(3000);
                     } catch (Exception e) {
                     }
                 }
@@ -75,36 +74,40 @@ public class BackgroundService extends android.app.Service {
         String Detail_Gone = spCall_service.getString("Detail_Gone","");
         String History_Gone = spCall_service.getString("History_Gone","");
         String Switch_nt = spCall_service.getString("switch_nt","");
+
         /*****************************status Activity & run service if *************************/
         sp_NT = getSharedPreferences("NOTIFICATION",Context.MODE_PRIVATE);
         editor_NT = sp_NT.edit();
+        Log.d("TEST","BG : " + Main_Gone + " " + Detail_Gone + " " + History_Gone + " " + Switch_nt + " "
+                + String.valueOf(sp_NT.getBoolean("Status_nt",false)));
         if(Main_Gone.equals("1") && Detail_Gone.equals("1") && History_Gone.equals("1") && Switch_nt.equals("1")){
             Call<List<Mis_service>> call = mManager.getmService().CallbackService();
             call.enqueue(new Callback<List<Mis_service>>() {
                 @Override
                 public void onResponse(Call<List<Mis_service>> call, Response<List<Mis_service>> response) {
                     if(response.isSuccessful()){
-                        List<Mis_service> ListService = response.body();
-                        for(int i =0 ; i < ListService.size() ; i++ ){
-                            mc_name = ListService.get(i).getMc_name();
-                            mo_pram = ListService.get(i).getMo_pram();
-                            mo_min = ListService.get(i).getMo_min();
-                            mo_max = ListService.get(i).getMo_max();
-                            mc_id = ListService.get(i).getMc_id();
-                            mMo_id = ListService.get(i).getMo_id();
-                            mo_startDatatime = ListService.get(i).getStart_datetime();
-                            status_nt = ListService.get(i).getNotificationStatus();
+                      List<Mis_service> ListService = response.body();
+                                        for(int i =0 ; i < ListService.size() ; i++ ){
+                                            mc_name = ListService.get(i).getMc_name();
+                                            mo_pram = ListService.get(i).getMo_pram();
+                                            mo_min = ListService.get(i).getMo_min();
+                                            mo_max = ListService.get(i).getMo_max();
+                                            mc_id = ListService.get(i).getMc_id();
+                                            mMo_id = ListService.get(i).getMo_id();
+                                            mo_startDatatime = ListService.get(i).getStart_datetime();
+                                            status_nt = ListService.get(i).getNotificationStatus();
 
-                            /************ SET NT *************/
-                            NT = sp_NT.getBoolean("Status_nt",true);
-                            /************ SET NT *************/
+                                            /************ SET NT *************/
+                                            NT = sp_NT.getBoolean("Status_nt",true);
+                                            /************ SET NT *************/
 
-                            if(status_nt.equals("0") && (NT.equals(true) || NT != false)){
-                                Notification(mc_name,mo_pram,mc_id,mo_min,mo_max,mMo_id,mo_startDatatime);
-                                editor_NT.putBoolean("Status_nt",false);
-                                editor_NT.commit();
-                            }
-                        }
+                                            if(status_nt.equals("0") && (NT.equals(true) || NT != false)){
+                                                Notification(mc_name,mo_pram,mc_id,mo_min,mo_max,mMo_id,mo_startDatatime);
+                                                editor_NT.putBoolean("Status_nt",false);
+                                                editor_NT.commit();
+                                            }
+                                        }
+
                     }
                 }
 
@@ -135,8 +138,13 @@ public class BackgroundService extends android.app.Service {
         exit.setAction("EXIT_MESSAGE_ACTION");
         PendingIntent ignoreIntent = PendingIntent.getBroadcast(context,123,exit,PendingIntent.FLAG_UPDATE_CURRENT);
 
+        Intent cancel = new Intent();
+        exit.setAction("CENCEL_MESSAGE_ACTION");
+        PendingIntent cencelIntent = PendingIntent.getBroadcast(context,123,exit,PendingIntent.FLAG_UPDATE_CURRENT);
+
         NT.addAction(0,"Ok",readIntent);
         NT.addAction(0,"Exit",ignoreIntent);
+        NT.setDeleteIntent(cencelIntent);
         NT.setContentIntent(ignoreIntent);
         NT.setContentIntent(readIntent);
         NotificationManager manager = (NotificationManager)getSystemService(context.NOTIFICATION_SERVICE);

@@ -48,10 +48,10 @@ public class AdapterDescrip extends RecyclerView.Adapter<AdapterDescrip.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Mis_descrip setList = mList.get(position);
-        holder.mPram.setText(String.valueOf(setList.getMo_pram()));
+        holder.mPram.setText(String.valueOf(setList.getMo_pram().toUpperCase()));
         holder.mAct.setText(String.valueOf(setList.getMo_act()));
         holder.mAct.setTextColor(Color.parseColor(setColor(String.valueOf(setList.getMo_act()),String.valueOf(setList.getMo_min()),String.valueOf(setList.getMo_max()))));
-        holder.mUnit.setText(String.valueOf(setList.getMo_unit()));
+        holder.mUnit.setText(String.valueOf(setList.getMo_unit().toUpperCase()));
         holder.mMinMax.setText(String.valueOf(setList.getMo_min()+"-"+setList.getMo_max()));
 
         holder.mLinearAll.setOnClickListener(new View.OnClickListener() {

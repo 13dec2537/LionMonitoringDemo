@@ -48,7 +48,7 @@
                     android:id="@+id/btnlogin"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/btn_login_bg"
+                    android:background="@drawable/menu_history"
                     android:text="DESCRIPTION"
                     android:textColor="@color/btn_login"
                     android:textSize="30dp"

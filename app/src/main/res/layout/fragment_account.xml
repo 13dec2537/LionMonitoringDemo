@@ -1,17 +1,17 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentAccount">
+    tools:context="com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentAccount"
+    android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_margin="10dp">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:orientation="vertical"
@@ -21,76 +21,65 @@
             android:weightSum="1">
 
             <com.mikhaellopez.circularimageview.CircularImageView
-                android:layout_width="match_parent"
-                android:layout_height="159dp"
-                android:src="@drawable/ic_cancel"
-                app:civ_border_color="#EEEEEE"
+                android:layout_height="150dp"
+                android:src="@drawable/ic_me"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="center"
+                android:id="@+id/image"
+                app:civ_border_color="#ffffff"
                 app:civ_border_width="4dp"
                 app:civ_shadow="true"
                 app:civ_shadow_radius="10"
                 app:civ_shadow_color="#8BC34A"
-                android:id="@+id/image" />
+                android:layout_width="150dp" />
 
 
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:background="#ebebeb">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Username"
+                android:layout_gravity="center_vertical"
+                android:textSize="20dp"
+                android:id="@+id/txtUsername"
+                android:layout_weight="1" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginStart="5dp"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginLeft="5dp">
+            android:layout_height="35dp"
+            android:background="#ebebeb">
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_contacts"
-                    android:id="@+id/imageView2"
-                    android:layout_width="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginLeft="5dp"
-                    tools:ignore="VectorDrawableCompat" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Username"
-                    android:textAlignment="center"
-                    android:textSize="20dp"
-                    android:textStyle="normal|bold"
-                    android:id="@+id/txtUsername" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
+            <TextView
+                android:layout_gravity="center_vertical"
+                android:text="DIVISION"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-                <ImageView
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_briefcase"
-                    android:id="@+id/imageView2"
-                    android:layout_width="wrap_content"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginLeft="5dp"
-                    tools:ignore="DuplicateIds,VectorDrawableCompat" />
-                <TextView
-                    android:text="DIVISION"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txtDivision"
-                    android:textSize="24sp"
-                    android:textStyle="normal"
-                    android:layout_weight="1" />
-            </LinearLayout>
+                android:id="@+id/txtDivision"
+                android:textSize="20dp"
+                android:textStyle="normal"
+                android:layout_weight="1" />
 
         </LinearLayout>
+
     </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>

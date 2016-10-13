@@ -34,11 +34,11 @@ public interface    Service {
     @POST("/service/json/peerapong/mis_login.php")
     Call<List<Mis_login>> Callback_Login(@Field("username") String username, @Field("password") String password);
 
-    @POST("/service/json/peerapong/service.php")
+    @POST("/service/json/peerapong/mis_service.php")
     Call<List<Mis_service>> CallbackService();
 
     @FormUrlEncoded
-    @POST("/service/json/peerapong/adddata.php")
+    @POST("/service/json/peerapong/set_status_nt.php")
     Call<Mis_adddata> Callback_AddData(@Field("NotificationStatus") String statusNotification,
                                        @Field("mo_id") String mo_id);
 

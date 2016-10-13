@@ -155,6 +155,9 @@ public class HistoryActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
                     List<Mis_history> Listhistory = response.body();
                     mAdapter.addList(Listhistory);
+                    if(Listhistory.size() == 0){
+                        mRecyclerView.setBackgroundResource(R.drawable.pic_noinfo);
+                    }
                 }
             }
 
