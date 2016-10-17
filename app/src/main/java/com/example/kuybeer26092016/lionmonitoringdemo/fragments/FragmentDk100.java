@@ -33,15 +33,15 @@ public class FragmentDk100 extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        Button btnsetshowgone = (Button) getActivity().findViewById(R.id.button);
-        btnsetshowgone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences sp = getActivity().getSharedPreferences("NOTIFICATION", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putBoolean("Status_nt",true);
-                editor.commit();
-            }
-        });
+//        Button btnsetshowgone = (Button) getActivity().findViewById(R.id.button);
+//        btnsetshowgone.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                SharedPreferences sp = getActivity().getSharedPreferences("NOTIFICATION", Context.MODE_PRIVATE);
+//                SharedPreferences.Editor editor = sp.edit();
+//                editor.putBoolean("Status_nt",true);
+//                editor.commit();
+//            }
+//        });
     }
 }

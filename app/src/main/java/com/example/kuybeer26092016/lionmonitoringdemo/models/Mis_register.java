@@ -5,7 +5,7 @@ package com.example.kuybeer26092016.lionmonitoringdemo.models;
  */
 
 public class Mis_register  {
-        private String username,password,division,result;
+        private String username,password,division;
 
     public void setUsername(String username) {
         this.username = username;
@@ -29,13 +29,5 @@ public class Mis_register  {
 
     public String getUsername() {
         return username;
-    }
-
-    public String getResult() {
-        return result;
-    }
-
-    public void setResult(String result) {
-        this.result = result;
     }
 }

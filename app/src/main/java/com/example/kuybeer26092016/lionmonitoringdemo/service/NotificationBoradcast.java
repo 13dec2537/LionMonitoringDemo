@@ -36,6 +36,10 @@ public class NotificationBoradcast extends BroadcastReceiver{
         if(intent.getAction().equals("READ_MESSAGE_ACTION")){
             Intent readMessage = new Intent(context,MainActivity.class);
             readMessage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            readMessage.putExtra("mc_id",intent.getStringExtra("mc_id"));
+            editor.putInt("returnAc", Integer.parseInt(intent.getStringExtra("mc_id")));
+            editor.commit();
+            Log.d("TAG",intent.getStringExtra("mc_id"));
             context.startActivity(readMessage);
             editor.putBoolean("Status_nt" ,true);
             setStatusNotifDB(intent.getStringExtra("mo_id"));

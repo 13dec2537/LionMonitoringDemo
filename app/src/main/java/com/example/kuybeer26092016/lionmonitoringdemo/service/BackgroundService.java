@@ -4,6 +4,7 @@ import android.app.*;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.CountDownTimer;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v7.app.NotificationCompat;
@@ -19,6 +20,7 @@ import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_service;
 
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,7 +35,7 @@ import static android.app.Notification.DEFAULT_SOUND;
 
 public class BackgroundService extends android.app.Service {
     Context context;
-    private String mc_name,mc_id,mo_pram,mo_min,mo_max,status_nt,mMo_id,mo_startDatatime;
+    private String mc_name,mc_id,mo_pram,mo_min,mo_max,status_nt,mMo_id,mo_startDatatime,mo_act;
     private ManagerRetrofit mManager;
     private Boolean NT;
     private SharedPreferences sp_NT;
@@ -55,7 +57,8 @@ public class BackgroundService extends android.app.Service {
             public void run() {
                 while (true){
                      try {
-                        Run_service();  Thread.sleep(3000);
+                        Run_service();
+                         Thread.sleep(3000);
                     } catch (Exception e) {
                     }
                 }
@@ -73,14 +76,15 @@ public class BackgroundService extends android.app.Service {
         String Main_Gone = spCall_service.getString("Main_Gone","");
         String Detail_Gone = spCall_service.getString("Detail_Gone","");
         String History_Gone = spCall_service.getString("History_Gone","");
+        String Upload_Gone = spCall_service.getString("Upload_Gone","");
         String Switch_nt = spCall_service.getString("switch_nt","");
 
         /*****************************status Activity & run service if *************************/
         sp_NT = getSharedPreferences("NOTIFICATION",Context.MODE_PRIVATE);
         editor_NT = sp_NT.edit();
-        Log.d("TEST","BG : " + Main_Gone + " " + Detail_Gone + " " + History_Gone + " " + Switch_nt + " "
+        Log.d("TEST","BG : " + Main_Gone + " " + Detail_Gone + " " + History_Gone + " " +Upload_Gone + " " + Switch_nt + " "
                 + String.valueOf(sp_NT.getBoolean("Status_nt",false)));
-        if(Main_Gone.equals("1") && Detail_Gone.equals("1") && History_Gone.equals("1") && Switch_nt.equals("1")){
+        if(Main_Gone.equals("1") && Detail_Gone.equals("1") && History_Gone.equals("1") && Switch_nt.equals("1") && Upload_Gone.equals("1")){
             Call<List<Mis_service>> call = mManager.getmService().CallbackService();
             call.enqueue(new Callback<List<Mis_service>>() {
                 @Override
@@ -96,16 +100,31 @@ public class BackgroundService extends android.app.Service {
                                             mMo_id = ListService.get(i).getMo_id();
                                             mo_startDatatime = ListService.get(i).getStart_datetime();
                                             status_nt = ListService.get(i).getNotificationStatus();
+                                            mo_act = ListService.get(i).getMo_act();
 
                                             /************ SET NT *************/
                                             NT = sp_NT.getBoolean("Status_nt",true);
                                             /************ SET NT *************/
-
                                             if(status_nt.equals("0") && (NT.equals(true) || NT != false)){
-                                                Notification(mc_name,mo_pram,mc_id,mo_min,mo_max,mMo_id,mo_startDatatime);
+                                                Notification(mc_name,mo_pram,mc_id,mo_min,mo_max,mMo_id,mo_startDatatime,mo_act);
                                                 editor_NT.putBoolean("Status_nt",false);
                                                 editor_NT.commit();
                                             }
+
+                                            new CountDownTimer(2000, 1000) {
+
+                                                public void onTick(long millisUntilFinished) {
+
+                                                }
+
+                                                public void onFinish() {
+                                                    if(status_nt.equals("0") && (NT.equals(true) || NT != false)){
+                                                        Notification(mc_name,mo_pram,mc_id,mo_min,mo_max,mMo_id,mo_startDatatime,mo_act);
+                                                        editor_NT.putBoolean("Status_nt",false);
+                                                        editor_NT.commit();
+                                                    }
+                                                }
+                                            }.start();
                                         }
 
                     }
@@ -118,23 +137,26 @@ public class BackgroundService extends android.app.Service {
             });
         }
     }
-    public void Notification(String mc_name,String mo_pram,String mc_id,String mo_min,String mo_max,String mo_id,String mo_startDatatime){
-
+    public void Notification(String mc_name,String mo_pram,String mc_id,String mo_min,String mo_max,String mo_id,String mo_startDatatime
+    ,String mo_act){
         NotificationCompat.Builder NT = (NotificationCompat.Builder) new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ic_search_black_24dp)
-                .setContentTitle(mc_name)
-                .setContentText(mc_name + " " + mo_pram + " DateTime : " + mo_startDatatime )
+                .setContentTitle("มีค่าเกิน standard")
+                .setContentText(mc_name + " " + mo_pram.toUpperCase() + '\n' +"Standard : " + mo_min + "-" +
+                mo_max + '\n' + "Value : " +  mo_act)
                 .setDefaults(Notification.DEFAULT_SOUND)
                 .setAutoCancel(true);
         Intent read = new Intent();
         read.setAction("READ_MESSAGE_ACTION");
         read.putExtra("mc_name" , mc_name);
+        read.putExtra("mc_id",mc_id);
         read.putExtra("mo_pram", mo_pram);
         read.putExtra("mo_id", mo_id);
         PendingIntent readIntent = PendingIntent.getBroadcast(context,123,read,PendingIntent.FLAG_UPDATE_CURRENT);
 
         Intent exit = new Intent();
         exit.putExtra("mo_id" , mo_id);
+
         exit.setAction("EXIT_MESSAGE_ACTION");
         PendingIntent ignoreIntent = PendingIntent.getBroadcast(context,123,exit,PendingIntent.FLAG_UPDATE_CURRENT);
 

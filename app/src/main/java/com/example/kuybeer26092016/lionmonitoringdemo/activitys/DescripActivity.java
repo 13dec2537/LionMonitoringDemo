@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
@@ -31,7 +32,7 @@ import retrofit2.Response;
 public class DescripActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
-    private static final String IMAGEURL = "http://www.thaidate4u.com/service/json/images/";
+    private static final String IMAGEURL = "http://www.thaidate4u.com/service/json/img/";
     private Toolbar toolbar;
     private RecyclerView mRecyclerView;
     private ManagerRetrofit mManeger;
@@ -39,19 +40,27 @@ public class DescripActivity extends AppCompatActivity {
 
     /******************** Global ******************/
     private boolean running;
-    private String mMc_id;
+    private String mMc_id,mAnim;
     private String mMc_name = "NODATA";
     private ImageView mImageToobar;
     private boolean isRunning  = true;
-    Bundle bundle = new Bundle();
+    private Bundle bundle = new Bundle();
+    private Thread thread;
     /******************** Global ******************/
     private SharedPreferences sp,spApp_Gone;
     private  SharedPreferences.Editor editor,editor_App_Gone;
-    Context context;
+    private Context context;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_descrip);
+        mAnim = getIntent().getExtras().getString("Ianim","");
+        if(mAnim.equals("1")){
+            this.overridePendingTransition(R.anim.anim_silde_out_left,R.anim.anim_silde_out_left);
+        }else if(mAnim.equals("2")){
+            this.overridePendingTransition(R.anim.anim_silde_in_left,R.anim.anim_silde_in_left);
+        }
+
         context = this;
 
         /******************** Open & set Shared  ******************/
@@ -93,16 +102,17 @@ public class DescripActivity extends AppCompatActivity {
             mMc_name = sp.getString("mc_name","");
             mMc_id = sp.getString("mc_id","");
         }
-
+        ((Button)findViewById(R.id.header)).setText(mMc_name);
         toolbar.setTitle(mMc_name);
         Picasso.with(this).load(IMAGEURL + mMc_id + ".jpg")
-                .placeholder(R.drawable.ic_me).error(R.drawable.ic_me).into(mImageToobar);
+                .placeholder(R.drawable.progress_aniloadimg).error(R.drawable.ic_ok).into(mImageToobar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(DescripActivity.this,MainActivity.class);
+                i.putExtra("Ianim","2");
                 startActivity(i);
                 finish();
             }
@@ -111,23 +121,21 @@ public class DescripActivity extends AppCompatActivity {
 
 
         /**************** Thread ************/
-        new Thread(new Runnable() {
+        thread = new Thread() {
             @Override
             public void run() {
-                while (true){
-                    try {
-                        Thread.sleep(2000);
-                    } catch (Exception e) {
-                    }
-
-                    if(isRunning){
+                try {
+                    while(true) {
                         CallData();
+                        sleep(2000);
                     }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-
-
             }
-        }).start();
+        };
+
+        thread.start();
         /**************** Thread ************/
     }
 
@@ -135,6 +143,7 @@ public class DescripActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Intent i = new Intent(DescripActivity.this,MainActivity.class);
+        i.putExtra("Ianim","2");
         startActivity(i);
         finish();
     }

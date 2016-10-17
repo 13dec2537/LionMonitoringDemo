@@ -37,7 +37,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HistoryActivity extends AppCompatActivity {
     private SharedPreferences spApp_Gone;
     private  SharedPreferences.Editor editor_App_Gone;
-    private static final String IMAGEURL = "http://www.thaidate4u.com/service/json/images/";
+    private static final String IMAGEURL = "http://www.thaidate4u.com/service/json/img/";
     private Toolbar toolbar;
     private RecyclerView mRecyclerView;
     private ManagerRetrofit mManeger;
@@ -46,7 +46,7 @@ public class HistoryActivity extends AppCompatActivity {
     /************** Global *****************************/
     private boolean isRunning  = true;
     private ProgressBar progressBar;
-    private String mMo_id, mMc_name, mMc_id, mMin, mMax, mPram;
+    private String mMo_id, mMc_name, mMc_id, mMin, mMax, mPram,mAnim;
     private TextView txtMc_name, txt_mMinMix, txtMo_pram;
     private ImageView mImageToobar;
     /************** Global *****************************/
@@ -54,11 +54,20 @@ public class HistoryActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
-
+        this.overridePendingTransition(R.anim.anim_silde_out_left,R.anim.anim_silde_out_left);
         /************** set Shared *****************************/
         spApp_Gone = getSharedPreferences("App_Gone", Context.MODE_PRIVATE);
         editor_App_Gone  = spApp_Gone.edit();
         /************** set Shared *****************************/
+
+        /***************set Anim *************************/
+        mAnim = getIntent().getExtras().getString("Ianim","");
+        if(mAnim.equals("1")){
+            this.overridePendingTransition(R.anim.anim_silde_out_left,R.anim.anim_silde_out_left);
+        }else if(mAnim.equals("2")){
+            this.overridePendingTransition(R.anim.anim_silde_in_left,R.anim.anim_silde_in_left);
+        }
+        /***************set Anim *************************/
 
         Intent call = getIntent();
         if(call != null){
@@ -90,6 +99,7 @@ public class HistoryActivity extends AppCompatActivity {
                 Intent i = new Intent(HistoryActivity.this,DescripActivity.class);
                 i.putExtra("mc_name",mMc_name);
                 i.putExtra("mc_id",mMc_id);
+                i.putExtra("Ianim","2");
                 startActivity(i);
                 finish();
             }
@@ -117,7 +127,7 @@ public class HistoryActivity extends AppCompatActivity {
         txtMc_name.setText(String.valueOf(mMc_name));
         txtMo_pram.setText(String.valueOf(mPram));
         txt_mMinMix.setText(String.valueOf(mMin + "-" + mMax));
-        Picasso.with(this).load(IMAGEURL + mMc_id + ".jpg").placeholder(R.drawable.ic_me).error(R.drawable.ic_me).into(mImageToobar);
+        Picasso.with(this).load(IMAGEURL + mMc_id + ".jpg")  .placeholder(R.drawable.progress_aniloadimg).error(R.drawable.ic_me).into(mImageToobar);
         /************** put Data to XML *****************************/
         new Thread(new Runnable() {
             @Override
@@ -142,6 +152,9 @@ public class HistoryActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         Intent i = new Intent(HistoryActivity.this,DescripActivity.class);
+        i.putExtra("Ianim","2");
+        i.putExtra("mc_name",mMc_name);
+        i.putExtra("mc_id",mMc_id);
         startActivity(i);
         finish();
     }
@@ -190,10 +203,5 @@ public class HistoryActivity extends AppCompatActivity {
             mMax= call.getStringExtra("mo_max");
             Log.d("TEST" , "Resume mc_name : " + mMc_name);
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 }

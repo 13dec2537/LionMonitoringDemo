@@ -9,22 +9,21 @@
     <!-- TODO: Update blank fragment layout -->
 
     <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:layout_weight="1.5">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:weightSum="1">
 
             <com.mikhaellopez.circularimageview.CircularImageView
-                android:layout_height="150dp"
-                android:src="@drawable/ic_me"
+                android:src="@drawable/person"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
                 android:layout_gravity="center"
                 android:id="@+id/image"
                 app:civ_border_color="#ffffff"
@@ -32,54 +31,117 @@
                 app:civ_shadow="true"
                 app:civ_shadow_radius="10"
                 app:civ_shadow_color="#8BC34A"
-                android:layout_width="150dp" />
+                android:layout_width="125dp"
+                android:layout_height="125dp" />
 
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="14dp"
+            android:layout_marginStart="14dp"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/image"
+            android:layout_toEndOf="@+id/image"
+            android:layout_weight="1.5"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="username"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/txtUsername"
+                    android:layout_weight="1"
+                    android:layout_above="@+id/button3"
+                    android:layout_alignLeft="@+id/button3"
+                    android:layout_alignStart="@+id/button3"
+                    android:textSize="@dimen/Text20dp"
+                    android:textColor="@color/bb_tabletRightBorderDark"
+                    android:gravity="center_horizontal" />
+
+                <TextView
+                    android:layout_gravity="center_vertical"
+                    android:text="division"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtDivision"
+                    android:textStyle="normal"
+                    android:layout_weight="1"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignRight="@+id/button3"
+                    android:layout_alignEnd="@+id/button3"
+                    android:textSize="@dimen/Text20dp"
+                    android:textColor="@color/bb_tabletRightBorderDark"
+                    android:gravity="center_horizontal" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView12"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal" />
+
+                <TextView
+                    android:text="division"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView11"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:text="Edit Image"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:id="@+id/editimage"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@+id/txtDivision"
+                    android:textStyle="bold"
+                    android:layout_height="40dp" />
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp">
-
-        <LinearLayout
-            android:orientation="horizontal"
+        android:layout_height="match_parent"
+        android:layout_weight="1.5">
+        <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_marginTop="10dp"
-            android:background="#ebebeb">
+            android:layout_height="match_parent"
+            android:id="@+id/XML_RecyclerAc">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Username"
-                android:layout_gravity="center_vertical"
-                android:textSize="20dp"
-                android:id="@+id/txtUsername"
-                android:layout_weight="1" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="#ebebeb">
-
-            <TextView
-                android:layout_gravity="center_vertical"
-                android:text="DIVISION"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/txtDivision"
-                android:textSize="20dp"
-                android:textStyle="normal"
-                android:layout_weight="1" />
-
-        </LinearLayout>
-
+        </android.support.v7.widget.RecyclerView>
     </LinearLayout>
 
 </LinearLayout>

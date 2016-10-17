@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_upload_image"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.kuybeer26092016.lionmonitoringdemo.activitys.UploadImageActivity"
+    android:background="@drawable/corners_upload">
+
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="230dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_margin="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/border_image"
+                    android:id="@+id/XML_IMAGE" />
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_marginLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+           android:paddingLeft="20dp"
+                android:id="@+id/XML_btnCapture"
+                android:drawableLeft="@drawable/ic_menu_camera"
+                android:text="Capture"
+                android:background="@drawable/btn_uploadimg" />
+
+            <Button
+                android:text="Gallery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/XML_btnGallery"
+                android:layout_marginTop="3dp"
+                android:paddingLeft="20dp"
+                android:layout_weight="1"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:drawableLeft="@drawable/ic_menu_gallery"
+                android:background="@drawable/btn_uploadimg" />
+
+            <Button
+                android:text="UPLOAD"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/XML_btnupload"
+                android:layout_marginTop="3dp"
+                android:layout_weight="1"
+                android:paddingLeft="20dp"
+                android:drawableLeft="@drawable/ic_file_download_black_24dp"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentRight="false"
+                android:layout_marginRight="20dp"
+                android:layout_alignParentEnd="false"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/btn_uploadimg" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

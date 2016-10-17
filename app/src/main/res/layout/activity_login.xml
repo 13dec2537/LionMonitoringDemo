@@ -38,6 +38,7 @@
         android:weightSum="1">
 
         <EditText
+
             android:id="@+id/edUsername"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -52,12 +53,13 @@
 
         <EditText
             android:id="@+id/edPassword"
+
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:background="@color/white"
             android:hint="@string/hint_password"
-            android:inputType="textPassword"
+            android:inputType="numberPassword"
             android:padding="10dp"
             android:maxLines="1"
             android:textColor="@color/input_login"

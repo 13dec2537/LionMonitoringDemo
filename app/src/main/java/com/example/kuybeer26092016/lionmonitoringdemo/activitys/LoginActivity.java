@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +29,7 @@ import com.example.kuybeer26092016.lionmonitoringdemo.manager.ManagerRetrofit;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_login;
 import com.example.kuybeer26092016.lionmonitoringdemo.service.BackgroundService;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import io.fabric.sdk.android.Fabric;
 import java.util.List;
 
@@ -35,6 +38,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
+    private final String BASE_IMAGE = "http://www.thaidate4u.com/service/json/img/";
     private String Username, Password, imageUrl, Division = "0";
     private Boolean ClearDataAccount = false;
     private Boolean mLogin_Again;
@@ -109,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void SnackbarAlaert() {
-        final CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id
+        final LinearLayout coordinatorLayout = (LinearLayout) findViewById(R.id
                 .XML_Coorlayout);
         Snackbar snackbar = Snackbar
                 .make(coordinatorLayout, "Network Not Available", Snackbar.LENGTH_LONG)
@@ -149,9 +153,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void ShowListMc(){
-
-
-
         progressBar.setVisibility(View.VISIBLE);
 
         Call<List<Mis_login>> call = mManager.getmService().Callback_Login(edUsername.getText().toString(),
@@ -168,13 +169,13 @@ public class LoginActivity extends AppCompatActivity {
                         editor.commit();
                         Username = tower2List.get(i).getUsername();
                         Password = tower2List.get(i).getPassword();
-                        imageUrl = tower2List.get(i).getImage();
+                        imageUrl = String.valueOf(BASE_IMAGE+Username+".jpg");
+                        Log.d("TEST","imageUrl : " + imageUrl);
                         if(imageUrl.trim().length()<0){
-                            imageUrl = "http://www.thaidate4u.com/service/json/images/aoh.jpg";
+                            imageUrl = "http://www.thaidate4u.com/service/json/img/aoh.jpg";
                         }
                         Division = tower2List.get(i).getDivision();
                         Toast.makeText(LoginActivity.this,"Login compile !",Toast.LENGTH_SHORT).show();
-                        Log.d("TEST" , "image : " + String.valueOf(imageUrl));
                         Mis_login misMclist = tower2List.get(i);
                         mAdapter.addLogin(misMclist);
                         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
@@ -184,7 +185,9 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("username",Username);
                         editor.putString("imageUrl",imageUrl);
                         editor.putString("division",Division);
+                        editor.putString("Userdivision",Division);
                         editor.commit();
+                        intent.putExtra("Ianim","1");
                         startActivity(intent);
                         finish();
                     }
@@ -217,7 +220,7 @@ public class LoginActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        mAlertDialog();
+        mAlertDialogExit();
     }
 
     @Override
@@ -228,25 +231,49 @@ public class LoginActivity extends AppCompatActivity {
         editor.commit();
     }
 
-    public void mAlertDialog(){
-        mAlertDialog = new AlertDialog.Builder(LoginActivity.this);
-        mAlertDialog.setTitle("Close App !");
-        mAlertDialog.setMessage("TEST Alert");
-        mAlertDialog.setPositiveButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface arg0, int arg1) {
-                arg0.cancel();
-            }
-        });
-        mAlertDialog.setNegativeButton("Yes",new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finish();
-            }
-        });
+    public void mAlertDialogExit(){
+        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
+                .setTitleText("Exit !")
+                .setContentText("Are you sure went to Exit Application !")
+                .setCancelText("Cancel")
+                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(final SweetAlertDialog sDialog) {
+                        new CountDownTimer(2000, 1000) {
 
-        AlertDialog alertDialog = mAlertDialog.create();
-        alertDialog.show();
+                            public void onTick(long millisUntilFinished) {
+                                sDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                                sDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                    @Override
+                                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                        //ป้องกันการกดปุ้ม confirm อีกครั้ง ในระหว่าง show ani //
+                                    }
+                                });
+                            }
+
+                            public void onFinish() {
+                                sDialog.cancel();
+                            }
+                        }.start();
+                    }
+                })
+                .setConfirmText("OK")
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(final SweetAlertDialog sDialog) {
+
+                        new CountDownTimer(2000, 1000) {
+
+                            public void onTick(long millisUntilFinished) {
+                                sDialog.changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
+                            }
+
+                            public void onFinish() {
+                                finish();
+                            }
+                        }.start();
+                    }
+                })
+                .show();
     }
-
 }

@@ -2,9 +2,7 @@ package com.example.kuybeer26092016.lionmonitoringdemo.activitys;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Camera;
 import android.graphics.Matrix;
-import android.media.Image;
 import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,16 +15,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.kuybeer26092016.lionmonitoringdemo.R;
 import com.example.kuybeer26092016.lionmonitoringdemo.manager.ManagerRetrofit;
-import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_adddata;
-import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_history;
-import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_login;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_register;
+import com.example.kuybeer26092016.lionmonitoringdemo.service.CustomOnItemSelectedListener;
 import com.example.kuybeer26092016.lionmonitoringdemo.service.Service;
 import com.kosalgeek.android.photoutil.CameraPhoto;
 import com.kosalgeek.android.photoutil.GalleryPhoto;
@@ -42,7 +37,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.HashMap;
 import java.util.List;
 
@@ -87,8 +81,9 @@ public class RegisterActivity extends AppCompatActivity {
         image = (ImageView)findViewById(R.id.image);
         List<String> list = new ArrayList<String>();
         list.add("Select Division");
-        list.add("Admin");
-        list.add("Staff");
+        list.add("TOWER2");
+        list.add("ADMIN");
+        list.add("DK100");
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
                 (this, android.R.layout.simple_spinner_item,list);
 
@@ -114,6 +109,13 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
+        galleryPhoto = new GalleryPhoto(getApplicationContext());
+        ((ImageView)findViewById(R.id.XML_Gallery)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(galleryPhoto.openGalleryIntent(),GALLERY_REQUEST);
+            }
+        });
         //************ Set Class Cemera & ImageCapPic *****************/
 
     }
@@ -134,16 +136,24 @@ public class RegisterActivity extends AppCompatActivity {
                 password = edPassword.getText().toString();
                 password_again = edPassword_again.getText().toString();
                 division = spDivision.getSelectedItem().toString();
-                if(username.length()>5 && (password.length()>5 && password.equals(password_again)) && division != "Select Division"
-                        && null!=image.getDrawable()){
-                    CheckUsername(username,password,division);
-                    UploadImage();
-                    progressBar.setVisibility(View.VISIBLE);
-                }
-                else{
-                    snackbar = Snackbar.make(mLinearLayout,"Register unsuccessful",Snackbar.LENGTH_LONG);
-                    snackbar.show();
-                    progressBar.setVisibility(View.GONE);
+                if(username.length()>5 && password.length()>5){
+                    if( password.equals(password_again)){
+                        if( division != "Select Division"){
+                            if( null!=image.getDrawable()){
+                                CheckUsername(username,password,division);
+                                progressBar.setVisibility(View.VISIBLE);
+                            }
+                            else{
+                                Snackbar("Register unsuccessful Please capture image !");
+                            }
+                        }else{
+                            Snackbar("Register unsuccessful Please select Division !");
+                        }
+                    }else{
+                        Snackbar("Register unsuccessful Because Password does not matc !");
+                    }
+                }else{
+                    Snackbar("Register unsuccessful Because Character username & password less 5 !");
                 }
             }
         });
@@ -160,16 +170,15 @@ public class RegisterActivity extends AppCompatActivity {
                     Log.d("TEST" , "compile");
                     List<Mis_register> ListItem = response.body();
                     for(int i = 0 ; i<ListItem.size();i++){
-                        snackbar = Snackbar.make(mLinearLayout,"Username has already",Snackbar.LENGTH_LONG);
-                        snackbar.show();
+                        Snackbar("Username has already");
                         progressBar.setVisibility(View.GONE);
                     }
                     if(ListItem.size() == 0){
-                        snackbar = Snackbar.make(mLinearLayout,"Register successful",Snackbar.LENGTH_LONG);
-                        snackbar.show();
+                        Snackbar("Register successful");
                         edPassword.setText("");
                         edUsername.setText("");
                         edPassword_again.setText("");
+                        UploadImage();
                         Add_Account(mUsername,mPassword,mDivision);
                         new Thread(new Runnable() {
                             @Override
@@ -204,6 +213,7 @@ public class RegisterActivity extends AppCompatActivity {
         Service service = retrofit.create(Service.class);
         Mis_register register = new Mis_register();
         Call<List<Mis_register>> call = service.Callback_AddRegister(username,password,division);
+        Log.d("TEST","DIVISION : " + division);
 //        username, password,division
        call.enqueue(new Callback<List<Mis_register>>() {
            @Override
@@ -233,7 +243,7 @@ public class RegisterActivity extends AppCompatActivity {
             //post image to server
             HashMap<String, String> PostData = new HashMap<String, String>();
             PostData.put("image",encodedImage);
-            PostData.put("uid","xxxx");
+            PostData.put("uid",username);
             PostResponseAsyncTask task = new PostResponseAsyncTask(RegisterActivity.this, PostData, new AsyncResponse() {
                 @Override
                 public void processFinish(String s) {
@@ -277,7 +287,6 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(getApplication(),"Something worng while encoding photo",Toast.LENGTH_SHORT).show();
         }
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK){
@@ -316,5 +325,11 @@ public class RegisterActivity extends AppCompatActivity {
         Bitmap bitmap1 = Bitmap.createBitmap(source,0,0,source.getWidth(),source.getHeight(),matrix,true);
         return bitmap1;
     }
+    private void Snackbar(String messages){
+        snackbar = Snackbar.make(mLinearLayout,messages,Snackbar.LENGTH_LONG);
+        snackbar.show();
+        progressBar.setVisibility(View.GONE);
+    }
+
 
 }

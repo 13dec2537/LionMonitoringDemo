@@ -4,23 +4,25 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_tower2"
-            android:icon="@drawable/ic_nav"
+            android:icon="@drawable/arrow"
             android:title="TOWER 2" />
         <item
             android:id="@+id/nav_dk100"
-            android:icon="@drawable/ic_nav"
-            android:title="DK100" />
+            android:icon="@drawable/arrow"
+            android:title="DK100"
+            />
     </group>
 
     <item android:title="Other ">
         <menu>
             <item
                 android:id="@+id/nav_me"
-                android:icon="@drawable/ic_me"
+                android:icon="@drawable/person"
                 android:title="Me" />
             <item
                 android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@drawable/logout"
+                android:visible="true"
                 android:title="Logout" />
         </menu>
     </item>
