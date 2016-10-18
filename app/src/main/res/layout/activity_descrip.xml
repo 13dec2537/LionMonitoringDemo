@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="?attr/colorControlHighlight">
+    android:fitsSystemWindows="true">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/app_bar"
@@ -48,9 +47,10 @@
                     android:id="@+id/header"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/menu_history"
                     android:text="DESCRIPTION"
-                    android:textColor="@color/btn_login"
+                    android:background="#AEEA00"
+                    android:lines="1"
+                    android:textColor="#ffffff"
                     android:textSize="30dp"
                     android:textStyle="normal|bold" />
                 <ProgressBar

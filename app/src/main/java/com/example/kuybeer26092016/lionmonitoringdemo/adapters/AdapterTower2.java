@@ -4,13 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.TransitionDrawable;
-import android.media.Image;
-import android.net.Uri;
+import android.os.CountDownTimer;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,39 +16,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.kuybeer26092016.lionmonitoringdemo.R;
 import com.example.kuybeer26092016.lionmonitoringdemo.activitys.DescripActivity;
-import com.example.kuybeer26092016.lionmonitoringdemo.activitys.RegisterActivity;
 import com.example.kuybeer26092016.lionmonitoringdemo.activitys.UploadImageActivity;
-import com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentTower2;
-import com.example.kuybeer26092016.lionmonitoringdemo.manager.ManagerRetrofit;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_monitoringitem;
-import com.kosalgeek.android.photoutil.CameraPhoto;
-import com.kosalgeek.android.photoutil.GalleryPhoto;
-import com.kosalgeek.android.photoutil.ImageBase64;
-import com.kosalgeek.android.photoutil.ImageLoader;
-import com.kosalgeek.asynctask.AsyncResponse;
-import com.kosalgeek.asynctask.EachExceptionsHandler;
-import com.kosalgeek.asynctask.PostResponseAsyncTask;
+import com.example.kuybeer26092016.lionmonitoringdemo.service.AnimationUtil;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-
-import cn.pedant.SweetAlert.SweetAlertDialog;
-
-import static android.app.Activity.RESULT_OK;
-import static com.example.kuybeer26092016.lionmonitoringdemo.R.id.imageView;
 
 /**
  * Created by KuyBeer26092016 on 27/9/2559.
@@ -69,8 +45,12 @@ public class AdapterTower2  extends RecyclerView.Adapter<AdapterTower2.ViewHolde
     private TransitionDrawable TranAnimaBackColor;
     private Boolean ReloadImage = true;
     private int sizeimg = 0;
-    public AdapterTower2() {
+    private int prevPosition=0;
+    private boolean isRunAnim = true ;
+    LayoutInflater layoutInflater;
+    public AdapterTower2(Context context) {
         this.mList = mList;
+        layoutInflater = LayoutInflater.from(context);
     }
 
     @Override
@@ -92,24 +72,35 @@ public class AdapterTower2  extends RecyclerView.Adapter<AdapterTower2.ViewHolde
             holder.mAct_2.setText(setList.getMo_act().getAct_2());
             holder.mAct_3.setText(setList.getMo_act().getAct_3());
             holder.mAct_4.setText(setList.getMo_act().getAct_4());
+
             ReloadImage = sp_uploadimg.getBoolean("img_reload",true);
             if(sizeimg<mList.size() && ReloadImage == true){
-                Picasso.with(context)
-                        .load(IMAGEURL + setList.getMc_id() + ".jpg")
-                        .memoryPolicy(MemoryPolicy.NO_CACHE)
-                        .networkPolicy(NetworkPolicy.NO_CACHE)
-                        .resize(80, 80)
-                        .placeholder(R.drawable.progress_aniloadimg)
-                        .error(R.drawable.ic_me)
-                        .noFade()
-                        .into(holder.mImvMachine);
-                Log.d("TAG","RELOAD : TRUE");
+                new CountDownTimer(2000, 1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        Picasso.with(context)
+                                .load(IMAGEURL + setList.getMc_id() + ".jpg")
+                                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                                .networkPolicy(NetworkPolicy.NO_CACHE)
+                                .resize(80, 80)
+                                .placeholder(R.drawable.progress_aniloadimg)
+                                .error(R.drawable.ic_me)
+                                .noFade()
+                                .into(holder.mImvMachine);
+                        Log.d("TAG","RELOAD : TRUE");
+                    }
+                };
                 sizeimg++;
+                Animation_List(position,holder);
                 if(sizeimg==mList.size()){
                     editor_uploadimg.putBoolean("img_reload",false);
                     editor_uploadimg.commit();
                     sizeimg = 0;
-                    Log.d("TAG","RELOAD : FALSE");
                 }
             }
             else if(sizeimg<mList.size() && ReloadImage == false){
@@ -142,6 +133,7 @@ public class AdapterTower2  extends RecyclerView.Adapter<AdapterTower2.ViewHolde
                     i.putExtra("mc_id",setList.getMc_id());
                     i.putExtra("mc_name",setList.getMc_name());
                     editor.putString("division",setList.getMc_division());
+                    editor.putBoolean("Runanim",true);
                     editor.commit();
                     v.getContext().startActivity(i);
                     ((Activity)context).finish();
@@ -219,7 +211,18 @@ public class AdapterTower2  extends RecyclerView.Adapter<AdapterTower2.ViewHolde
             holder.mUnit_2.setText(setList.getMo_unit().getUnit_2());
             holder.mUnit_3.setText(setList.getMo_unit().getUnit_3());
             holder.mUnit_4.setText(setList.getMo_unit().getUnit_4());
+
     }
+
+    private void Animation_List(Integer position, ViewHolder holder) {
+        if(position > prevPosition){
+            AnimationUtil.animate(holder , true);
+        }else{
+            AnimationUtil.animate(holder , false);
+        }
+        prevPosition = position;
+    }
+
     @Override
     public int getItemCount() {
         return mList.size();

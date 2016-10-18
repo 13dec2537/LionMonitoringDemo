@@ -30,13 +30,14 @@
                 android:layout_marginTop="10dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:background="@color/white"/>
+                android:background="@drawable/person"/>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_menu_gallery"
+                app:srcCompat="@drawable/gallery"
                 android:id="@+id/XML_Gallery"
+                android:layout_marginLeft="5dp"
                 android:layout_alignParentBottom="true"
                 android:layout_toRightOf="@+id/XML_imagecappic"
                 android:layout_toEndOf="@+id/XML_imagecappic" />
@@ -44,7 +45,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_menu_camera"
+                app:srcCompat="@drawable/camera"
                 android:id="@+id/XML_imagecappic"
                 android:layout_alignParentBottom="true"
                 android:layout_alignLeft="@+id/image"
@@ -70,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:background="@color/white"
+            android:background="@drawable/corners_5dp"
             android:hint="@string/hint_email"
             android:inputType="textEmailAddress"
             android:padding="10dp"
@@ -83,7 +84,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:background="@color/white"
+            android:background="@drawable/corners_5dp"
             android:hint="@string/hint_password"
             android:inputType="textPassword"
             android:padding="10dp"
@@ -96,7 +97,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:background="@color/white"
+            android:background="@drawable/corners_5dp"
             android:hint="@string/hint_password_again"
             android:inputType="textPassword"
             android:padding="10dp"
@@ -109,7 +110,7 @@
         <Spinner
             android:layout_width="fill_parent"
             android:id="@+id/spDivision"
-            android:background="@color/white"
+            android:background="@drawable/corners_5dp"
             android:layout_height="40dp"
             />
 

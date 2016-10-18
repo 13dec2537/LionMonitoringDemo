@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -45,6 +46,7 @@ import java.net.ProtocolException;
 import java.util.HashMap;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -62,10 +64,9 @@ public class FragmentAccount extends Fragment {
     private final int CAMERA_REQUEST = 13323;
     private final int GALLERY_REQUEST = 22131;
     private CameraPhoto cameraPhoto;
+    private GalleryPhoto galleryPhoto;
     private String seleletedPhoto;
-    private RecyclerView recyclerview;
-    private AdapterAccount mAdapter;
-    private ManagerRetrofit mManager;
+    private SweetAlertDialog sweetAlertDialog;
     private ImageView mImage;
     public FragmentAccount() {
         // Required empty public constructor
@@ -85,14 +86,9 @@ public class FragmentAccount extends Fragment {
         sp = getActivity().getSharedPreferences("DataAccount", Context.MODE_PRIVATE);
         editor = sp.edit();
         cameraPhoto = new CameraPhoto(getActivity());
+        galleryPhoto = new GalleryPhoto(getActivity());
+        sweetAlertDialog = new SweetAlertDialog(getActivity());
         image = (CircularImageView)getView().findViewById(R.id.image);
-//        recyclerview = (RecyclerView)getView().findViewById(R.id.XML_RecyclerAc);
-//        mAdapter = new AdapterAccount();
-//        mManager = new ManagerRetrofit();
-//        recyclerview.setHasFixedSize(true);
-//        recyclerview.setRecycledViewPool(new RecyclerView.RecycledViewPool());
-//        recyclerview.setAdapter(mAdapter);
-//        recyclerview.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         ((TextView)getView().findViewById(R.id.txtUsername)).setText(sp.getString("username",""));
         ((TextView)getView().findViewById(R.id.txtDivision)).setText(sp.getString("division",""));
         mImage = (ImageView)getView().findViewById(R.id.image);
@@ -100,33 +96,10 @@ public class FragmentAccount extends Fragment {
         ((Button)getView().findViewById(R.id.editimage)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    startActivityForResult(cameraPhoto.takePhotoIntent(),CAMERA_REQUEST);
-                    cameraPhoto.addToGallery();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+               mAlertDialog();
             }
         });
 //        CallData();
-    }
-
-    private void CallData() {
-        Call<List<Mis_monitoringitem>> call = mManager.getmService().CallbackAccount();
-        call.enqueue(new Callback<List<Mis_monitoringitem>>() {
-            @Override
-            public void onResponse(Call<List<Mis_monitoringitem>> call, Response<List<Mis_monitoringitem>> response) {
-               if(response.isSuccessful()){
-                   List<Mis_monitoringitem> list = response.body();
-                   mAdapter.addList(list);
-               }
-            }
-
-            @Override
-            public void onFailure(Call<List<Mis_monitoringitem>> call, Throwable t) {
-
-            }
-        });
     }
 
     public static FragmentAccount newInstent(String username) {
@@ -138,14 +111,13 @@ public class FragmentAccount extends Fragment {
     }
     private void UploadImage(){
         try{
-            Bitmap bitmap = ImageLoader.init().from(seleletedPhoto).requestSize(1024,1024).getBitmap();
+            Bitmap bitmap = ImageLoader.init().from(seleletedPhoto).requestSize(128,128).getBitmap();
             String encodedImage = ImageBase64.encode(bitmap);
-            Log.d("ACCOUNT",encodedImage);
-            Log.d("ACCOUNT","5555");
+            Log.d("ACCOUNT",sp.getString("username",""));
             //post image to server
             HashMap<String, String> PostData = new HashMap<String, String>();
             PostData.put("image",encodedImage);
-            PostData.put("uid",sp.getString("imageUrl",""));
+            PostData.put("uid",sp.getString("username",""));
             PostResponseAsyncTask task = new PostResponseAsyncTask(getActivity(), PostData, new AsyncResponse() {
                 @Override
                 public void processFinish(String s) {
@@ -196,10 +168,9 @@ public class FragmentAccount extends Fragment {
             if(requestCode == CAMERA_REQUEST){
                 String photoPath = cameraPhoto.getPhotoPath();
                 seleletedPhoto = photoPath;
-                Log.d("TAG" , seleletedPhoto);
                 try {
-                    Bitmap bitmap = ImageLoader.init().from(photoPath).requestSize(512, 512).getBitmap();
-                    mImage.setImageBitmap(getRotateBitmap(bitmap,-90));
+                    Bitmap bitmap = ImageLoader.init().from(photoPath).requestSize(128, 128).getBitmap();
+                    mImage.setImageBitmap(getRotateBitmap(bitmap,0));
                     UploadImage();
 
                 } catch (FileNotFoundException e) {
@@ -207,6 +178,20 @@ public class FragmentAccount extends Fragment {
                             "Something Wrong while loading photos", Toast.LENGTH_SHORT).show();
                 }
 
+            }
+            else if(requestCode == GALLERY_REQUEST){
+                Uri uri = data.getData();
+                galleryPhoto.setPhotoUri(uri);
+                String photoPath = galleryPhoto.getPath();
+                seleletedPhoto = photoPath;
+                try {
+                    Bitmap bitmap = ImageLoader.init().from(photoPath).requestSize(128, 128).getBitmap();
+                    mImage.setImageBitmap(bitmap);
+                    UploadImage();
+                } catch (FileNotFoundException e) {
+                    Toast.makeText(getActivity(),
+                            "Something Wrong while choosing photos", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }
@@ -224,5 +209,35 @@ public class FragmentAccount extends Fragment {
                 .placeholder(R.drawable.progress_aniloadimg)
                 .error(R.drawable.person)
                 .into(mImage);
+    }
+    public void mAlertDialog(){
+        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE);
+        sweetAlertDialog.setCanceledOnTouchOutside(true);
+        sweetAlertDialog.setTitleText("CAMERA");
+        sweetAlertDialog.setContentText("Select Take photos OR Gallery ?");
+        sweetAlertDialog.setCancelText("Gallery");
+        sweetAlertDialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        startActivityForResult(galleryPhoto.openGalleryIntent(),GALLERY_REQUEST);
+                        sweetAlertDialog.dismiss();
+                    }
+                });
+        sweetAlertDialog .setConfirmText("Take photo");
+        sweetAlertDialog .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        try {
+                            startActivityForResult(cameraPhoto.takePhotoIntent(),CAMERA_REQUEST);
+                            cameraPhoto.addToGallery();
+                            sweetAlertDialog.dismiss();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+        sweetAlertDialog.show();
+
     }
 }

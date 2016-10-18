@@ -38,4 +38,6 @@
         <item name="android:orientation">vertical</item>
     </style>
 
+    <style name="Appcompat_account_btn" parent="Theme.AppCompat.Light.NoActionBar" />
+
 </resources>

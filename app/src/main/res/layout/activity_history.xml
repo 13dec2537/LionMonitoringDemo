@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="?attr/colorControlHighlight"
     tools:ignore="ExtraText">
 
     <android.support.design.widget.AppBarLayout
@@ -46,6 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:background="#8ee3e3e3"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,51 +59,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Exuast Fun"
+                    android:background="#AEEA00"
+                    android:lines="2"
+                    android:textColor="#f1f1f1"
                     android:layout_weight="1"
                     android:id="@+id/mc_name_his"
                     android:textAlignment="center"
-                    android:textSize="18sp"
-                    android:textColor="@color/btn_login"
-                    android:background="@drawable/menu_history"
-                    android:textStyle="bold" />
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Amp"
-                    android:layout_weight="1"
-                    android:id="@+id/pram_his"
-                    android:textAlignment="center"
-                    android:textSize="18sp"
-                    android:textColor="@color/btn_login"
-                    android:background="@drawable/menu_history"
+                    android:textSize="30dp"
                     android:textStyle="bold" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Standard"
-                    android:layout_weight="1"
-                    android:textAlignment="center"
-                    android:textSize="18sp"
-                    android:textColor="@color/btn_login"
-                    android:background="@drawable/menu_history"
-                    android:textStyle="bold" />
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="50-100"
-                    android:layout_weight="1"
-                    android:id="@+id/min_max_his"
-                    android:textAlignment="center"
-                    android:textSize="18sp"
-                    android:textColor="@color/btn_login"
-                    android:background="@drawable/menu_history"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                android:orientation="horizontal"></LinearLayout>
         </LinearLayout>
         <ProgressBar
             style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"

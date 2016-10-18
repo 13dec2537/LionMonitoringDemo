@@ -10,13 +10,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.kuybeer26092016.lionmonitoringdemo.R;
 import com.example.kuybeer26092016.lionmonitoringdemo.activitys.HistoryActivity;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_descrip;
+import com.example.kuybeer26092016.lionmonitoringdemo.service.AnimationUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +27,12 @@ import java.util.List;
 
 public class AdapterDescrip extends RecyclerView.Adapter<AdapterDescrip.ViewHolder> {
     private List<Mis_descrip> mList = new ArrayList<>();
-    Context context;
+    private Context context;
     private static SharedPreferences sp;
     private static SharedPreferences.Editor editor;
-    String TDS,NT;
+    private int  prevPosition = 0;
+    private boolean Runanim;
+    private int CountList = 0;
     public AdapterDescrip(Context context) {
         this.mList = mList;
         this.context = context;
@@ -47,13 +49,23 @@ public class AdapterDescrip extends RecyclerView.Adapter<AdapterDescrip.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        sp  = context.getSharedPreferences("DataAccount",context.MODE_PRIVATE);
+        editor = sp.edit();
+        Runanim = sp.getBoolean("Runanim",false);
+        if(Runanim){
+            Animation_List(position,holder);
+            CountList++;
+            if(CountList==mList.size()){
+                editor.putBoolean("Runanim",false);
+                editor.commit();
+            }
+        }
         final Mis_descrip setList = mList.get(position);
         holder.mPram.setText(String.valueOf(setList.getMo_pram().toUpperCase()));
         holder.mAct.setText(String.valueOf(setList.getMo_act()));
         holder.mAct.setTextColor(Color.parseColor(setColor(String.valueOf(setList.getMo_act()),String.valueOf(setList.getMo_min()),String.valueOf(setList.getMo_max()))));
         holder.mUnit.setText(String.valueOf(setList.getMo_unit().toUpperCase()));
         holder.mMinMax.setText(String.valueOf(setList.getMo_min()+"-"+setList.getMo_max()));
-
         holder.mLinearAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +76,9 @@ public class AdapterDescrip extends RecyclerView.Adapter<AdapterDescrip.ViewHold
                 i.putExtra("mo_min",setList.getMo_min());
                 i.putExtra("mo_max",setList.getMo_max());
                 i.putExtra("mo_id","0");
+                editor.putBoolean("Runanim",true);
+                editor.commit();
+                Log.d("TAG",String.valueOf(sp.getBoolean("Runanim",true)));
                 v.getContext().startActivity(i);
                 ((Activity)context).finish();
             }
@@ -105,5 +120,14 @@ public class AdapterDescrip extends RecyclerView.Adapter<AdapterDescrip.ViewHold
             color = "#d81114";
         }
         return  color;
+    }
+    private void Animation_List(Integer position, AdapterDescrip.ViewHolder holder) {
+        if(position > prevPosition){
+            AnimationUtil.animate(holder , true);
+        }else{
+            AnimationUtil.animate(holder , false);
+        }
+        prevPosition = position;
+        Log.d("TAG","RUN : " + String.valueOf(prevPosition));
     }
 }

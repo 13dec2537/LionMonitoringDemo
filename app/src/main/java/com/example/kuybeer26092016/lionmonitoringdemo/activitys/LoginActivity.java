@@ -46,12 +46,12 @@ public class LoginActivity extends AppCompatActivity {
     private EditText edUsername,edPassword;
     private ProgressBar progressBar;
     //Manager
+    private LinearLayout mLinearLayout;
     private ManagerRetrofit mManager;
     private AdapterLogin mAdapter;
     private AlertDialog.Builder mAlertDialog;
     //SharedPreferences
     private SharedPreferences sp;
-
     private  SharedPreferences.Editor editor;
     private String UsernameShared,PasswordShared;
     @Override
@@ -59,6 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_login);
+        mLinearLayout = (LinearLayout)findViewById(R.id.XML_Coorlayout);
         mManager = new ManagerRetrofit();
         mAdapter = new AdapterLogin();
         edUsername = (EditText)findViewById(R.id.edUsername);
@@ -175,7 +176,6 @@ public class LoginActivity extends AppCompatActivity {
                             imageUrl = "http://www.thaidate4u.com/service/json/img/aoh.jpg";
                         }
                         Division = tower2List.get(i).getDivision();
-                        Toast.makeText(LoginActivity.this,"Login compile !",Toast.LENGTH_SHORT).show();
                         Mis_login misMclist = tower2List.get(i);
                         mAdapter.addLogin(misMclist);
                         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
@@ -192,7 +192,7 @@ public class LoginActivity extends AppCompatActivity {
                         finish();
                     }
                     if(tower2List.size() == 0){
-                        Toast.makeText(LoginActivity.this,"Your Login Name or Password is invalid !",Toast.LENGTH_SHORT).show();
+                        Snackbar("Your Login Name or Password is invalid !");
                         SetEnable(true,true,true,true);
                     }
 
@@ -203,7 +203,7 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Mis_login>> call, Throwable t) {
-                    Toast.makeText(LoginActivity.this,"Your Login Name or Password is incorrect !",Toast.LENGTH_SHORT).show();
+                Snackbar("Your Login Name or Password is invalid !");
                 progressBar.setVisibility(View.GONE);
             }
         });
@@ -231,12 +231,13 @@ public class LoginActivity extends AppCompatActivity {
         editor.commit();
     }
 
-    public void mAlertDialogExit(){
-        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("Exit !")
-                .setContentText("Are you sure went to Exit Application !")
-                .setCancelText("Cancel")
-                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+    private void mAlertDialogExit(){
+        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE);
+        sweetAlertDialog.setCanceledOnTouchOutside(true);
+        sweetAlertDialog.setTitleText("Exit !");
+        sweetAlertDialog.setContentText("Are you sure went to Exit Application !");
+        sweetAlertDialog.setCancelText("Cancel");
+        sweetAlertDialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(final SweetAlertDialog sDialog) {
                         new CountDownTimer(2000, 1000) {
@@ -256,9 +257,9 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }.start();
                     }
-                })
-                .setConfirmText("OK")
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                });
+        sweetAlertDialog.setConfirmText("OK");
+        sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(final SweetAlertDialog sDialog) {
 
@@ -273,7 +274,11 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }.start();
                     }
-                })
-                .show();
+                });
+        sweetAlertDialog.show();
+    }
+    private void Snackbar(String messages){
+        Snackbar snackbar = Snackbar.make(mLinearLayout,messages,Snackbar.LENGTH_LONG);
+        snackbar.show();
     }
 }

@@ -1,8 +1,9 @@
 package com.example.kuybeer26092016.lionmonitoringdemo.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.kuybeer26092016.lionmonitoringdemo.R;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_history;
+import com.example.kuybeer26092016.lionmonitoringdemo.service.AnimationUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +22,13 @@ import java.util.List;
  */
 
 public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.ViewHolder>{
+    private static SharedPreferences sp;
+    private static SharedPreferences.Editor editor;
     private List<Mis_history> mList = new ArrayList<>();
-    Context context;
+    private Context context;
+    private int  prevPosition = 0;
+    private boolean Runanim;
+    private int CountList = 0;
     public AdapterHistory() {
         this.mList = mList;
     }
@@ -35,15 +42,27 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        sp  = context.getSharedPreferences("DataAccount",context.MODE_PRIVATE);
+        editor = sp.edit();
         final Mis_history setList = mList.get(position);
         holder.mTime.setText(String.valueOf(setList.getStart_datetime()));
         holder.mMo_act.setText(String.valueOf(setList.getMo_act()));
         Integer mStatus = setList.getStatus();
         if(mStatus == 0){
-            holder.Status.setImageResource(R.drawable.ic_ok);
+            holder.Status.setImageResource(R.drawable.ic_true);
         }
         else if(mStatus == 1){
-            holder.Status.setImageResource(R.drawable.ic_cancel);
+            holder.Status.setImageResource(R.drawable.ic_false);
+        }
+        Runanim = sp.getBoolean("Runanim",false);
+        Log.d("TAG",String.valueOf(Runanim));
+        if(Runanim){
+            Animation_List(position,holder);
+            CountList++;
+            if(CountList==mList.size()){
+                editor.putBoolean("Runanim",false);
+                editor.commit();
+            }
         }
     }
 
@@ -67,6 +86,14 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.ViewHold
             Status = (ImageView) itemView.findViewById(R.id.status);
             mMo_act = (TextView)itemView.findViewById(R.id.mo_act);
         }
+    }
+    private void Animation_List(Integer position, AdapterHistory.ViewHolder holder) {
+        if(position > prevPosition){
+            AnimationUtil.animate(holder , true);
+        }else{
+            AnimationUtil.animate(holder , false);
+        }
+        prevPosition = position;
     }
 }
 

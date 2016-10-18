@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -65,6 +66,7 @@ public class FragmentTower2 extends Fragment {
     AdapterTower2 adapterTower2;
     Context context;
     Thread thread;
+    private LinearLayout mLinearlayout;
     private SharedPreferences spApp_Gone,sp_reload;
     private  SharedPreferences.Editor editor_App_Gone,editor_reload;
     public FragmentTower2() {
@@ -77,6 +79,7 @@ public class FragmentTower2 extends Fragment {
         editor_reload = sp_reload.edit();
         editor_reload.putBoolean("img_reload",true);
         editor_reload.commit();
+        mLinearlayout = (LinearLayout)getActivity().findViewById(R.id.linear_tw2);
         return  view;
     }
 
@@ -90,7 +93,7 @@ public class FragmentTower2 extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setRecycledViewPool(new RecyclerView.RecycledViewPool());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
-        mAdapter = new AdapterTower2();
+        mAdapter = new AdapterTower2(getContext());
         mRecyclerView.setAdapter(mAdapter);
         spApp_Gone = getActivity().getSharedPreferences("App_Gone", Context.MODE_PRIVATE);
         editor_App_Gone  = spApp_Gone.edit();
@@ -121,7 +124,7 @@ public class FragmentTower2 extends Fragment {
                 try {
                     while(true) {
                         CallData();
-                        sleep(2000);
+                        sleep(5000);
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();

@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -34,15 +35,17 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private String mUsername,mImage,mPosition,mAnim,mUserDivision;
     private SharedPreferences sp,spApp_Gone,spNT;
-    private String mMc_name = "";
     private Toolbar toolbar;
-    private Bundle bundle = new Bundle();
     private  SharedPreferences.Editor editor,editor_App_Gone,editor_NT;
     private  NavigationView navigationView;
+    private  ImageView imageView;
+    private  DrawerLayout mDrawerlayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mDrawerlayout = (DrawerLayout)findViewById(R.id.drawer_layout);
+
         toolbar = (Toolbar) findViewById(R.id.toolbarMain);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -73,7 +76,7 @@ public class MainActivity extends AppCompatActivity
          navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setItemIconTintList(null);
         View Nav_view = navigationView.getHeaderView(0);
-        ImageView imageView = (ImageView) Nav_view.findViewById(R.id.imageView);
+        imageView = (ImageView) Nav_view.findViewById(R.id.imageView);
         imageView.setImageResource(R.drawable.ic_me);
         TextView txtname = (TextView) Nav_view.findViewById(R.id.name);
         TextView txtposition = (TextView) Nav_view.findViewById(R.id.position);
@@ -116,7 +119,7 @@ public class MainActivity extends AppCompatActivity
         editor_App_Gone.putString("Upload_Gone" , "1");
         editor_App_Gone.commit();
         //*************** SharedPreferences And Set ViewGone  ***********************************//
-
+        Snackbar("Login compile !");
     }
 
     private void SetMenuNavigation() {
@@ -198,7 +201,9 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        Picasso.with(this).load(mImage)
+                .placeholder(R.drawable.person).error(R.drawable.person).into(imageView);
+        navigationView.setNavigationItemSelectedListener(this);
         if (id == R.id.nav_tower2) {
             FragTower2();
             toolbar.setTitle("TOWER 2");
@@ -238,37 +243,13 @@ public class MainActivity extends AppCompatActivity
         ft.commit();
     }
     public void mAlertDialogLogout(){
-//        mAlertDialog = new AlertDialog.Builder(MainActivity.this);
-//
-//        mAlertDialog.setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface arg0, int arg1) {
-//                arg0.cancel();
-//            }
-//        });
-//        mAlertDialog.setNegativeButton("OK",new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                Intent i = new Intent(MainActivity.this,LoginActivity.class);
-//                i.putExtra("ClearDataAccount" , true);
-//                editor_App_Gone.putString("Main_Gone","0");
-//                editor_App_Gone.putString("Detail_Gone","0");
-//                editor_App_Gone.putString("History_Gone","0");
-//                editor_App_Gone.commit();
-//                editor.putBoolean("mLogin_Again",false);
-//                editor.commit();
-//                startActivity(i);
-//                finish();
-//            }
-//        });
-//
-//        AlertDialog alertDialog = mAlertDialog.create();
-//        alertDialog.show();
-        new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE)
-                .setTitleText("Log Out!")
-                .setContentText("Are you sure went tto log out!")
-                .setCancelText("Cancel")
-                .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+
+        SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE);
+        sweetAlertDialog.setTitleText("Log Out!");
+        sweetAlertDialog.setCanceledOnTouchOutside(true);
+        sweetAlertDialog.setContentText("Are you sure went tto log out!");
+        sweetAlertDialog.setCancelText("Cancel");
+        sweetAlertDialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(final SweetAlertDialog sDialog) {
                         new CountDownTimer(2000, 1000) {
@@ -288,9 +269,9 @@ public class MainActivity extends AppCompatActivity
                             }
                         }.start();
                     }
-                })
-                .setConfirmText("OK")
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                });
+        sweetAlertDialog.setConfirmText("OK");
+        sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(final SweetAlertDialog sDialog) {
 
@@ -315,7 +296,11 @@ public class MainActivity extends AppCompatActivity
                             }
                         }.start();
                     }
-                })
-                .show();
+                });
+        sweetAlertDialog.show();
+    }
+    private void Snackbar(String messages){
+        Snackbar snackbar = Snackbar.make(mDrawerlayout,messages,Snackbar.LENGTH_LONG);
+        snackbar.show();
     }
 }

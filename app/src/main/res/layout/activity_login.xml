@@ -43,7 +43,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:background="@color/white"
+            android:background="@drawable/corners_5dp"
             android:hint="@string/hint_email"
             android:inputType="textEmailAddress"
             android:padding="10dp"
@@ -57,9 +57,9 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:background="@color/white"
+            android:background="@drawable/corners_5dp"
             android:hint="@string/hint_password"
-            android:inputType="numberPassword"
+            android:inputType="textPassword"
             android:padding="10dp"
             android:maxLines="1"
             android:textColor="@color/input_login"
@@ -74,8 +74,10 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
-            android:background="@color/btn_login_bg"
+            android:background="@drawable/ani_btn_login"
             android:text="@string/btn_login"
+            android:textSize="20dp"
+            android:textStyle="bold"
             android:textColor="@color/btn_login" />
 
         <!-- Link to Login Screen -->
@@ -87,12 +89,13 @@
             android:layout_marginTop="40dip"
             android:background="@null"
             android:text="Sign Up"
+            android:textStyle="bold"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="20dp" />
 
         <ProgressBar
-            style="?android:attr/progressBarStyle"
+            style="@android:style/Widget.Holo.Light.ProgressBar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/PBLogin"

@@ -127,7 +127,7 @@ public class DescripActivity extends AppCompatActivity {
                 try {
                     while(true) {
                         CallData();
-                        sleep(2000);
+                        sleep(5000);
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -171,6 +171,7 @@ public class DescripActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        thread.interrupt();
         editor_App_Gone.putString("Detail_Gone" , "1");
         editor_App_Gone.commit();
     }

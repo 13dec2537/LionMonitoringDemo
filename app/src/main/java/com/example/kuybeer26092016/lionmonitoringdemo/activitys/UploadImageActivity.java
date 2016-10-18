@@ -108,7 +108,7 @@ public class UploadImageActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Please Select Image !",Toast.LENGTH_LONG).show();
                 }else{
                     try {
-                        Bitmap bitmap = ImageLoader.init().from(seleletedPhoto).requestSize(256,256).getBitmap();
+                        Bitmap bitmap = ImageLoader.init().from(seleletedPhoto).requestSize(128,128).getBitmap();
                         if(bitmap == null){
                             Toast.makeText(getApplicationContext(),"Do not use this Picture",Toast.LENGTH_LONG).show();
                         }
@@ -139,7 +139,7 @@ public class UploadImageActivity extends AppCompatActivity {
 
     private void UploadImage() {
         try{
-            Bitmap bitmap = ImageLoader.init().from(seleletedPhoto).requestSize(256,256).getBitmap();
+            Bitmap bitmap = ImageLoader.init().from(seleletedPhoto).requestSize(128,128).getBitmap();
                 String encodedImage = ImageBase64.encode(bitmap);
                 HashMap<String, String> PostData = new HashMap<String, String>();
                 PostData.put("image",encodedImage);
@@ -203,7 +203,7 @@ public class UploadImageActivity extends AppCompatActivity {
                 seleletedPhoto = photoPath;
                 Log.d("TAG" , seleletedPhoto);
                 try {
-                    Bitmap bitmap = ImageLoader.init().from(photoPath).requestSize(256, 256).getBitmap();
+                    Bitmap bitmap = ImageLoader.init().from(photoPath).requestSize(128, 128).getBitmap();
                     mImage.setImageBitmap(getRotateBitmap(bitmap,0));
 
                 } catch (FileNotFoundException e) {
@@ -218,7 +218,7 @@ public class UploadImageActivity extends AppCompatActivity {
                 String photoPath = galleryphoto.getPath();
                 seleletedPhoto = photoPath;
                 try {
-                    Bitmap bitmap = ImageLoader.init().from(photoPath).requestSize(256, 256).getBitmap();
+                    Bitmap bitmap = ImageLoader.init().from(photoPath).requestSize(128, 128).getBitmap();
                     mImage.setImageBitmap(bitmap);
                 } catch (FileNotFoundException e) {
                     Toast.makeText(getApplicationContext(),
