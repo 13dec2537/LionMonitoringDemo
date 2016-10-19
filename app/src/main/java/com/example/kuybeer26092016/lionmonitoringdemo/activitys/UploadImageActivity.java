@@ -114,8 +114,8 @@ public class UploadImageActivity extends AppCompatActivity {
                         }
                         else{
                             UploadImage();
-                            editor_uploadimg.putBoolean("img_reload",true);
-                            editor_uploadimg.commit();
+//                            editor_uploadimg.putBoolean("img_reload",true);
+//                            editor_uploadimg.commit();
                         }
 
                     } catch (FileNotFoundException e) {
@@ -152,6 +152,8 @@ public class UploadImageActivity extends AppCompatActivity {
 
                         if(s.contains("upload_success")){
                             Log.i("Tag","Upload Finish");
+                            editor_uploadimg.putBoolean("img_reload",true);
+                            editor_uploadimg.commit();
                             finish();
                             Toast.makeText(getApplication(),"Upload Success : ",Toast.LENGTH_SHORT).show();
                         }else if(s.contains("upload_failed")){

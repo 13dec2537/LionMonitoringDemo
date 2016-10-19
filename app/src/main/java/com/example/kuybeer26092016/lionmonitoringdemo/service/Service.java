@@ -20,37 +20,33 @@ import retrofit2.http.POST;
  */
 
 public interface    Service {
-    @POST("/service/json/peerapong/mis_tw2.php")
+    @POST("/service/json/android_php/mis_tw2.php")
     Call<List<Mis_monitoringitem>> CallbackTower2();
     @FormUrlEncoded
-    @POST("/service/json/peerapong/mis_monitoritem.php")
+    @POST("/service/json/android_php/mis_monitoritem.php")
     Call<List<Mis_descrip>> Callback_Detail(@Field("mc_id") String mc_id);
-
-    @POST("/service/json/peerapong/JsonNew250959.php")
-    Call<List<Mis_monitoringitem>> CallbackAccount();
-
     @FormUrlEncoded
-    @POST("/service/json/peerapong/mis_history.php")
+    @POST("/service/json/android_php/mis_history.php")
     Call<List<Mis_history>> Callback_History(@Field("mo_pram") String mo_pram);
 
     @FormUrlEncoded
-    @POST("/service/json/peerapong/mis_login.php")
+    @POST("/service/json/android_php/mis_login.php")
     Call<List<Mis_login>> Callback_Login(@Field("username") String username, @Field("password") String password);
 
-    @POST("/service/json/peerapong/mis_service.php")
+    @POST("/service/json/android_php/mis_service.php")
     Call<List<Mis_service>> CallbackService();
 
     @FormUrlEncoded
-    @POST("/service/json/peerapong/set_status_nt.php")
+    @POST("/service/json/android_php/set_status_nt.php")
     Call<Mis_adddata> Callback_AddData(@Field("NotificationStatus") String statusNotification,
                                        @Field("mo_id") String mo_id);
 
     @FormUrlEncoded
-    @POST("/service/json/peerapong/check_register.php")
+    @POST("/service/json/android_php/check_register.php")
     Call<List<Mis_register>> Callback_CheckRegister( @Field("username") String username);
 
     @FormUrlEncoded
-    @POST("/service/json/peerapong/add_register.php")
+    @POST("/service/json/android_php/add_register.php")
     Call<List<Mis_register>> Callback_AddRegister(    @Field("username") String username,
                                                       @Field("password") String password,
                                                       @Field("division") String division);

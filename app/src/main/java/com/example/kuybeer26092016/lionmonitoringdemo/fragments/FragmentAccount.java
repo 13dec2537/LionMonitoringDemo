@@ -58,7 +58,7 @@ import static android.app.Activity.RESULT_OK;
  */
 public class FragmentAccount extends Fragment {
     private String mUsername;
-    private CircularImageView image;
+    private ImageView image;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private final int CAMERA_REQUEST = 13323;
@@ -88,7 +88,7 @@ public class FragmentAccount extends Fragment {
         cameraPhoto = new CameraPhoto(getActivity());
         galleryPhoto = new GalleryPhoto(getActivity());
         sweetAlertDialog = new SweetAlertDialog(getActivity());
-        image = (CircularImageView)getView().findViewById(R.id.image);
+        image = (ImageView)getView().findViewById(R.id.image);
         ((TextView)getView().findViewById(R.id.txtUsername)).setText(sp.getString("username",""));
         ((TextView)getView().findViewById(R.id.txtDivision)).setText(sp.getString("division",""));
         mImage = (ImageView)getView().findViewById(R.id.image);
@@ -186,7 +186,7 @@ public class FragmentAccount extends Fragment {
                 seleletedPhoto = photoPath;
                 try {
                     Bitmap bitmap = ImageLoader.init().from(photoPath).requestSize(128, 128).getBitmap();
-                    mImage.setImageBitmap(bitmap);
+                    mImage.setImageBitmap(getRotateBitmap(bitmap,0));
                     UploadImage();
                 } catch (FileNotFoundException e) {
                     Toast.makeText(getActivity(),

@@ -171,7 +171,6 @@ public class LoginActivity extends AppCompatActivity {
                         Username = tower2List.get(i).getUsername();
                         Password = tower2List.get(i).getPassword();
                         imageUrl = String.valueOf(BASE_IMAGE+Username+".jpg");
-                        Log.d("TEST","imageUrl : " + imageUrl);
                         if(imageUrl.trim().length()<0){
                             imageUrl = "http://www.thaidate4u.com/service/json/img/aoh.jpg";
                         }
@@ -179,13 +178,11 @@ public class LoginActivity extends AppCompatActivity {
                         Mis_login misMclist = tower2List.get(i);
                         mAdapter.addLogin(misMclist);
                         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
-//                        intent.putExtra("username",Username);
-//                        intent.putExtra("imageUrl",imageUrl);
-//                        intent.putExtra("position",Position);
                         editor.putString("username",Username);
                         editor.putString("imageUrl",imageUrl);
                         editor.putString("division",Division);
                         editor.putString("Userdivision",Division);
+                        editor.putBoolean("RunAnim",true);
                         editor.commit();
                         intent.putExtra("Ianim","1");
                         startActivity(intent);

@@ -125,7 +125,6 @@ public class MainActivity extends AppCompatActivity
     private void SetMenuNavigation() {
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         Menu nav_menu = navigationView.getMenu();
-        Log.d("TAG",mUserDivision);
         MenuItem menuTw2 = nav_menu.findItem(R.id.nav_tower2);
         MenuItem menuDk100 = nav_menu.findItem(R.id.nav_dk100);
         if(mUserDivision.equals("ADMIN")){
@@ -174,7 +173,6 @@ public class MainActivity extends AppCompatActivity
             FragTower2();
             editor_NT.clear();
             editor_NT.commit();
-            Log.d("TEST", String.valueOf(spNT.getInt("returnAc",0)));
         }
         else if(returnAc>=5 && returnAc<=16){
             FragDk100();

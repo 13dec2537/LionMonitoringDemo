@@ -21,11 +21,24 @@
             android:layout_weight="2"
             android:weightSum="1">
 
+            <!--<com.mikhaellopez.circularimageview.CircularImageView-->
+                <!--android:src="@drawable/person"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:id="@+id/image"-->
+                <!--app:civ_border_color="#ffffff"-->
+                <!--app:civ_border_width="1dp"-->
+                <!--app:civ_shadow="true"-->
+                <!--app:civ_shadow_radius="5"-->
+                <!--app:civ_shadow_color="#929292"-->
+                <!--android:layout_width="125dp"-->
+                <!--android:layout_height="125dp" />-->
             <com.mikhaellopez.circularimageview.CircularImageView
                 android:src="@drawable/person"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="center"
                 android:id="@+id/image"
+                android:rotation="90"
                 app:civ_border_color="#ffffff"
                 app:civ_border_width="1dp"
                 app:civ_shadow="true"

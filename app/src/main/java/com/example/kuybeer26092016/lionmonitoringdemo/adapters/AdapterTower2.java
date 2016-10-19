@@ -46,7 +46,6 @@ public class AdapterTower2  extends RecyclerView.Adapter<AdapterTower2.ViewHolde
     private Boolean ReloadImage = true;
     private int sizeimg = 0;
     private int prevPosition=0;
-    private boolean isRunAnim = true ;
     LayoutInflater layoutInflater;
     public AdapterTower2(Context context) {
         this.mList = mList;
@@ -72,17 +71,8 @@ public class AdapterTower2  extends RecyclerView.Adapter<AdapterTower2.ViewHolde
             holder.mAct_2.setText(setList.getMo_act().getAct_2());
             holder.mAct_3.setText(setList.getMo_act().getAct_3());
             holder.mAct_4.setText(setList.getMo_act().getAct_4());
-
             ReloadImage = sp_uploadimg.getBoolean("img_reload",true);
             if(sizeimg<mList.size() && ReloadImage == true){
-                new CountDownTimer(2000, 1000) {
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-
-                    }
-
-                    @Override
-                    public void onFinish() {
                         Picasso.with(context)
                                 .load(IMAGEURL + setList.getMc_id() + ".jpg")
                                 .memoryPolicy(MemoryPolicy.NO_CACHE)
@@ -92,14 +82,12 @@ public class AdapterTower2  extends RecyclerView.Adapter<AdapterTower2.ViewHolde
                                 .error(R.drawable.ic_me)
                                 .noFade()
                                 .into(holder.mImvMachine);
-                        Log.d("TAG","RELOAD : TRUE");
-                    }
-                };
                 sizeimg++;
                 Animation_List(position,holder);
                 if(sizeimg==mList.size()){
                     editor_uploadimg.putBoolean("img_reload",false);
                     editor_uploadimg.commit();
+                    editor.putBoolean("RunAnim",false);
                     sizeimg = 0;
                 }
             }
