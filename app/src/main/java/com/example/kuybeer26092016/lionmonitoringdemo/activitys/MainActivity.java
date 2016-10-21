@@ -23,16 +23,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kuybeer26092016.lionmonitoringdemo.R;
+import com.example.kuybeer26092016.lionmonitoringdemo.adapters.AdapterTower2;
 import com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentAccount;
 import com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentDk100;
 import com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentTower2;
 import com.mikhaellopez.circularimageview.CircularImageView;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
     private String mUsername,mImage,mPosition,mAnim,mUserDivision;
     private SharedPreferences sp,spApp_Gone,spNT;
     private Toolbar toolbar;
@@ -45,7 +48,6 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mDrawerlayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-
         toolbar = (Toolbar) findViewById(R.id.toolbarMain);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -106,7 +108,13 @@ public class MainActivity extends AppCompatActivity
         txtname.setText(mUsername.toUpperCase());
         txtposition.setText(mPosition.toUpperCase());
         Picasso.with(this).load(mImage)
-                .placeholder(R.drawable.person).error(R.drawable.person).into(imageView);
+                .networkPolicy(NetworkPolicy.NO_CACHE)
+                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                .rotate(90)
+                .resize(128,128)
+                .centerCrop()
+
+                .placeholder(R.drawable.placeholder_img_engine).error(R.drawable.placeholder_img_engine).into(imageView);
         navigationView.setNavigationItemSelectedListener(this);
         /**************************** Check Position Detail and Set Profile Account  *********************/
 
@@ -200,6 +208,9 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         Picasso.with(this).load(mImage)
+                .networkPolicy(NetworkPolicy.NO_CACHE)
+                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                .rotate(90)
                 .placeholder(R.drawable.person).error(R.drawable.person).into(imageView);
         navigationView.setNavigationItemSelectedListener(this);
         if (id == R.id.nav_tower2) {
@@ -300,5 +311,11 @@ public class MainActivity extends AppCompatActivity
     private void Snackbar(String messages){
         Snackbar snackbar = Snackbar.make(mDrawerlayout,messages,Snackbar.LENGTH_LONG);
         snackbar.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("TAG","Close APp");
     }
 }

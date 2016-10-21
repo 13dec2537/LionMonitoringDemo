@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Lion </string>
+    <string name="app_name">LION RTIS</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -20,4 +20,11 @@
     <string name="btn_logout">LOGOUT</string>
     <string name="hint_password_again">Confirm Password</string>
     <string name="register">Sign Up</string>
+    <string name="description">DESCRIPTION</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Username">Change Username</string>
+    <string name="Password">Change Password</string>
+    <string name="edit_engine">Edit Engine</string>
 </resources>

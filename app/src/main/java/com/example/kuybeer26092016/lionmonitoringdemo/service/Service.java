@@ -20,11 +20,24 @@ import retrofit2.http.POST;
  */
 
 public interface    Service {
+    @FormUrlEncoded
+    @POST("/service/json/android_php/edit_mcname.php")
+    Call<List<Mis_monitoringitem>> CallbackMcname(@Field("mc_name") String mc_name);
+
+    @FormUrlEncoded
+    @POST("/service/json/android_php/add_newmcname.php")
+    Call<List<Mis_monitoringitem>> Callback_AddMcname(@Field("mc_id")String mc_id,
+                                                      @Field("newname")String newname);
+
     @POST("/service/json/android_php/mis_tw2.php")
     Call<List<Mis_monitoringitem>> CallbackTower2();
+
+    @POST("/service/json/android_php/mis_dk100.php")
+    Call<List<Mis_monitoringitem>> CallbackDk100();
     @FormUrlEncoded
     @POST("/service/json/android_php/mis_monitoritem.php")
     Call<List<Mis_descrip>> Callback_Detail(@Field("mc_id") String mc_id);
+
     @FormUrlEncoded
     @POST("/service/json/android_php/mis_history.php")
     Call<List<Mis_history>> Callback_History(@Field("mo_pram") String mo_pram);

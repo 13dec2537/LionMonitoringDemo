@@ -7,9 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.TransitionDrawable;
-import android.os.CountDownTimer;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +19,7 @@ import com.example.kuybeer26092016.lionmonitoringdemo.R;
 import com.example.kuybeer26092016.lionmonitoringdemo.activitys.DescripActivity;
 import com.example.kuybeer26092016.lionmonitoringdemo.activitys.UploadImageActivity;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_monitoringitem;
-import com.example.kuybeer26092016.lionmonitoringdemo.service.AnimationUtil;
+import com.example.kuybeer26092016.lionmonitoringdemo.service.AnimationListitem;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -34,6 +32,7 @@ import java.util.List;
  */
 
 public class AdapterTower2  extends RecyclerView.Adapter<AdapterTower2.ViewHolder>{
+    public  CallbackInterface mCallback;
     private static final String IMAGEURL = "http://www.thaidate4u.com/service/json/img/";
     private final String ADMIN = "ADMIN";
     private List<Mis_monitoringitem> mList = new ArrayList<>();
@@ -49,7 +48,7 @@ public class AdapterTower2  extends RecyclerView.Adapter<AdapterTower2.ViewHolde
     LayoutInflater layoutInflater;
     public AdapterTower2(Context context) {
         this.mList = mList;
-        layoutInflater = LayoutInflater.from(context);
+        this.context = context;
     }
 
     @Override
@@ -77,7 +76,9 @@ public class AdapterTower2  extends RecyclerView.Adapter<AdapterTower2.ViewHolde
                                 .load(IMAGEURL + setList.getMc_id() + ".jpg")
                                 .memoryPolicy(MemoryPolicy.NO_CACHE)
                                 .networkPolicy(NetworkPolicy.NO_CACHE)
-                                .resize(80, 80)
+                                .resize(128, 128)
+                                .centerCrop()
+                                .rotate(90)
                                 .placeholder(R.drawable.progress_aniloadimg)
                                 .error(R.drawable.ic_me)
                                 .noFade()
@@ -94,7 +95,9 @@ public class AdapterTower2  extends RecyclerView.Adapter<AdapterTower2.ViewHolde
             else if(sizeimg<mList.size() && ReloadImage == false){
                 Picasso.with(context)
                         .load(IMAGEURL + setList.getMc_id() + ".jpg")
-                        .resize(80, 80)
+                        .resize(128, 128)
+                        .centerCrop()
+                        .rotate(90)
                         .placeholder(R.drawable.progress_aniloadimg)
                         .error(R.drawable.ic_me)
                         .noFade()
@@ -204,9 +207,9 @@ public class AdapterTower2  extends RecyclerView.Adapter<AdapterTower2.ViewHolde
 
     private void Animation_List(Integer position, ViewHolder holder) {
         if(position > prevPosition){
-            AnimationUtil.animate(holder , true);
+            AnimationListitem.animate(holder , true);
         }else{
-            AnimationUtil.animate(holder , false);
+            AnimationListitem.animate(holder , false);
         }
         prevPosition = position;
     }
@@ -259,6 +262,11 @@ public class AdapterTower2  extends RecyclerView.Adapter<AdapterTower2.ViewHolde
 
         return  AnimaBackColor;
     }
+
+    public interface CallbackInterface {
+        void CallBackMethod();
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView mMc_name,mAct_1,mAct_2,mAct_3,mAct_4;
         private TextView mUnit_1,mUnit_2,mUnit_3,mUnit_4;

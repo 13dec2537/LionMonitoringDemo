@@ -9,6 +9,10 @@ public class Mis_monitoringitem {
     private String mc_name;
     private String mc_id;
 
+    public void setMc_name(String mc_name) {
+        this.mc_name = mc_name;
+    }
+
     public String getMc_division() {
         return mc_division;
     }

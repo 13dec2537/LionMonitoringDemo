@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.example.kuybeer26092016.lionmonitoringdemo.R;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_history;
-import com.example.kuybeer26092016.lionmonitoringdemo.service.AnimationUtil;
+import com.example.kuybeer26092016.lionmonitoringdemo.service.AnimationListitem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,9 +89,9 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.ViewHold
     }
     private void Animation_List(Integer position, AdapterHistory.ViewHolder holder) {
         if(position > prevPosition){
-            AnimationUtil.animate(holder , true);
+            AnimationListitem.animate(holder , true);
         }else{
-            AnimationUtil.animate(holder , false);
+            AnimationListitem.animate(holder , false);
         }
         prevPosition = position;
     }

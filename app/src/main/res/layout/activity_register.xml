@@ -23,16 +23,6 @@
             android:layout_weight="1">
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center_horizontal"
-                android:id="@+id/image"
-                android:layout_marginTop="10dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/person"/>
-
-            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/gallery"
@@ -50,6 +40,15 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignLeft="@+id/image"
                 android:layout_alignStart="@+id/image" />
+
+            <ImageView
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/image"
+                android:background="@drawable/person"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
 
         </RelativeLayout>
 

@@ -68,7 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         mManager = new ManagerRetrofit();
-
+        overridePendingTransition(R.anim.popup_slie_in_bottom,R.anim.popup_slie_in_bottom);
         //*********** Set XML ************************************//
         progressBar = (ProgressBar)findViewById(R.id.Pgregister);
         progressBar.setVisibility(View.GONE);
@@ -213,8 +213,7 @@ public class RegisterActivity extends AppCompatActivity {
         Service service = retrofit.create(Service.class);
         Mis_register register = new Mis_register();
         Call<List<Mis_register>> call = service.Callback_AddRegister(username,password,division);
-        Log.d("TEST","DIVISION : " + division);
-//        username, password,division
+
        call.enqueue(new Callback<List<Mis_register>>() {
            @Override
            public void onResponse(Call<List<Mis_register>> call, Response<List<Mis_register>> response) {
@@ -222,10 +221,8 @@ public class RegisterActivity extends AppCompatActivity {
                    List<Mis_register> List = response.body();
                    for(int i = 0 ; i < List.size();i++) {
                        CheckUsername = List.get(i).getUsername();
-                       Log.d("TEST", "CheckUsername " + CheckUsername);
                    }
                }else {
-                   Log.d("TEST","CheckUsername False");
                }
            }
 
@@ -294,8 +291,9 @@ public class RegisterActivity extends AppCompatActivity {
                 String photoPath = cameraPhoto.getPhotoPath();
                 seleletedPhoto = photoPath;
                 try {
-                    Bitmap bitmap = ImageLoader.init().from(photoPath).requestSize(512, 512).getBitmap();
-                    image.setImageBitmap(getRotateBitmap(bitmap,-90));
+                    Bitmap bitmap = ImageLoader.init().from(photoPath).requestSize(128, 128).getBitmap();
+                    Bitmap bitmapRe = Bitmap.createScaledBitmap(bitmap,128,128,true);
+                    image.setImageBitmap(getRotateBitmap(bitmapRe,90));
 
                 } catch (FileNotFoundException e) {
                     Toast.makeText(getApplicationContext(),
@@ -310,8 +308,9 @@ public class RegisterActivity extends AppCompatActivity {
                 seleletedPhoto = photoPath;
 //                UploadImage ();
                 try {
-                    Bitmap bitmap = ImageLoader.init().from(photoPath).requestSize(512, 512).getBitmap();
-                    image.setImageBitmap(bitmap);
+                    Bitmap bitmap = ImageLoader.init().from(photoPath).requestSize(128, 128).getBitmap();
+                    Bitmap bitmapRe = Bitmap.createScaledBitmap(bitmap,128,128,true);
+                    image.setImageBitmap(bitmapRe);
                 } catch (FileNotFoundException e) {
                     Toast.makeText(getApplicationContext(),
                             "Something Wrong while choosing photos", Toast.LENGTH_SHORT).show();
@@ -331,5 +330,9 @@ public class RegisterActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
     }
 
-
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(R.anim.popup_silde_exit_bottom,R.anim.anim_no);
+    }
 }

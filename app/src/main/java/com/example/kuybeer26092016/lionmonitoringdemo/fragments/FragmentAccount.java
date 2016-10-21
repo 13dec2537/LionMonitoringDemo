@@ -2,16 +2,15 @@ package com.example.kuybeer26092016.lionmonitoringdemo.fragments;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,11 +20,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cocosw.bottomsheet.BottomSheet;
 import com.example.kuybeer26092016.lionmonitoringdemo.R;
-import com.example.kuybeer26092016.lionmonitoringdemo.activitys.RegisterActivity;
-import com.example.kuybeer26092016.lionmonitoringdemo.adapters.AdapterAccount;
-import com.example.kuybeer26092016.lionmonitoringdemo.manager.ManagerRetrofit;
-import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_monitoringitem;
 import com.kosalgeek.android.photoutil.CameraPhoto;
 import com.kosalgeek.android.photoutil.GalleryPhoto;
 import com.kosalgeek.android.photoutil.ImageBase64;
@@ -33,7 +29,6 @@ import com.kosalgeek.android.photoutil.ImageLoader;
 import com.kosalgeek.asynctask.AsyncResponse;
 import com.kosalgeek.asynctask.EachExceptionsHandler;
 import com.kosalgeek.asynctask.PostResponseAsyncTask;
-import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -44,12 +39,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.util.HashMap;
-import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -59,6 +50,7 @@ import static android.app.Activity.RESULT_OK;
 public class FragmentAccount extends Fragment {
     private String mUsername;
     private ImageView image;
+    private Context mContext;
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
     private final int CAMERA_REQUEST = 13323;
@@ -68,8 +60,11 @@ public class FragmentAccount extends Fragment {
     private String seleletedPhoto;
     private SweetAlertDialog sweetAlertDialog;
     private ImageView mImage;
+
+    /*********************Tab Layout ******************/
+    /*********************Tab Layout ******************/
     public FragmentAccount() {
-        // Required empty public constructor
+
     }
 
 
@@ -77,7 +72,8 @@ public class FragmentAccount extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account, container, false);
+        View view =  inflater.inflate(R.layout.fragment_account, container, false);
+        return view;
     }
 
     @Override
@@ -92,11 +88,17 @@ public class FragmentAccount extends Fragment {
         ((TextView)getView().findViewById(R.id.txtUsername)).setText(sp.getString("username",""));
         ((TextView)getView().findViewById(R.id.txtDivision)).setText(sp.getString("division",""));
         mImage = (ImageView)getView().findViewById(R.id.image);
+        mImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAlertDialogEditImage();
+            }
+        });
         SetImage();
         ((Button)getView().findViewById(R.id.editimage)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               mAlertDialog();
+                mAlertDialogSetting();
             }
         });
 //        CallData();
@@ -168,11 +170,10 @@ public class FragmentAccount extends Fragment {
             if(requestCode == CAMERA_REQUEST){
                 String photoPath = cameraPhoto.getPhotoPath();
                 seleletedPhoto = photoPath;
+                UploadImage ();
                 try {
                     Bitmap bitmap = ImageLoader.init().from(photoPath).requestSize(128, 128).getBitmap();
-                    mImage.setImageBitmap(getRotateBitmap(bitmap,0));
-                    UploadImage();
-
+                    mImage.setImageBitmap(bitmap);
                 } catch (FileNotFoundException e) {
                     Toast.makeText(getContext(),
                             "Something Wrong while loading photos", Toast.LENGTH_SHORT).show();
@@ -186,7 +187,7 @@ public class FragmentAccount extends Fragment {
                 seleletedPhoto = photoPath;
                 try {
                     Bitmap bitmap = ImageLoader.init().from(photoPath).requestSize(128, 128).getBitmap();
-                    mImage.setImageBitmap(getRotateBitmap(bitmap,0));
+                    mImage.setImageBitmap(bitmap);
                     UploadImage();
                 } catch (FileNotFoundException e) {
                     Toast.makeText(getActivity(),
@@ -210,7 +211,7 @@ public class FragmentAccount extends Fragment {
                 .error(R.drawable.person)
                 .into(mImage);
     }
-    public void mAlertDialog(){
+    public void mAlertDialogEditImage(){
         SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.WARNING_TYPE);
         sweetAlertDialog.setCanceledOnTouchOutside(true);
         sweetAlertDialog.setTitleText("CAMERA");
@@ -240,4 +241,32 @@ public class FragmentAccount extends Fragment {
         sweetAlertDialog.show();
 
     }
+    public void mAlertDialogSetting(){
+        new BottomSheet.Builder(getActivity()).title("SETTING").sheet(R.menu.list).listener(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which) {
+                    case R.id.username:
+                        Toast.makeText(getActivity(),"Change Username",Toast.LENGTH_LONG).show();
+                        break;
+                    case R.id.password:
+                        Toast.makeText(getActivity(),"Change Password",Toast.LENGTH_LONG).show();
+                        break;
+                    case R.id.edit_engine:
+                        Toast.makeText(getActivity(),"Edit_InformationEngine",Toast.LENGTH_LONG).show();
+                        Tran_FragEditprofile();
+                        break;
+                }
+            }
+        }).show();
+
+    }
+    private void Tran_FragEditprofile(){
+        FragmentEditmcname FragEdit = new FragmentEditmcname();
+        FragmentManager fm = getFragmentManager();
+        android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.FrameAccount,FragEdit);
+        ft.commit();
+    }
+
 }

@@ -1,0 +1,41 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentEditmcname"
+    android:background="#e7e7e7">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:text="EDIT MCNAME"
+        android:layout_width="match_parent"
+        android:enabled="true"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:gravity="center_vertical"
+        android:textSize="20dp"
+        android:background="@drawable/corners_header_editmcname"
+        android:layout_alignBottom="@+id/XML_RecyclerView"
+        android:id="@+id/button"
+        android:layout_height="50dp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/XML_RecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:background="#349f17"
+        android:layout_height="50dp">
+
+    </LinearLayout>
+
+
+</LinearLayout>

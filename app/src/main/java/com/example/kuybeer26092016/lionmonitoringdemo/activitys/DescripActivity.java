@@ -21,6 +21,8 @@ import com.example.kuybeer26092016.lionmonitoringdemo.R;
 import com.example.kuybeer26092016.lionmonitoringdemo.adapters.AdapterDescrip;
 import com.example.kuybeer26092016.lionmonitoringdemo.manager.ManagerRetrofit;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_descrip;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -105,7 +107,14 @@ public class DescripActivity extends AppCompatActivity {
         ((Button)findViewById(R.id.header)).setText(mMc_name);
         toolbar.setTitle(mMc_name);
         Picasso.with(this).load(IMAGEURL + mMc_id + ".jpg")
-                .placeholder(R.drawable.progress_aniloadimg).error(R.drawable.ic_ok).into(mImageToobar);
+                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE)
+                .resize(128, 128)
+                .centerCrop()
+                .rotate(90)
+                .placeholder(R.drawable.person)
+                .error(R.drawable.person)
+                .into(mImageToobar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

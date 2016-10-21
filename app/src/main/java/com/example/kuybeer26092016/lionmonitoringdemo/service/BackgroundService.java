@@ -140,8 +140,8 @@ public class BackgroundService extends android.app.Service {
     public void Notification(String mc_name,String mo_pram,String mc_id,String mo_min,String mo_max,String mo_id,String mo_startDatatime
     ,String mo_act){
         NotificationCompat.Builder NT = (NotificationCompat.Builder) new NotificationCompat.Builder(context)
-                .setSmallIcon(R.drawable.ic_search_black_24dp)
-                .setContentTitle("มีค่าเกิน standard")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("Standard over")
                 .setContentText(mc_name + " " + mo_pram.toUpperCase() + '\n' +"Standard : " + mo_min + "-" +
                 mo_max + '\n' + "Value : " +  mo_act)
                 .setDefaults(Notification.DEFAULT_SOUND)

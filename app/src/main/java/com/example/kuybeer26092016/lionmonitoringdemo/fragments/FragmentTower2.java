@@ -63,9 +63,8 @@ public class FragmentTower2 extends Fragment {
     private Switch mSwitch;
     private ManagerRetrofit mManager;
     private AdapterTower2 mAdapter;
-    AdapterTower2 adapterTower2;
-    Context context;
-    Thread thread;
+    private Context context;
+    private Thread thread;
     private LinearLayout mLinearlayout;
     private SharedPreferences spApp_Gone,sp_reload;
     private  SharedPreferences.Editor editor_App_Gone,editor_reload;
@@ -163,4 +162,6 @@ public class FragmentTower2 extends Fragment {
             }
         });
     }
+
+
 }

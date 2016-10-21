@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.example.kuybeer26092016.lionmonitoringdemo.R;
 import com.example.kuybeer26092016.lionmonitoringdemo.activitys.HistoryActivity;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_descrip;
-import com.example.kuybeer26092016.lionmonitoringdemo.service.AnimationUtil;
+import com.example.kuybeer26092016.lionmonitoringdemo.service.AnimationListitem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,9 +123,9 @@ public class AdapterDescrip extends RecyclerView.Adapter<AdapterDescrip.ViewHold
     }
     private void Animation_List(Integer position, AdapterDescrip.ViewHolder holder) {
         if(position > prevPosition){
-            AnimationUtil.animate(holder , true);
+            AnimationListitem.animate(holder , true);
         }else{
-            AnimationUtil.animate(holder , false);
+            AnimationListitem.animate(holder , false);
         }
         prevPosition = position;
         Log.d("TAG","RUN : " + String.valueOf(prevPosition));

@@ -12,7 +12,7 @@
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarDiscription"
+        android:theme="@style/AppBarDiscription"
         android:layout_height="180dp"
         android:background="?attr/colorControlActivated">
 

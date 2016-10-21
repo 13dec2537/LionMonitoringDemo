@@ -3,6 +3,7 @@ package com.example.kuybeer26092016.lionmonitoringdemo.activitys;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.net.Uri;
@@ -24,6 +25,8 @@ import com.kosalgeek.android.photoutil.ImageLoader;
 import com.kosalgeek.asynctask.AsyncResponse;
 import com.kosalgeek.asynctask.EachExceptionsHandler;
 import com.kosalgeek.asynctask.PostResponseAsyncTask;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.io.FileNotFoundException;
@@ -48,22 +51,20 @@ public class UploadImageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_upload_image);
         mContext = this;
         spApp_Gone = getSharedPreferences("App_Gone", Context.MODE_PRIVATE);
         editor_App_Gone  = spApp_Gone.edit();
         sp_uploadimg = getSharedPreferences("img",Context.MODE_PRIVATE);
         editor_uploadimg = sp_uploadimg.edit();
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int width = dm.widthPixels;
-        int height = dm.heightPixels;
-        getWindow().setLayout((int)(width*.7),(int)(height*.6));
         cameraphoto = new CameraPhoto(this);
         galleryphoto = new GalleryPhoto(this);
 
         /***************** GET INTENT *************************/
         Get_URL_IMAGE = getIntent().getExtras().getString("I_URL_IMAGE");
+        Log.d("IMG",String.valueOf(Get_URL_IMAGE));
         Get_ID_IMAGE = getIntent().getExtras().getString("ID_IMAGE");
         Log.d("TAG",Get_ID_IMAGE);
         /***************** GET INTENT *************************/
@@ -74,9 +75,13 @@ public class UploadImageActivity extends AppCompatActivity {
         mBtnCapture = (Button)findViewById(R.id.XML_btnCapture);
         mImage = (ImageView)findViewById(R.id.XML_IMAGE);
         Picasso.with(mContext).load(Get_URL_IMAGE)
-                .placeholder(R.drawable.ic_me)
-                .resize(120, 100)
-                .error(R.drawable.ic_me)
+                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE)
+                .rotate(90)
+                .placeholder(R.drawable.person)
+                .centerCrop()
+                .resize(128, 128)
+                .error(R.drawable.person)
                 .into(mImage);
         /***************** SET XML & INSERT VALUE INTENT  *************************/
 
@@ -89,6 +94,8 @@ public class UploadImageActivity extends AppCompatActivity {
                     editor_App_Gone.putString("Upload_Gone" , "0");
                     editor_App_Gone.commit();
                     startActivityForResult(cameraphoto.takePhotoIntent(),CAMERA_REQUEST);
+                    editor_uploadimg.putString("cameraphoto",cameraphoto.getPhotoPath());
+                    editor_uploadimg.commit();
                     cameraphoto.addToGallery();
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -140,6 +147,7 @@ public class UploadImageActivity extends AppCompatActivity {
     private void UploadImage() {
         try{
             Bitmap bitmap = ImageLoader.init().from(seleletedPhoto).requestSize(128,128).getBitmap();
+
                 String encodedImage = ImageBase64.encode(bitmap);
                 HashMap<String, String> PostData = new HashMap<String, String>();
                 PostData.put("image",encodedImage);
@@ -201,12 +209,11 @@ public class UploadImageActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(resultCode == RESULT_OK){
             if(requestCode == CAMERA_REQUEST){
-                String photoPath = cameraphoto.getPhotoPath();
+                String photoPath = sp_uploadimg.getString("cameraphoto","null");
                 seleletedPhoto = photoPath;
-                Log.d("TAG" , seleletedPhoto);
                 try {
                     Bitmap bitmap = ImageLoader.init().from(photoPath).requestSize(128, 128).getBitmap();
-                    mImage.setImageBitmap(getRotateBitmap(bitmap,0));
+                    mImage.setImageBitmap(getRotateBitmap(bitmap,90));
 
                 } catch (FileNotFoundException e) {
                     Toast.makeText(getApplicationContext(),
@@ -215,13 +222,16 @@ public class UploadImageActivity extends AppCompatActivity {
 
             }
             else if(requestCode == GALLERY_REQUEST){
-                Uri uri = data.getData();
+                editor_uploadimg.putString("galleryphoto",String.valueOf(data.getData()));
+                editor_uploadimg.commit();
+                Uri uri = Uri.parse(sp_uploadimg.getString("galleryphoto","null"));
+                Log.d("UP",String.valueOf(uri));
                 galleryphoto.setPhotoUri(uri);
                 String photoPath = galleryphoto.getPath();
                 seleletedPhoto = photoPath;
                 try {
                     Bitmap bitmap = ImageLoader.init().from(photoPath).requestSize(128, 128).getBitmap();
-                    mImage.setImageBitmap(bitmap);
+                    mImage.setImageBitmap(getRotateBitmap(bitmap,90));
                 } catch (FileNotFoundException e) {
                     Toast.makeText(getApplicationContext(),
                             "Something Wrong while choosing photos", Toast.LENGTH_SHORT).show();

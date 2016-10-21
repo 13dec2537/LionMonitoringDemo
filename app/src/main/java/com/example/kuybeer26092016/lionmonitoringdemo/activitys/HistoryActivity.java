@@ -24,6 +24,8 @@ import com.example.kuybeer26092016.lionmonitoringdemo.manager.ManagerRetrofit;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_adddata;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_history;
 import com.example.kuybeer26092016.lionmonitoringdemo.service.Service;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -126,7 +128,14 @@ public class HistoryActivity extends AppCompatActivity {
 
         /************** put Data to XML *****************************/
         txtMc_name.setText(String.valueOf(mMc_name) + " : " + String.valueOf(mPram) + "\nStandard : " + String.valueOf(mMin + "-" + mMax));
-        Picasso.with(this).load(IMAGEURL + mMc_id + ".jpg")  .placeholder(R.drawable.progress_aniloadimg).error(R.drawable.ic_me).into(mImageToobar);
+        Picasso.with(this).load(IMAGEURL + mMc_id + ".jpg")
+                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE)
+                .resize(128, 128)
+                .centerCrop()
+                .rotate(90)
+                .placeholder(R.drawable.person)
+                .error(R.drawable.person).into(mImageToobar);
         /************** put Data to XML *****************************/
         thread = new Thread() {
             @Override

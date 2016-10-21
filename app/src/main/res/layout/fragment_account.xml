@@ -3,22 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentAccount"
-    android:orientation="vertical">
+    android:background="#e7e7e7"
+    android:orientation="vertical"
+    tools:context="com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentAccount">
 
     <!-- TODO: Update blank fragment layout -->
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1.5">
+        android:layout_height="166dp"
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="2"
+            android:orientation="vertical"
             android:weightSum="1">
 
             <!--<com.mikhaellopez.circularimageview.CircularImageView-->
@@ -34,18 +34,18 @@
                 <!--android:layout_width="125dp"-->
                 <!--android:layout_height="125dp" />-->
             <com.mikhaellopez.circularimageview.CircularImageView
-                android:src="@drawable/person"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center"
                 android:id="@+id/image"
+                android:layout_width="125dp"
+                android:layout_height="125dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
                 android:rotation="90"
+                android:src="@drawable/person"
                 app:civ_border_color="#ffffff"
                 app:civ_border_width="1dp"
                 app:civ_shadow="true"
-                app:civ_shadow_radius="5"
                 app:civ_shadow_color="#929292"
-                android:layout_width="125dp"
-                android:layout_height="125dp" />
+                app:civ_shadow_radius="5" />
 
 
         </LinearLayout>
@@ -53,105 +53,106 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
             android:layout_marginLeft="14dp"
             android:layout_marginStart="14dp"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/image"
             android:layout_toEndOf="@+id/image"
+            android:layout_toRightOf="@+id/image"
             android:layout_weight="1.5"
             android:orientation="vertical">
 
             <LinearLayout
-                android:layout_marginTop="30dp"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/txtUsername"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="username"
-                    android:layout_gravity="center_vertical"
-                    android:id="@+id/txtUsername"
-                    android:layout_weight="1"
                     android:layout_above="@+id/button3"
                     android:layout_alignLeft="@+id/button3"
                     android:layout_alignStart="@+id/button3"
-                    android:textSize="@dimen/Text20dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="username"
                     android:textColor="@color/bb_tabletRightBorderDark"
-                    android:gravity="center_horizontal" />
+                    android:textSize="@dimen/Text20dp" />
 
                 <TextView
-                    android:layout_gravity="center_vertical"
-                    android:text="division"
+                    android:id="@+id/txtDivision"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/txtDivision"
-                    android:textStyle="normal"
-                    android:layout_weight="1"
+                    android:layout_alignEnd="@+id/button3"
                     android:layout_alignParentTop="true"
                     android:layout_alignRight="@+id/button3"
-                    android:layout_alignEnd="@+id/button3"
-                    android:textSize="@dimen/Text20dp"
-                    android:textColor="@color/bb_tabletRightBorderDark"
-                    android:gravity="center_horizontal" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:text="username"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView12"
+                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:gravity="center_horizontal" />
-
-                <TextView
+                    android:gravity="center_horizontal"
                     android:text="division"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/textView11"
-                    android:layout_weight="1"
-                    android:gravity="center_horizontal" />
+                    android:textColor="@color/bb_tabletRightBorderDark"
+                    android:textSize="@dimen/Text20dp"
+                    android:textStyle="normal" />
+
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="username" />
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="division" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <Button
-                    android:text="Edit Image"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
                     android:id="@+id/editimage"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/txtDivision"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
                     android:background="@drawable/corners_5dp_gruy"
-                    android:layout_below="@+id/txtDivision"
+                    android:drawableLeft="@drawable/setting"
+                    android:paddingEnd="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingStart="20dp"
+                    android:text="SETTING"
                     android:textStyle="bold"
-                    android:layout_height="40dp" />
+                    android:paddingRight="10dp" />
             </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <FrameLayout
+        android:id="@+id/FrameAccount"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.5">
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/XML_RecyclerAc">
+        android:layout_weight="1.5"
+        android:orientation="vertical">
 
-        </android.support.v7.widget.RecyclerView>
-    </LinearLayout>
+    </FrameLayout>
 
 </LinearLayout>
