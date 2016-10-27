@@ -6,15 +6,17 @@
 
     <TextView
         android:id="@+id/XML_txt_mcname"
-        android:textSize="20dp"
+        android:textSize="30dp"
         android:textStyle="bold"
         android:layout_weight="1"
+        android:gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:paddingStart="10dp"
-        android:paddingLeft="10dp" />
+        android:paddingLeft="10dp"
+        android:text="Text" />
 
     <LinearLayout
         android:orientation="horizontal"

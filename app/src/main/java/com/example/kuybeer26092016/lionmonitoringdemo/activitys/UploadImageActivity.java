@@ -64,9 +64,7 @@ public class UploadImageActivity extends AppCompatActivity {
 
         /***************** GET INTENT *************************/
         Get_URL_IMAGE = getIntent().getExtras().getString("I_URL_IMAGE");
-        Log.d("IMG",String.valueOf(Get_URL_IMAGE));
         Get_ID_IMAGE = getIntent().getExtras().getString("ID_IMAGE");
-        Log.d("TAG",Get_ID_IMAGE);
         /***************** GET INTENT *************************/
 
         /***************** SET XML & INSERT VALUE INTENT  *************************/
@@ -77,7 +75,7 @@ public class UploadImageActivity extends AppCompatActivity {
         Picasso.with(mContext).load(Get_URL_IMAGE)
                 .memoryPolicy(MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE)
-                .rotate(90)
+//                .rotate(90)
                 .placeholder(R.drawable.person)
                 .centerCrop()
                 .resize(128, 128)
@@ -155,11 +153,7 @@ public class UploadImageActivity extends AppCompatActivity {
                 PostResponseAsyncTask task = new PostResponseAsyncTask(UploadImageActivity.this, PostData, new AsyncResponse() {
                     @Override
                     public void processFinish(String s) {
-
-                        Log.i("TAG2",s.toString());
-
                         if(s.contains("upload_success")){
-                            Log.i("Tag","Upload Finish");
                             editor_uploadimg.putBoolean("img_reload",true);
                             editor_uploadimg.commit();
                             finish();
@@ -225,7 +219,6 @@ public class UploadImageActivity extends AppCompatActivity {
                 editor_uploadimg.putString("galleryphoto",String.valueOf(data.getData()));
                 editor_uploadimg.commit();
                 Uri uri = Uri.parse(sp_uploadimg.getString("galleryphoto","null"));
-                Log.d("UP",String.valueOf(uri));
                 galleryphoto.setPhotoUri(uri);
                 String photoPath = galleryphoto.getPath();
                 seleletedPhoto = photoPath;

@@ -24,6 +24,7 @@ import com.example.kuybeer26092016.lionmonitoringdemo.service.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -64,7 +65,12 @@ public class AdapterEdit_mcname extends RecyclerView.Adapter<AdapterEdit_mcname.
                 v.getContext().startActivity(intent);
             }
         });
-
+        holder.mBtn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SweetDialog(holder.mTxt_mcname.getText().toString());
+            }
+        });
     }
 
 
@@ -88,21 +94,26 @@ public class AdapterEdit_mcname extends RecyclerView.Adapter<AdapterEdit_mcname.
         }
     }
 
-    private void ChangeData(String name_new,String mc_id){
-        Call<List<Mis_monitoringitem>> call = mManager.getmService().Callback_AddMcname(name_new,mc_id);
-        call.enqueue(new Callback<List<Mis_monitoringitem>>() {
+    private void SweetDialog(String s){
+        final SweetAlertDialog sweetDialog = new SweetAlertDialog(mContext,SweetAlertDialog.WARNING_TYPE);
+        sweetDialog.setCanceledOnTouchOutside(true);
+        sweetDialog.setTitleText("DELETE " + s + " !");
+        sweetDialog.setContentText("Are you sure went to Delete "+s+ " !");
+        sweetDialog.setConfirmText("Delete");
+        sweetDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
             @Override
-            public void onResponse(Call<List<Mis_monitoringitem>> call, Response<List<Mis_monitoringitem>> response) {
-                if(response.isSuccessful()){
-
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Mis_monitoringitem>> call, Throwable t) {
+            public void onClick(SweetAlertDialog sweetAlertDialog) {
 
             }
         });
+        sweetDialog.setCancelText("Cancel");
+        sweetDialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+            @Override
+            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                sweetDialog.changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                sweetDialog.cancel();
+            }
+        });
+        sweetDialog.show();
     }
 }

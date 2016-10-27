@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,14 +14,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.kuybeer26092016.lionmonitoringdemo.R;
 import com.example.kuybeer26092016.lionmonitoringdemo.adapters.AdapterHistory;
 import com.example.kuybeer26092016.lionmonitoringdemo.manager.ManagerRetrofit;
-import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_adddata;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_history;
-import com.example.kuybeer26092016.lionmonitoringdemo.service.Service;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -33,8 +28,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HistoryActivity extends AppCompatActivity {
     private SharedPreferences spApp_Gone;
@@ -50,30 +43,30 @@ public class HistoryActivity extends AppCompatActivity {
     /************** Global *****************************/
     private ProgressBar progressBar;
     private String mMo_id, mMc_name, mMc_id, mMin, mMax, mPram,mAnim;
-    private TextView txtMc_name;
+    private TextView mProcessname,mParametername,mStandardvalue,mHeadername;
     private ImageView mImageToobar;
     /************** Global *****************************/
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
-        this.overridePendingTransition(R.anim.anim_silde_out_left,R.anim.anim_silde_out_left);
-        /************** set Shared *****************************/
-        spApp_Gone = getSharedPreferences("App_Gone", Context.MODE_PRIVATE);
-        editor_App_Gone  = spApp_Gone.edit();
-        sp  = getSharedPreferences("DataAccount",Context.MODE_PRIVATE);
-        editor = sp.edit();
-        /************** set Shared *****************************/
+        setIntents();
+        setAnimation();
+        setSharedPreferences();
 
-        /***************set Anim *************************/
-        mAnim = getIntent().getExtras().getString("Ianim","");
+    }
+
+    private void setAnimation() {
+        this.overridePendingTransition(R.anim.anim_silde_out_left,R.anim.anim_silde_out_left);
         if(mAnim.equals("1")){
             this.overridePendingTransition(R.anim.anim_silde_out_left,R.anim.anim_silde_out_left);
         }else if(mAnim.equals("2")){
             this.overridePendingTransition(R.anim.anim_silde_in_left,R.anim.anim_silde_in_left);
         }
-        /***************set Anim *************************/
+    }
 
+    private void setIntents() {
+        mAnim = getIntent().getExtras().getString("Ianim","");
         Intent call = getIntent();
         if(call != null){
             mMc_name = call.getStringExtra("mc_name");
@@ -83,59 +76,25 @@ public class HistoryActivity extends AppCompatActivity {
             mMax= call.getStringExtra("mo_max");
         }
     }
+
+    private void setSharedPreferences() {
+        spApp_Gone = getSharedPreferences("App_Gone", Context.MODE_PRIVATE);
+        editor_App_Gone  = spApp_Gone.edit();
+        sp  = getSharedPreferences("DataAccount",Context.MODE_PRIVATE);
+        editor = sp.edit();
+    }
+
     @Override
     public void onStart() {
         super.onStart();
-
-        /************** Open & set Shared *****************************/
         editor_App_Gone.putString("History_Gone" , "0");
         editor_App_Gone.commit();
-        /************** Open & set Shared *****************************/
+        setToolbar();
+        setUsingClass();
+        setFindbyid();
+        setRecyclerView();
+        setXML();
 
-
-        /************** set Toolbar *****************************/
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle(mMc_name);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(HistoryActivity.this,DescripActivity.class);
-                i.putExtra("mc_name",mMc_name);
-                i.putExtra("mc_id",mMc_id);
-                i.putExtra("Ianim","2");
-                startActivity(i);
-                finish();
-            }
-        });
-        /************** set Toolbar *****************************/
-
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        txtMc_name = (TextView) findViewById(R.id.mc_name_his);
-        mImageToobar = (ImageView) findViewById(R.id.imageToobar);
-
-        /************** set Recycler View  *****************************/
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        mManeger = new ManagerRetrofit();
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setRecycledViewPool(new RecyclerView.RecycledViewPool());
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        mAdapter = new AdapterHistory();
-        mRecyclerView.setAdapter(mAdapter);
-        /************** set Recycler View  *****************************/
-
-
-        /************** put Data to XML *****************************/
-        txtMc_name.setText(String.valueOf(mMc_name) + " : " + String.valueOf(mPram) + "\nStandard : " + String.valueOf(mMin + "-" + mMax));
-        Picasso.with(this).load(IMAGEURL + mMc_id + ".jpg")
-                .memoryPolicy(MemoryPolicy.NO_CACHE)
-                .networkPolicy(NetworkPolicy.NO_CACHE)
-                .resize(128, 128)
-                .centerCrop()
-                .rotate(90)
-                .placeholder(R.drawable.person)
-                .error(R.drawable.person).into(mImageToobar);
         /************** put Data to XML *****************************/
         thread = new Thread() {
             @Override
@@ -152,6 +111,60 @@ public class HistoryActivity extends AppCompatActivity {
         };
 
         thread.start();
+    }
+
+    private void setXML() {
+        mHeadername.setText(mMc_name);
+        mProcessname.setText(mMc_name);
+        mParametername.setText(mPram);
+        mStandardvalue.setText(mMin+mMax);
+        Picasso.with(this).load(IMAGEURL + mMc_id + ".jpg")
+                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                .networkPolicy(NetworkPolicy.NO_CACHE)
+                .resize(128, 128)
+                .centerCrop()
+                .placeholder(R.drawable.person)
+                .error(R.drawable.person).into(mImageToobar);
+    }
+
+    private void setRecyclerView() {
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setRecycledViewPool(new RecyclerView.RecycledViewPool());
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+    private void setUsingClass() {
+        mManeger = new ManagerRetrofit();
+        mAdapter = new AdapterHistory();
+    }
+
+    private void setToolbar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(mMc_name);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HistoryActivity.this,DescripActivity.class);
+                i.putExtra("mc_name",mMc_name);
+                i.putExtra("mc_id",mMc_id);
+                i.putExtra("Ianim","2");
+                startActivity(i);
+                finish();
+            }
+        });
+    }
+
+    private void setFindbyid() {
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        mHeadername = (TextView)findViewById(R.id.XML_Headername);
+        mProcessname = (TextView) findViewById(R.id.XML_Processname);
+        mParametername = (TextView)findViewById(R.id.XML_Parametername);
+        mStandardvalue =  (TextView)findViewById(R.id.XML_Standardvalue);
+        mImageToobar = (ImageView) findViewById(R.id.imageToobar);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
     }
 
     @Override
@@ -176,8 +189,9 @@ public class HistoryActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
                     List<Mis_history> Listhistory = response.body();
                     mAdapter.addList(Listhistory);
+
                     if(Listhistory.size() == 0){
-                        mRecyclerView.setBackgroundResource(R.drawable.pic_noinfo);
+                        mRecyclerView.setBackgroundResource(R.drawable.notthingfound);
                     }
                 }
             }
@@ -195,21 +209,11 @@ public class HistoryActivity extends AppCompatActivity {
         thread.interrupt();
         editor_App_Gone.putString("History_Gone" , "1");
         editor_App_Gone.commit();
-        Log.d("TAG","onSTOP " + sp.getBoolean("Runanim",false));
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Intent call = getIntent();
-        Log.d("TEST", "onResume");
-        if(call != null){
-            mMc_name = call.getStringExtra("mc_name");
-            mMc_id = call.getStringExtra("mc_id");
-            mPram = call.getStringExtra("mo_pram");
-            mMin = call.getStringExtra("mo_min");
-            mMax= call.getStringExtra("mo_max");
-        }
+        setIntents();
     }
 }

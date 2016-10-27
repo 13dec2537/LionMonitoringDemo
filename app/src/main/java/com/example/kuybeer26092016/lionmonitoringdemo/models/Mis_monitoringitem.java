@@ -9,6 +9,26 @@ public class Mis_monitoringitem {
     private String mc_name;
     private String mc_id;
 
+    public Mo_status mo_status;
+    public class Mo_status{
+        private String status_1,status_2,status_3,status_4;
+
+        public String getStatus_1() {
+            return status_1;
+        }
+
+        public String getStatus_2() {
+            return status_2;
+        }
+
+        public String getStatus_3() {
+            return status_3;
+        }
+
+        public String getStatus_4() {
+            return status_4;
+        }
+    }
     public void setMc_name(String mc_name) {
         this.mc_name = mc_name;
     }

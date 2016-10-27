@@ -3,13 +3,43 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_tower2"
+            android:id="@+id/menu_1"
             android:icon="@drawable/arrow"
             android:title="TOWER 2" />
         <item
-            android:id="@+id/nav_dk100"
+            android:id="@+id/menu_2"
             android:icon="@drawable/arrow"
             android:title="DK100"
+            />
+        <item
+            android:id="@+id/menu_3"
+            android:icon="@drawable/arrow"
+            android:title="PK200"
+            />
+        <item
+            android:id="@+id/menu_4"
+            android:icon="@drawable/arrow"
+            android:title="menu_4"
+            />
+        <item
+            android:id="@+id/menu_5"
+            android:icon="@drawable/arrow"
+            android:title="menu_5"
+            />
+        <item
+            android:id="@+id/menu_6"
+            android:icon="@drawable/arrow"
+            android:title="menu_6"
+            />
+        <item
+            android:id="@+id/menu_7"
+            android:icon="@drawable/arrow"
+            android:title="menu_7"
+            />
+        <item
+            android:id="@+id/menu_8"
+            android:icon="@drawable/arrow"
+            android:title="menu_8"
             />
     </group>
 

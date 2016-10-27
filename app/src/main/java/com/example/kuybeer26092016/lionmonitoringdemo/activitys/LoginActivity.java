@@ -155,7 +155,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private void ShowListMc(){
         progressBar.setVisibility(View.VISIBLE);
-
         Call<List<Mis_login>> call = mManager.getmService().Callback_Login(edUsername.getText().toString(),
                 edPassword.getText().toString());
         call.enqueue(new Callback<List<Mis_login>>() {

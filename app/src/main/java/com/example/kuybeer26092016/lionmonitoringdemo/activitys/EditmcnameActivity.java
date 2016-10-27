@@ -2,6 +2,8 @@ package com.example.kuybeer26092016.lionmonitoringdemo.activitys;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.kuybeer26092016.lionmonitoringdemo.R;
+import com.example.kuybeer26092016.lionmonitoringdemo.adapters.AdapterManageProcess;
+import com.example.kuybeer26092016.lionmonitoringdemo.manager.ManagerRetrofit;
+import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_history;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_monitoringitem;
 import com.example.kuybeer26092016.lionmonitoringdemo.service.Service;
 
@@ -27,6 +32,9 @@ public class EditmcnameActivity extends AppCompatActivity {
     private EditText mEd_newname;
     private TextView mTxt_mcname;
     private Button mBtnReset,mBtnChange;
+    private AdapterManageProcess mAdapter;
+    private ManagerRetrofit mManager;
+    private RecyclerView mRecyclerview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +43,38 @@ public class EditmcnameActivity extends AppCompatActivity {
         setFindbyid();
         setIntents();
         setView();
+        setRecyclerView();
         setBtnOnclick();
+    }
+
+    private void setRecyclerView() {
+        mAdapter = new AdapterManageProcess();
+        mManager = new ManagerRetrofit();
+        mRecyclerview  = (RecyclerView) findViewById(R.id.XML_RecyclerViewParameter);
+        mRecyclerview.setHasFixedSize(true);
+        mRecyclerview.setRecycledViewPool(new RecyclerView.RecycledViewPool());
+        mRecyclerview.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        mRecyclerview.setAdapter(mAdapter);
+        CallData(mMc_name);
+    }
+
+    private void CallData(String process) {
+        Log.d("TAG",mMc_name);
+        Call<List<Mis_monitoringitem>> call = mManager.getmService().CallbackDetailProcess(process);
+        call.enqueue(new Callback<List<Mis_monitoringitem>>() {
+            @Override
+            public void onResponse(Call<List<Mis_monitoringitem>> call, Response<List<Mis_monitoringitem>> response) {
+                if (response.isSuccessful()) {
+                    List<Mis_monitoringitem> calllist = response.body();
+                    mAdapter.addList(calllist);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Mis_monitoringitem>> call, Throwable t) {
+
+            }
+        });
     }
 
     private void setView() {

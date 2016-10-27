@@ -27,4 +27,6 @@
     <string name="Username">Change Username</string>
     <string name="Password">Change Password</string>
     <string name="edit_engine">Edit Engine</string>
+    <string name="opendrawer">Open</string>
+    <string name="closedrawer">close</string>
 </resources>

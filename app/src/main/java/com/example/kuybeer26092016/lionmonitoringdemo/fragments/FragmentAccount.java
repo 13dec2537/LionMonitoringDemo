@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,6 +60,7 @@ public class FragmentAccount extends Fragment {
     private CameraPhoto cameraPhoto;
     private GalleryPhoto galleryPhoto;
     private String seleletedPhoto;
+    private LinearLayout mLinear;
     private SweetAlertDialog sweetAlertDialog;
     private ImageView mImage;
 
@@ -79,6 +82,7 @@ public class FragmentAccount extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        mLinear = (LinearLayout)getView().findViewById(R.id.XML_LinearAccount);
         sp = getActivity().getSharedPreferences("DataAccount", Context.MODE_PRIVATE);
         editor = sp.edit();
         cameraPhoto = new CameraPhoto(getActivity());
@@ -98,10 +102,18 @@ public class FragmentAccount extends Fragment {
         ((Button)getView().findViewById(R.id.editimage)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAlertDialogSetting();
+                if(sp.getString("division","").equals("ADMIN")){
+                    mAlertDialogSetting();
+                }
+                else{
+                    Snackbar("For Administrator");
+                }
             }
         });
-//        CallData();
+    }
+    private void Snackbar(String messages){
+        Snackbar snackbar = Snackbar.make(mLinear,messages,Snackbar.LENGTH_LONG);
+        snackbar.show();
     }
 
     public static FragmentAccount newInstent(String username) {
@@ -115,7 +127,6 @@ public class FragmentAccount extends Fragment {
         try{
             Bitmap bitmap = ImageLoader.init().from(seleletedPhoto).requestSize(128,128).getBitmap();
             String encodedImage = ImageBase64.encode(bitmap);
-            Log.d("ACCOUNT",sp.getString("username",""));
             //post image to server
             HashMap<String, String> PostData = new HashMap<String, String>();
             PostData.put("image",encodedImage);
@@ -123,8 +134,6 @@ public class FragmentAccount extends Fragment {
             PostResponseAsyncTask task = new PostResponseAsyncTask(getActivity(), PostData, new AsyncResponse() {
                 @Override
                 public void processFinish(String s) {
-
-                    Log.i("TAG",s.toString());
                     if(s.contains("upload_success")){
                         Log.i("Tag","Upload Finish");
                         Toast.makeText(getActivity(),"Upload Success",Toast.LENGTH_SHORT).show();

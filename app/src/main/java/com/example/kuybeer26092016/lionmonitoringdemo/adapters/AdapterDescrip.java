@@ -78,7 +78,6 @@ public class AdapterDescrip extends RecyclerView.Adapter<AdapterDescrip.ViewHold
                 i.putExtra("mo_id","0");
                 editor.putBoolean("Runanim",true);
                 editor.commit();
-                Log.d("TAG",String.valueOf(sp.getBoolean("Runanim",true)));
                 v.getContext().startActivity(i);
                 ((Activity)context).finish();
             }
@@ -101,11 +100,11 @@ public class AdapterDescrip extends RecyclerView.Adapter<AdapterDescrip.ViewHold
         private LinearLayout mLinearAll;
         public ViewHolder(View itemView) {
             super(itemView);
-            mPram = (TextView)itemView.findViewById(R.id.pram);
-            mAct = (TextView)itemView.findViewById(R.id.act);
-            mUnit = (TextView)itemView.findViewById(R.id.unit);
-            mMinMax = (TextView)itemView.findViewById(R.id.min_max);
-            mLinearAll = (LinearLayout) itemView.findViewById(R.id.LinearAll);
+            mPram = (TextView)itemView.findViewById(R.id.XML_Parametername);
+            mAct = (TextView)itemView.findViewById(R.id.XML_Actvalue);
+            mUnit = (TextView)itemView.findViewById(R.id.XML_Unitname);
+            mMinMax = (TextView)itemView.findViewById(R.id.XML_Standardvalue);
+            mLinearAll = (LinearLayout) itemView.findViewById(R.id.XML_Linaer);
         }
     }
     static String setColor(String act, String min , String max){

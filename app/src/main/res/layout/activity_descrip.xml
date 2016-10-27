@@ -43,16 +43,17 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@drawable/bg_activity">
 
                 <Button
                     android:id="@+id/header"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/description"
-                    android:background="#AEEA00"
+                    android:background="@drawable/bg_header_dis"
                     android:lines="1"
-                    android:textColor="#ffffff"
+                    android:textColor="#333"
                     android:textSize="30dp"
                     android:textStyle="normal|bold" />
                 <ProgressBar

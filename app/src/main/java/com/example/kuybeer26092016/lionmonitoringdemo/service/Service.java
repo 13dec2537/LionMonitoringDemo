@@ -1,6 +1,7 @@
 package com.example.kuybeer26092016.lionmonitoringdemo.service;
 
-import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_adddata;
+import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_menu;
+import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_updateNT;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_descrip;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_history;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_login;
@@ -20,6 +21,9 @@ import retrofit2.http.POST;
  */
 
 public interface    Service {
+    @POST("/service/json/android_php/mis_menu.php")
+    Call<List<Mis_menu>> CallbackMenu();
+
     @FormUrlEncoded
     @POST("/service/json/android_php/edit_mcname.php")
     Call<List<Mis_monitoringitem>> CallbackMcname(@Field("mc_name") String mc_name);
@@ -29,11 +33,14 @@ public interface    Service {
     Call<List<Mis_monitoringitem>> Callback_AddMcname(@Field("mc_id")String mc_id,
                                                       @Field("newname")String newname);
 
-    @POST("/service/json/android_php/mis_tw2.php")
-    Call<List<Mis_monitoringitem>> CallbackTower2();
+    @FormUrlEncoded
+    @POST("/service/json/android_php/mis_managerdetail.php")
+    Call<List<Mis_monitoringitem>> CallbackDetailProcess(@Field("process") String process);
 
-    @POST("/service/json/android_php/mis_dk100.php")
-    Call<List<Mis_monitoringitem>> CallbackDk100();
+    @FormUrlEncoded
+    @POST("/service/json/android_php/mis_callstation.php")
+    Call<List<Mis_monitoringitem>> CallbackStation(@Field("station") String station);
+
     @FormUrlEncoded
     @POST("/service/json/android_php/mis_monitoritem.php")
     Call<List<Mis_descrip>> Callback_Detail(@Field("mc_id") String mc_id);
@@ -44,15 +51,16 @@ public interface    Service {
 
     @FormUrlEncoded
     @POST("/service/json/android_php/mis_login.php")
-    Call<List<Mis_login>> Callback_Login(@Field("username") String username, @Field("password") String password);
+    Call<List<Mis_login>> Callback_Login(@Field("username") String username,
+                                         @Field("password") String password);
 
     @POST("/service/json/android_php/mis_service.php")
     Call<List<Mis_service>> CallbackService();
 
     @FormUrlEncoded
     @POST("/service/json/android_php/set_status_nt.php")
-    Call<Mis_adddata> Callback_AddData(@Field("NotificationStatus") String statusNotification,
-                                       @Field("mo_id") String mo_id);
+    Call<Mis_updateNT> Callback_AddData(@Field("NotificationStatus") String statusNotification,
+                                        @Field("mo_id") String mo_id);
 
     @FormUrlEncoded
     @POST("/service/json/android_php/check_register.php")

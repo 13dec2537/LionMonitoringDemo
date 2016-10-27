@@ -11,23 +11,14 @@ import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
 import com.example.kuybeer26092016.lionmonitoringdemo.R;
-import com.example.kuybeer26092016.lionmonitoringdemo.activitys.HistoryActivity;
-import com.example.kuybeer26092016.lionmonitoringdemo.activitys.MainActivity;
 import com.example.kuybeer26092016.lionmonitoringdemo.manager.ManagerRetrofit;
-import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_adddata;
-import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_history;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_service;
 
 import java.util.List;
 
-import cn.pedant.SweetAlert.SweetAlertDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static android.app.Notification.DEFAULT_SOUND;
 
 /**
  * Created by KuyBeer26092016 on 29/9/2559.
@@ -40,6 +31,7 @@ public class BackgroundService extends android.app.Service {
     private Boolean NT;
     private SharedPreferences sp_NT;
     private SharedPreferences.Editor editor_NT;
+    String Main_Gone,Detail_Gone,History_Gone,Upload_Gone,Switch_nt;
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -48,7 +40,6 @@ public class BackgroundService extends android.app.Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("TEST" , "StartService");
         mManager = new ManagerRetrofit();
         context = this;
 
@@ -70,20 +61,7 @@ public class BackgroundService extends android.app.Service {
     }
 
     private void Run_service() {
-
-        SharedPreferences spCall_service = getSharedPreferences("App_Gone",Context.MODE_PRIVATE);
-        /*****************************status Activity & run service if *************************/
-        String Main_Gone = spCall_service.getString("Main_Gone","");
-        String Detail_Gone = spCall_service.getString("Detail_Gone","");
-        String History_Gone = spCall_service.getString("History_Gone","");
-        String Upload_Gone = spCall_service.getString("Upload_Gone","");
-        String Switch_nt = spCall_service.getString("switch_nt","");
-
-        /*****************************status Activity & run service if *************************/
-        sp_NT = getSharedPreferences("NOTIFICATION",Context.MODE_PRIVATE);
-        editor_NT = sp_NT.edit();
-        Log.d("TEST","BG : " + Main_Gone + " " + Detail_Gone + " " + History_Gone + " " +Upload_Gone + " " + Switch_nt + " "
-                + String.valueOf(sp_NT.getBoolean("Status_nt",false)));
+        setSharedPreferences();
         if(Main_Gone.equals("1") && Detail_Gone.equals("1") && History_Gone.equals("1") && Switch_nt.equals("1") && Upload_Gone.equals("1")){
             Call<List<Mis_service>> call = mManager.getmService().CallbackService();
             call.enqueue(new Callback<List<Mis_service>>() {
@@ -132,11 +110,22 @@ public class BackgroundService extends android.app.Service {
 
                 @Override
                 public void onFailure(Call<List<Mis_service>> call, Throwable t) {
-                    Log.d("TEST" , "onFailure");
                 }
             });
         }
     }
+
+    private void setSharedPreferences() {
+        SharedPreferences spCall_service = getSharedPreferences("App_Gone",Context.MODE_PRIVATE);
+        Main_Gone = spCall_service.getString("Main_Gone","");
+        Detail_Gone = spCall_service.getString("Detail_Gone","");
+        History_Gone = spCall_service.getString("History_Gone","");
+        Upload_Gone = spCall_service.getString("Upload_Gone","");
+        Switch_nt = spCall_service.getString("switch_nt","");
+        sp_NT = getSharedPreferences("NOTIFICATION",Context.MODE_PRIVATE);
+        editor_NT = sp_NT.edit();
+    }
+
     public void Notification(String mc_name,String mo_pram,String mc_id,String mo_min,String mo_max,String mo_id,String mo_startDatatime
     ,String mo_act){
         NotificationCompat.Builder NT = (NotificationCompat.Builder) new NotificationCompat.Builder(context)

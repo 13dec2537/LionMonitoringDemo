@@ -108,9 +108,9 @@
 
         <Spinner
             android:layout_width="fill_parent"
-            android:id="@+id/spDivision"
-            android:background="@drawable/corners_5dp"
+            android:id="@+id/spinner"
             android:layout_height="40dp"
+            android:background="@drawable/corners_5dp"
             />
 
         <Button

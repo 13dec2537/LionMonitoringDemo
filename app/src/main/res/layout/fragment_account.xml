@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="#e7e7e7"
     android:orientation="vertical"
+    android:id="@+id/XML_LinearAccount"
     tools:context="com.example.kuybeer26092016.lionmonitoringdemo.fragments.FragmentAccount">
 
     <!-- TODO: Update blank fragment layout -->
@@ -133,7 +134,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/corners_5dp_gruy"
+                    android:background="@drawable/ani_btn_editname"
                     android:drawableLeft="@drawable/setting"
                     android:paddingEnd="10dp"
                     android:paddingLeft="20dp"

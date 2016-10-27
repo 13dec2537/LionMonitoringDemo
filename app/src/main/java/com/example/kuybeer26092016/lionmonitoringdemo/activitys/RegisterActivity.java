@@ -20,8 +20,9 @@ import android.widget.Toast;
 
 import com.example.kuybeer26092016.lionmonitoringdemo.R;
 import com.example.kuybeer26092016.lionmonitoringdemo.manager.ManagerRetrofit;
+import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_menu;
+import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_monitoringitem;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_register;
-import com.example.kuybeer26092016.lionmonitoringdemo.service.CustomOnItemSelectedListener;
 import com.example.kuybeer26092016.lionmonitoringdemo.service.Service;
 import com.kosalgeek.android.photoutil.CameraPhoto;
 import com.kosalgeek.android.photoutil.GalleryPhoto;
@@ -62,6 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
     private final int CAMERA_REQUEST = 13323;
     private final int GALLERY_REQUEST = 22131;
     private String seleletedPhoto;
+    private  List<String> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,23 +79,15 @@ public class RegisterActivity extends AppCompatActivity {
         edPassword = (EditText) findViewById(R.id.edPassword);
         edPassword_again = (EditText) findViewById(R.id.edPasswordAgain);
         btn_register = (Button)findViewById(R.id.btnregister);
-        spDivision = (Spinner)findViewById(R.id.spDivision);
+        spDivision = (Spinner)findViewById(R.id.spinner);
         image = (ImageView)findViewById(R.id.image);
-        List<String> list = new ArrayList<String>();
-        list.add("Select Division");
-        list.add("TOWER2");
-        list.add("ADMIN");
-        list.add("DK100");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
-                (this, android.R.layout.simple_spinner_item,list);
+        SetSwitch();
 
-        dataAdapter.setDropDownViewResource
-                (android.R.layout.simple_spinner_dropdown_item);
 
-        spDivision.setAdapter(dataAdapter);
+
 
         // Spinner item selection Listener  
-        addListenerOnSpinnerItemSelection();
+
         //*********** Set XML ************************************//
 
         //************ Set Class Cemera & ImageCapPic *****************/
@@ -105,7 +99,6 @@ public class RegisterActivity extends AppCompatActivity {
                     startActivityForResult(cameraPhoto.takePhotoIntent(),CAMERA_REQUEST);
                     cameraPhoto.addToGallery();
                 } catch (IOException e) {
-                    Log.d("TAG","Error Something");
                 }
             }
         });
@@ -120,10 +113,44 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void addListenerOnSpinnerItemSelection() {
-        spDivision.setOnItemSelectedListener(new CustomOnItemSelectedListener());
-    }
+    private void SetSwitch(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://www.thaidate4u.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        Service service = retrofit.create(Service.class);
+        Mis_monitoringitem register = new Mis_monitoringitem();
+        Call<List<Mis_menu>> call = service.CallbackMenu();
+        list = new ArrayList<String>();
 
+        call.enqueue(new Callback<List<Mis_menu>>() {
+            @Override
+            public void onResponse(Call<List<Mis_menu>> call, Response<List<Mis_menu>> response) {
+                if(response.isSuccessful()){
+                    final List<Mis_menu> Listitem = response.body();
+                    try{
+                        for (int i = 0 ; i< Listitem.size() ; i ++){
+                            list.add(Listitem.get(i).getMc_div());
+                            Log.d("C","PASS");
+                        }
+                        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
+                                (getApplicationContext(), R.layout.spinner_item,list);
+                        dataAdapter.setDropDownViewResource
+                                (R.layout.spinner_item);
+                        spDivision.setAdapter(dataAdapter);
+
+                    }catch (Exception e){
+                        Log.d("C","ERROR");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Mis_menu>> call, Throwable t) {
+
+            }
+        });
+    }
 
     @Override
     protected void onStart() {
@@ -167,7 +194,6 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Mis_register>> call, Response<List<Mis_register>> response) {
                 if(response.isSuccessful()){
-                    Log.d("TEST" , "compile");
                     List<Mis_register> ListItem = response.body();
                     for(int i = 0 ; i<ListItem.size();i++){
                         Snackbar("Username has already");
@@ -234,20 +260,15 @@ public class RegisterActivity extends AppCompatActivity {
     }
     private void UploadImage(){
         try{
-            Bitmap bitmap = ImageLoader.init().from(seleletedPhoto).requestSize(1024,1024).getBitmap();
+            Bitmap bitmap = ImageLoader.init().from(seleletedPhoto).requestSize(128,128).getBitmap();
             String encodedImage = ImageBase64.encode(bitmap);
-            Log.d("Tag",encodedImage);
-            //post image to server
             HashMap<String, String> PostData = new HashMap<String, String>();
             PostData.put("image",encodedImage);
             PostData.put("uid",username);
             PostResponseAsyncTask task = new PostResponseAsyncTask(RegisterActivity.this, PostData, new AsyncResponse() {
                 @Override
                 public void processFinish(String s) {
-
-                    Log.i("TAG",s.toString());
                     if(s.contains("upload_success")){
-                        Log.i("Tag","Upload Finish");
                         Toast.makeText(getApplication(),"Upload Success",Toast.LENGTH_SHORT).show();
                     }else if(s.contains("upload_failed")){
                         Toast.makeText(getApplication(),"upload_failed",Toast.LENGTH_SHORT).show();

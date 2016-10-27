@@ -5,12 +5,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.service.notification.StatusBarNotification;
-import android.util.Log;
 
-import com.example.kuybeer26092016.lionmonitoringdemo.activitys.HistoryActivity;
 import com.example.kuybeer26092016.lionmonitoringdemo.activitys.MainActivity;
-import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_adddata;
+import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_updateNT;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_history;
 
 import retrofit2.Call;
@@ -39,7 +36,6 @@ public class NotificationBoradcast extends BroadcastReceiver{
             readMessage.putExtra("mc_id",intent.getStringExtra("mc_id"));
             editor.putInt("returnAc", Integer.parseInt(intent.getStringExtra("mc_id")));
             editor.commit();
-            Log.d("TAG",intent.getStringExtra("mc_id"));
             context.startActivity(readMessage);
             editor.putBoolean("Status_nt" ,true);
             setStatusNotifDB(intent.getStringExtra("mo_id"));
@@ -48,13 +44,11 @@ public class NotificationBoradcast extends BroadcastReceiver{
         else if(intent.getAction().equals("EXIT_MESSAGE_ACTION")){
             editor.putBoolean("Status_nt" ,true);
             editor.commit();
-            Log.d("TEST", "MO ID : " + (intent.getStringExtra("mo_id")));
             setStatusNotifDB(intent.getStringExtra("mo_id"));
         }
         else if(intent.getAction().equals("CENCEL_MESSAGE_ACTION")){
             editor.putBoolean("Status_nt" ,true);
             editor.commit();
-            Log.d("TEST", "ได้แล้วสัส");
         }
     }
     private void setStatusNotifDB(String mMo_id) {
@@ -64,15 +58,15 @@ public class NotificationBoradcast extends BroadcastReceiver{
                 .build();
         Service service = retrofit.create(Service.class);
         Mis_history misdata = new Mis_history();
-        Call<Mis_adddata> call = service.Callback_AddData("1", mMo_id);
-        call.enqueue(new Callback<Mis_adddata>() {
+        Call<Mis_updateNT> call = service.Callback_AddData("1", mMo_id);
+        call.enqueue(new Callback<Mis_updateNT>() {
             @Override
-            public void onResponse(Call<Mis_adddata> call, Response<Mis_adddata> response) {
+            public void onResponse(Call<Mis_updateNT> call, Response<Mis_updateNT> response) {
 
             }
 
             @Override
-            public void onFailure(Call<Mis_adddata> call, Throwable t) {
+            public void onFailure(Call<Mis_updateNT> call, Throwable t) {
 
             }
         });

@@ -111,7 +111,6 @@ public class DescripActivity extends AppCompatActivity {
                 .networkPolicy(NetworkPolicy.NO_CACHE)
                 .resize(128, 128)
                 .centerCrop()
-                .rotate(90)
                 .placeholder(R.drawable.person)
                 .error(R.drawable.person)
                 .into(mImageToobar);

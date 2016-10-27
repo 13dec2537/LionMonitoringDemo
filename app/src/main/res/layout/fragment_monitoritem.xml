@@ -1,0 +1,37 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linear_tw2"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#8ee3e3e3">
+    <LinearLayout
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <Switch
+            android:text="NOTIFICATION STATUS "
+            android:layout_width="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="5dp"
+            android:id="@+id/switch_nt"
+            android:textStyle="bold"
+            android:paddingRight="5dp"
+            android:paddingLeft="20dp"
+            android:background="@drawable/bg_switch"
+            android:layout_height="30dp" />
+        <ProgressBar
+            android:id="@+id/progessbarDk100"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycleviewDk100"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
+</LinearLayout>
