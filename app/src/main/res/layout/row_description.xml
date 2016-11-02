@@ -5,81 +5,92 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="3dp"
     android:id="@+id/XML_Linaer">
+
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="20dp"
-        app:cardCornerRadius="10dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TableLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        app:cardElevation="2dp"
+        android:layout_marginTop="3dp"
+         android:layout_marginBottom="3dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        app:cardBackgroundColor="#20f6f6f6"
+        app:cardCornerRadius="10dp"
+        android:layout_height="90dp">
+
                 <LinearLayout android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_header_rowdis"
                     android:weightSum="2">
-                    <TextView android:id="@+id/XML_Parametername" android:layout_width="match_parent"
-                        android:layout_height="30dp" android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="TEST"
-                        android:textSize="20dp"
-                        android:textColor="#333"/>
-                    <TextView android:id="@+id/XML_Unitname" android:layout_width="match_parent"
-                        android:layout_height="30dp" android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="TEST"
-                        android:textSize="20dp"
-                        android:textColor="#333"/>
-                </LinearLayout>
 
-                <TableRow android:layout_marginBottom="5dp" android:layout_marginTop="5dp" android:weightSum="2">
-
-                    <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_weight="1">
-                        <TextView android:id="@+id/XML_Standardvalue"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
+
+                        <TextView android:id="@+id/XML_Parametername" android:layout_width="match_parent"
+                            android:layout_height="match_parent" android:layout_weight="1"
                             android:gravity="center"
+                            android:text="TEST"
                             android:textSize="20dp"
-                            android:textColor="#333"/>
-                        <TextView android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="STANDARD"/>
-                    </TableLayout>
+                            android:textColor="#E0E0E0"/>
+
+                            <TextView android:id="@+id/XML_Standardvalue"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:layout_marginTop="3dp"
+                                android:layout_marginBottom="3dp"
+                                android:gravity="center"
+                                android:textSize="30dp"
+                                android:textColor="#E0E0E0"/>
+                            <TextView android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:id="@+id/XML_txtstandard"
+                                android:textColor="#d7b7b7b7"
+                                android:gravity="center"
+                                android:text="STANDARD"/>
+                    </LinearLayout>
+
                     <View
-                        android:layout_width="1dp"
-                        android:layout_height="45dp"
-                        android:background="#333">
+                        android:layout_width="5dp"
+                        android:background="#6a212121"
+                        android:layout_height="match_parent">
                     </View>
 
-
-
-                    <TableLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_weight="1">
-                        <TextView android:id="@+id/XML_Actvalue"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
+
+                        <TextView android:id="@+id/XML_Unitname" android:layout_width="match_parent"
+                            android:layout_height="match_parent" android:layout_weight="1"
                             android:gravity="center"
+                            android:text="TEST"
                             android:textSize="20dp"
-                            android:textStyle="bold"/>
-                        <TextView android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="NOW"/>
-                    </TableLayout>
-                </TableRow>
-            </TableLayout>
-        </LinearLayout>
+                            android:textColor="#E0E0E0"/>
+                            <TextView android:id="@+id/XML_Actvalue"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:textSize="30dp"
+                                android:layout_marginTop="3dp"
+                                android:layout_marginBottom="3dp"
+                                android:textStyle="bold"/>
+                            <TextView android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:id="@+id/XML_txtnow"
+                                android:gravity="center"
+                                android:textColor="#d7b7b7b7"
+                                android:text="NOW"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
     </android.support.v7.widget.CardView>
 </LinearLayout>

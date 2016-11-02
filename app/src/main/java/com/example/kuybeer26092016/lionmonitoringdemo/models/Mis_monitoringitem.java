@@ -8,6 +8,20 @@ public class Mis_monitoringitem {
     private String mc_division;
     private String mc_name;
     private String mc_id;
+    private String mc_div;
+    private String mo_id;
+
+    public String getMo_id() {
+        return mo_id;
+    }
+
+    public String getMc_div() {
+        return mc_div;
+    }
+
+    public Mo_status getMo_status() {
+        return mo_status;
+    }
 
     public Mo_status mo_status;
     public class Mo_status{

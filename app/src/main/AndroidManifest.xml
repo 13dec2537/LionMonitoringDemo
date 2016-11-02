@@ -72,7 +72,14 @@
             android:name=".activitys.RegisterActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
+        <activity
+            android:name=".activitys.ManageProcessActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.Dialog" />
+        <activity
+            android:name=".activitys.ManageStationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.Dialog" />
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="0be8cfd8c4c32848ceeb72fb14c1bef0976ac47c" />
@@ -81,10 +88,6 @@
             android:name=".activitys.UploadImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.Dialog" />
-        <activity android:name=".activitys.EditmcnameActivity"
-            android:screenOrientation="portrait"
-            android:label="EDIT MCNAME"
-            android:theme="@style/Theme.AppCompat.Light.Dialog"></activity>
     </application>
 
 </manifest>

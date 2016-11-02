@@ -5,13 +5,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.TransitionDrawable;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,14 +21,12 @@ import com.example.kuybeer26092016.lionmonitoringdemo.R;
 import com.example.kuybeer26092016.lionmonitoringdemo.activitys.DescripActivity;
 import com.example.kuybeer26092016.lionmonitoringdemo.activitys.UploadImageActivity;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_monitoringitem;
-import com.example.kuybeer26092016.lionmonitoringdemo.service.AnimationListitem;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  * Created by KuyBeer26092016 on 27/9/2559.
@@ -37,16 +36,16 @@ public class AdapterMonitorItem extends RecyclerView.Adapter<AdapterMonitorItem.
     private static final String IMAGEURL = "http://www.thaidate4u.com/service/json/img/";
     private final String ADMIN = "ADMIN";
     private List<Mis_monitoringitem> mList = new ArrayList<>();
-    private String act,min,max;;
+    private String act,min,max,status;
     private SharedPreferences sp,sp_uploadimg;
     private SharedPreferences.Editor editor,editor_uploadimg;
     private Context context;
-    private ColorDrawable[] AnimaBackColor;
-    private TransitionDrawable TranAnimaBackColor;
     private Boolean ReloadImage = true;
     private int sizeimg = 0;
-    private int prevPosition=0;
+    private int lastPosition = -1;
+    private Boolean mIcon_status = true;
     LayoutInflater layoutInflater;
+    private Animation mAnimation;
     public AdapterMonitorItem(Context context) {
         this.mList = mList;
         this.context = context;
@@ -62,6 +61,8 @@ public class AdapterMonitorItem extends RecyclerView.Adapter<AdapterMonitorItem.
     @Override
     public void onBindViewHolder(final AdapterMonitorItem.ViewHolder holder, int position) {
         final Mis_monitoringitem setList = mList.get(position);
+        MyCustomFonts(holder.mAct_1,holder.mAct_2,holder.mAct_3,holder.mAct_4);
+        MyCustomAnimation(holder.mAct_1,holder.mAct_2,holder.mAct_3,holder.mAct_4);
         sp = context.getSharedPreferences("DataAccount",Context.MODE_PRIVATE);
         editor = sp.edit();
         sp_uploadimg = context.getSharedPreferences("img",Context.MODE_PRIVATE);
@@ -79,13 +80,12 @@ public class AdapterMonitorItem extends RecyclerView.Adapter<AdapterMonitorItem.
                                 .networkPolicy(NetworkPolicy.NO_CACHE)
                                 .resize(128, 128)
                                 .centerCrop()
-//                                .rotate(90)
                                 .placeholder(R.drawable.progress_aniloadimg)
                                 .error(R.drawable.ic_me)
                                 .noFade()
                                 .into(holder.mImvMachine);
                 sizeimg++;
-                Animation_List(position,holder);
+//                Animation_List(position,holder);
                 if(sizeimg==mList.size()){
                     editor_uploadimg.putBoolean("img_reload",false);
                     editor_uploadimg.commit();
@@ -98,10 +98,6 @@ public class AdapterMonitorItem extends RecyclerView.Adapter<AdapterMonitorItem.
                         .load(IMAGEURL + setList.getMc_id() + ".jpg")
                         .resize(128, 128)
                         .centerCrop()
-//                        .rotate(90)
-                        .placeholder(R.drawable.progress_aniloadimg)
-                        .error(R.drawable.ic_me)
-                        .noFade()
                         .into(holder.mImvMachine);
             }
 
@@ -148,68 +144,36 @@ public class AdapterMonitorItem extends RecyclerView.Adapter<AdapterMonitorItem.
                 act = String.valueOf(setList.getMo_act().getAct_1());
                 min = String.valueOf(setList.getMo_min().getMin_1());
                 max = String.valueOf(setList.getMo_max().getMax_1());
-                holder.mAct_1.setTextColor(Color.parseColor(setColor(act,min,max)));
-                TranAnimaBackColor = new TransitionDrawable(setColorBackground(act,min,max));
-                holder.mAct_1.setBackground(TranAnimaBackColor);
-                TranAnimaBackColor.startTransition(2000);
+                status = String.valueOf(setList.getMo_status().getStatus_1());
+                setColorView(status,holder.mAct_1,act,min,max,holder.Icon);
+
             }
             if(holder.mAct_2.getText().length()>0){
                 holder.mLinearAll_txt_2.setVisibility(View.VISIBLE);
                 act = String.valueOf(setList.getMo_act().getAct_2());
                 min = String.valueOf(setList.getMo_min().getMin_2());
                 max = String.valueOf(setList.getMo_max().getMax_2());
-                holder.mAct_2.setTextColor(Color.parseColor(setColor(act,min,max)));
-                TranAnimaBackColor = new TransitionDrawable(setColorBackground(act,min,max));
-                holder.mAct_2.setBackground(TranAnimaBackColor);
-                TranAnimaBackColor.startTransition(2000);
+                status = String.valueOf(setList.getMo_status().getStatus_2());
+                setColorView(status,holder.mAct_2,act,min,max,holder.Icon);
                }
-            if(holder.mAct_3.getText().length()>0){
-                holder.mLinearAll_txt_3.setVisibility(View.VISIBLE);
-                act = String.valueOf(setList.getMo_act().getAct_3());
-                min = String.valueOf(setList.getMo_min().getMin_3());
-                max = String.valueOf(setList.getMo_max().getMax_3());
-                holder.mAct_3.setTextColor(Color.parseColor(setColor(act,min,max)));
-                TranAnimaBackColor = new TransitionDrawable(setColorBackground(act,min,max));
-                holder.mAct_3.setBackground(TranAnimaBackColor);
-                TranAnimaBackColor.startTransition(2000);
-            }
-            if(holder.mAct_4.getText().length()>0){
-                holder.mLinearAll_txt_4.setVisibility(View.VISIBLE);
-                act = String.valueOf(setList.getMo_act().getAct_4());
-                min = String.valueOf(setList.getMo_min().getMin_4());
-                max = String.valueOf(setList.getMo_max().getMax_4());
-                holder.mAct_4.setTextColor(Color.parseColor(setColor(act,min,max)));
-                TranAnimaBackColor = new TransitionDrawable(setColorBackground(act,min,max));
-                holder.mAct_4.setBackground(TranAnimaBackColor);
-                TranAnimaBackColor.startTransition(2000);
-            }
-        if(String.valueOf(setList.mo_status.getStatus_1()).equals ("0") ||
-                String.valueOf(setList.mo_status.getStatus_2()).equals ("0")||
-                String.valueOf(setList.mo_status.getStatus_3()) .equals ("0")||
-                String.valueOf(setList.mo_status.getStatus_4()) .equals ("0")){
-            holder.mAct_1.setTextColor(Color.parseColor("#BDBDBD"));
-            holder.mAct_2.setTextColor(Color.parseColor("#BDBDBD"));
-            holder.mAct_3.setTextColor(Color.parseColor("#BDBDBD"));
-            holder.mAct_4.setTextColor(Color.parseColor("#BDBDBD"));
-            TranAnimaBackColor = new TransitionDrawable(setColorBackground("0","0","0"));
-            holder.mAct_1.setBackground(TranAnimaBackColor);
-            holder.mAct_2.setBackground(TranAnimaBackColor);
-            holder.mAct_3.setBackground(TranAnimaBackColor);
-            holder.mAct_4.setBackground(TranAnimaBackColor);
-            holder.Icon.setImageResource(R.drawable.shape_round_disble);
+        if(holder.mAct_3.getText().length()>0){
+            holder.mLinearAll_txt_3.setVisibility(View.VISIBLE);
+            act = String.valueOf(setList.getMo_act().getAct_3());
+            min = String.valueOf(setList.getMo_min().getMin_3());
+            max = String.valueOf(setList.getMo_max().getMax_3());
+            status = String.valueOf(setList.getMo_status().getStatus_3());
+            setColorView(status,holder.mAct_3,act,min,max,holder.Icon);
         }
-        else {
-            if (String.valueOf(holder.mAct_1.getTextColors().getDefaultColor()).equals("-2617068")
-                    || String.valueOf(holder.mAct_2.getTextColors().getDefaultColor()).equals("-2617068")
-                    || String.valueOf(holder.mAct_3.getTextColors().getDefaultColor()).equals("-2617068")
-                    || String.valueOf(holder.mAct_4.getTextColors().getDefaultColor()).equals("-2617068")) {
-                holder.Icon.setImageResource(R.drawable.shape_round_ofline);
-
-            } else if (((String.valueOf(holder.mAct_1.getTextColors().getDefaultColor()).equals("-13730510")
-                    || String.valueOf(holder.mAct_1.getTextColors().getDefaultColor()).equals("-3407872")))) {
-                holder.Icon.setImageResource(R.drawable.shape_round_online);
-            }
+        if(holder.mAct_4.getText().length()>0){
+            holder.mLinearAll_txt_4.setVisibility(View.VISIBLE);
+            act = String.valueOf(setList.getMo_act().getAct_4());
+            min = String.valueOf(setList.getMo_min().getMin_4());
+            max = String.valueOf(setList.getMo_max().getMax_4());
+            status = String.valueOf(setList.getMo_status().getStatus_4());
+            setColorView(status,holder.mAct_4,act,min,max,holder.Icon);
         }
+            setViewIcon(holder.Icon,holder.mAct_1,holder.mAct_2,holder.mAct_3,holder.mAct_4);
+            mIcon_status = true;
             holder.mPram_1.setText(setList.getMo_pram().getPram_1());
             holder.mPram_2.setText(setList.getMo_pram().getPram_2());
             holder.mPram_3.setText(setList.getMo_pram().getPram_3());
@@ -218,17 +182,69 @@ public class AdapterMonitorItem extends RecyclerView.Adapter<AdapterMonitorItem.
             holder.mUnit_2.setText(setList.getMo_unit().getUnit_2());
             holder.mUnit_3.setText(setList.getMo_unit().getUnit_3());
             holder.mUnit_4.setText(setList.getMo_unit().getUnit_4());
-
-    }
-
-    private void Animation_List(Integer position, ViewHolder holder) {
-        if(position > prevPosition){
-            AnimationListitem.animate(holder , true);
-        }else{
-            AnimationListitem.animate(holder , false);
+        if(position > lastPosition) {
+            Animation animation = AnimationUtils.loadAnimation(context,
+                    R.anim.up_from_bottom);
+            holder.itemView.startAnimation(animation);
+            lastPosition = position;
         }
-        prevPosition = position;
+
     }
+
+    private void setColorView(String status, TextView mAct, String act, String min, String max,ImageView icon) {
+        if(status.equals("1")){
+            mAct.setTextColor(Color.parseColor(setColor(act,min,max)));
+            Double act_int = Double.valueOf(act);
+            Double min_int = Double.valueOf(min);
+            Double max_int = Double.valueOf(max);
+            if(act_int == 0 && min_int == 0 && max_int == 0){
+                icon.setImageResource(R.drawable.shape_round_disble);
+            }
+            else if(act_int<min_int || act_int> max_int){
+                icon.setImageResource(R.drawable.shape_round_ofline);
+                mIcon_status = false;
+            }
+            else if(mIcon_status == true){
+               icon.setImageResource(R.drawable.shape_round_online);
+            }
+            Log.d("C",String.valueOf(mIcon_status));
+        }else{
+            mAct.setText("-");
+            mAct.setTextColor(Color.parseColor(setColor("0","0","0")));
+            icon.setImageResource(R.drawable.shape_round_disble);
+        }
+    }
+
+    private void MyCustomAnimation(TextView mAct_1, TextView mAct_2, TextView mAct_3, TextView mAct_4) {
+        mAnimation = AnimationUtils.loadAnimation(context,
+                R.anim.fade_in);
+
+        mAct_1.setAnimation(mAnimation);
+        mAct_2.setAnimation(mAnimation);
+        mAct_3.setAnimation(mAnimation);
+        mAct_4.setAnimation(mAnimation);
+    }
+
+    private void MyCustomFonts(TextView mAct_1, TextView mAct_2, TextView mAct_3, TextView mAct_4) {
+        Typeface MyCustomFont = Typeface.createFromAsset(context.getAssets(),"fonts/DS-DIGIT.TTF");
+        mAct_1.setTypeface(MyCustomFont);
+        mAct_2.setTypeface(MyCustomFont);
+        mAct_3.setTypeface(MyCustomFont);
+        mAct_4.setTypeface(MyCustomFont);
+    }
+
+//    private void Animation_List(Integer position, ViewHolder holder) {
+//
+//        if(position > prevPosition){
+//            AnimationListitem.animate(holder , true);
+//            Log.d("log","TRUE");
+//        }else{
+//            AnimationListitem.animate(holder , false);
+//            Log.d("log","FALSE");
+//        }
+//        prevPosition = position-1;
+//        Log.d("log",String.valueOf(prevPosition + " | " + position));
+//    }
 
     @Override
     public int getItemCount() {
@@ -239,7 +255,7 @@ public class AdapterMonitorItem extends RecyclerView.Adapter<AdapterMonitorItem.
         mList.addAll(list_monitoringitem);
         this.notifyDataSetChanged();
     }
-    static String setColor(String act, String min , String max){
+    static String setColor(String act, String min, String max){
         Double act_int = Double.valueOf(act);
         Double min_int = Double.valueOf(min);
         Double max_int = Double.valueOf(max);
@@ -248,49 +264,25 @@ public class AdapterMonitorItem extends RecyclerView.Adapter<AdapterMonitorItem.
             color = "#BDBDBD";
         }
         else if(act_int>=min_int && act_int<= max_int){
-            color = "#2E7D32";
+            color = "#B2FF59";
         }
         else{
-            color = "#d81114";
+            color = "#F44336";
         }
         return  color;
     }
-    ColorDrawable[] setColorBackground(String act, String min, String max){
-        Double act_int = Double.valueOf(act);
-        Double min_int = Double.valueOf(min);
-        Double max_int = Double.valueOf(max);
-        if(act_int == 0 && min_int == 0 && max_int == 0){
-            AnimaBackColor = setColorBackgroundGruy();
-        }
-        else if(act_int>=min_int && act_int<= max_int){
-            AnimaBackColor = setColorBackgroundGreen();
-        }
-        else{
-            AnimaBackColor = setColorBackgroundRed();
-        }
-        return  AnimaBackColor;
-    }
-    ColorDrawable[] setColorBackgroundGreen(){
-        ColorDrawable[] AnimaBackColor = {
-                new ColorDrawable(Color.parseColor("#CCFF90")),
-                new ColorDrawable(Color.parseColor("#ffffff"))};
 
-        return  AnimaBackColor;
-    }
-    ColorDrawable[] setColorBackgroundRed(){
-        ColorDrawable[] AnimaBackColor = {
-                new ColorDrawable(Color.parseColor("#FFCDD2")),
-                new ColorDrawable(Color.parseColor("#ffffff"))};
+    public void setViewIcon(ImageView viewIcon, TextView mAct_1, TextView mAct_2, TextView mAct_3, TextView mAct_4) {
 
-        return  AnimaBackColor;
+        if(String.valueOf(mAct_1.getTextColors().getDefaultColor()).equals("-2617068")
+                || String.valueOf(mAct_2.getTextColors().getDefaultColor()).equals("-2617068")
+                || String.valueOf(mAct_3.getTextColors().getDefaultColor()).equals("-2617068")
+                || String.valueOf(mAct_4.getTextColors().getDefaultColor()).equals("-2617068")){
+            viewIcon.setImageResource(R.drawable.shape_round_ofline);
+        }
     }
-    ColorDrawable[] setColorBackgroundGruy(){
-        ColorDrawable[] AnimaBackColor = {
-                new ColorDrawable(Color.parseColor("#EEEEEE")),
-                new ColorDrawable(Color.parseColor("#ffffff"))};
 
-        return  AnimaBackColor;
-    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView mMc_name,mAct_1,mAct_2,mAct_3,mAct_4;
         private TextView mUnit_1,mUnit_2,mUnit_3,mUnit_4;

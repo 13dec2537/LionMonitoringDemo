@@ -3,6 +3,7 @@ package com.example.kuybeer26092016.lionmonitoringdemo.activitys;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -53,7 +54,6 @@ public class HistoryActivity extends AppCompatActivity {
         setIntents();
         setAnimation();
         setSharedPreferences();
-
     }
 
     private void setAnimation() {
@@ -114,17 +114,16 @@ public class HistoryActivity extends AppCompatActivity {
     }
 
     private void setXML() {
-        mHeadername.setText(mMc_name);
-        mProcessname.setText(mMc_name);
-        mParametername.setText(mPram);
+        mHeadername.setText(mMc_name.toUpperCase());
+        mProcessname.setText(mMc_name.toUpperCase());
+        mParametername.setText(mPram.toUpperCase());
         mStandardvalue.setText(mMin+mMax);
         Picasso.with(this).load(IMAGEURL + mMc_id + ".jpg")
                 .memoryPolicy(MemoryPolicy.NO_CACHE)
                 .networkPolicy(NetworkPolicy.NO_CACHE)
                 .resize(128, 128)
                 .centerCrop()
-                .placeholder(R.drawable.person)
-                .error(R.drawable.person).into(mImageToobar);
+                .into(mImageToobar);
     }
 
     private void setRecyclerView() {

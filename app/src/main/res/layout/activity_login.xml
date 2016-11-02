@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="com.example.kuybeer26092016.lionmonitoringdemo.activitys.LoginActivity"
-    android:background="@drawable/bglogin">
+    android:background="@drawable/bg_app">
 
     <LinearLayout
         android:orientation="horizontal"

@@ -8,10 +8,14 @@
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_margin="1dp"
-        android:elevation="50dp"
+        app:cardElevation="2dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        app:cardBackgroundColor="#20f6f6f6"
         app:cardCornerRadius="10dp"
-        android:layout_height="wrap_content">
+        android:layout_height="90dp">
 
   <LinearLayout
       android:layout_width="match_parent"
@@ -29,30 +33,40 @@
               android:id="@+id/mo_time"
               android:layout_height="wrap_content"
               android:text="08:30"
-              android:textColor="@android:color/black"
+              android:textColor="#E0E0E0"
               android:textAlignment="center"
               android:layout_width="match_parent"
               android:gravity="center_vertical"
               android:layout_gravity="center_vertical"
-              android:textSize="18dp"
-              android:textStyle="bold" />
+              android:textStyle="bold"
+              android:textSize="25dp" />
       </FrameLayout>
 
+      <View
+          android:layout_width="5dp"
+          android:background="#6a212121"
+          android:layout_height="match_parent">
+      </View>
       <LinearLayout
           android:orientation="vertical"
-          android:layout_width="match_parent"
+          android:layout_width="80dp"
           android:layout_height="match_parent"
-          android:layout_weight="1">
+          >
 
           <ImageView
-              android:layout_width="match_parent"
               android:layout_height="50dp"
               android:id="@+id/status"
               android:layout_weight="1"
               android:gravity="center_vertical"
-              android:layout_gravity="center_vertical"/>
+              android:layout_gravity="center_vertical"
+              android:layout_width="80dp" />
       </LinearLayout>
 
+      <View
+          android:layout_width="5dp"
+          android:background="#6a212121"
+          android:layout_height="match_parent">
+      </View>
       <FrameLayout
           android:orientation="vertical"
           android:layout_width="match_parent"
@@ -64,12 +78,12 @@
               android:layout_width="match_parent"
             android:layout_height="wrap_content"
               android:textAlignment="center"
-              android:textColor="@android:color/black"
+              android:textColor="#E0E0E0"
               android:text="1000"
               android:gravity="center_vertical"
               android:layout_gravity="center_vertical"
-              android:textSize="18dp"
-              android:textStyle="bold" />
+              android:textStyle="bold"
+              android:textSize="25dp" />
       </FrameLayout>
 
   </LinearLayout>

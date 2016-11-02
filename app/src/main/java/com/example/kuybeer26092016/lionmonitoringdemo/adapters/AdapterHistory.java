@@ -2,6 +2,7 @@ package com.example.kuybeer26092016.lionmonitoringdemo.adapters;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,7 +13,6 @@ import android.widget.TextView;
 
 import com.example.kuybeer26092016.lionmonitoringdemo.R;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_history;
-import com.example.kuybeer26092016.lionmonitoringdemo.service.AnimationListitem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,11 +42,12 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        MyCustomFonts(holder.mTime,holder.mMo_act);
         sp  = context.getSharedPreferences("DataAccount",context.MODE_PRIVATE);
         editor = sp.edit();
         final Mis_history setList = mList.get(position);
-        holder.mTime.setText(String.valueOf(setList.getStart_datetime()));
-        holder.mMo_act.setText(String.valueOf(setList.getMo_act()));
+        holder.mTime.setText(String.valueOf(setList.getStart_datetime().toUpperCase()));
+        holder.mMo_act.setText(String.valueOf(setList.getMo_act()).toUpperCase());
         Integer mStatus = setList.getStatus();
         if(mStatus == 0){
             holder.Status.setImageResource(R.drawable.ic_true);
@@ -57,7 +58,6 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.ViewHold
         Runanim = sp.getBoolean("Runanim",false);
         Log.d("TAG",String.valueOf(Runanim));
         if(Runanim){
-            Animation_List(position,holder);
             CountList++;
             if(CountList==mList.size()){
                 editor.putBoolean("Runanim",false);
@@ -87,13 +87,10 @@ public class AdapterHistory extends RecyclerView.Adapter<AdapterHistory.ViewHold
             mMo_act = (TextView)itemView.findViewById(R.id.mo_act);
         }
     }
-    private void Animation_List(Integer position, AdapterHistory.ViewHolder holder) {
-        if(position > prevPosition){
-            AnimationListitem.animate(holder , true);
-        }else{
-            AnimationListitem.animate(holder , false);
-        }
-        prevPosition = position;
+    private void MyCustomFonts(TextView mTime, TextView mMo_act) {
+        Typeface MyCustomFont = Typeface.createFromAsset(context.getAssets(),"fonts/DS-DIGIT.TTF");
+        mTime.setTypeface(MyCustomFont);
+        mMo_act.setTypeface(MyCustomFont);
     }
 }
 

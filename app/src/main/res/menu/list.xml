@@ -3,6 +3,7 @@
     <item android:id="@+id/username" android:title="@string/Username" android:icon="@drawable/username"/>
     <item android:id="@+id/password" android:title="@string/Password" android:icon="@drawable/number"/>
     <group android:id="@+id/helpgroup" >
-        <item android:id="@+id/edit_engine" android:title="@string/edit_engine" android:icon="@drawable/setting"/>
+
+        <item android:id="@+id/edit_station" android:title="@string/edit_station" android:icon="@drawable/setting"/>
     </group>
 </menu>

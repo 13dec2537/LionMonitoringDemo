@@ -111,8 +111,6 @@ public class DescripActivity extends AppCompatActivity {
                 .networkPolicy(NetworkPolicy.NO_CACHE)
                 .resize(128, 128)
                 .centerCrop()
-                .placeholder(R.drawable.person)
-                .error(R.drawable.person)
                 .into(mImageToobar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -150,6 +148,7 @@ public class DescripActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        thread.interrupt();
         Intent i = new Intent(DescripActivity.this,MainActivity.class);
         i.putExtra("Ianim","2");
         startActivity(i);

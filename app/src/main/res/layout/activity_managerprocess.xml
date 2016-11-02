@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/XML_MANAGERPROCESS"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    tools:context="com.example.kuybeer26092016.lionmonitoringdemo.activitys.ManageProcessActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:background="#20f6f6f6"
+            android:layout_height="match_parent"
+            android:weightSum="3"
+            >
+
+            <Button
+                android:text="Cancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/XML_BTNCANCEL"
+                android:textColor="#333"
+                android:background="#c9dadada"
+                android:layout_weight="1" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="PROCESS"
+                android:gravity="center"
+                android:textColor="#333"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:background="#69777777"
+                android:layout_weight="1" />
+            <Button
+                android:id="@+id/XML_BTNDONE"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="#333"
+                android:background="#c9dadada"
+                android:text="DONE" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp"
+            android:background="#cef6f6f6"
+            android:layout_marginBottom="5dp"
+            android:weightSum="3">
+
+            <ImageView
+                android:id="@+id/XML_ic_name"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:layout_marginStart="2dp"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:layout_marginEnd="2dp"
+                android:src="@drawable/ic_name" />
+            <EditText
+                android:layout_marginStart="5dp"
+                android:id="@+id/XML_PROCESSNAME"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:ems="10"
+                android:layout_weight="1"
+                android:lines="1"
+                android:layout_marginLeft="5dp" />
+
+            <ImageView
+                android:id="@+id/XML_IC_RESETTEXT"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:padding="10dp"
+                android:src="@drawable/ic_cancel"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="45dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:text="PARAMETER"
+                android:gravity="center"
+                android:textSize="18dp"
+                android:textColor="#333"
+                android:layout_marginBottom="3dp"
+                android:textStyle="bold"
+                android:background="#69777777"
+                android:layout_weight="1"
+                android:layout_height="45dp" />
+
+            <ImageView
+                android:id="@+id/XML_IC_PLUS"
+                android:layout_gravity="end"
+                android:padding="5dp"
+                app:srcCompat="@drawable/ic_plus"
+                android:layout_width="45dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_height="45dp" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#20f6f6f6"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <ProgressBar
+            android:id="@+id/XML_PGSTATION"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/XML_RecyclerViewParameter"
+            android:layout_width="match_parent"
+            android:background="@android:color/transparent"
+            android:layout_height="match_parent">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
+</LinearLayout>

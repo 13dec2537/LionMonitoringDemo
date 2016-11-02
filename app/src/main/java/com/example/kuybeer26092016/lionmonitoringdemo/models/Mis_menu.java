@@ -6,6 +6,11 @@ package com.example.kuybeer26092016.lionmonitoringdemo.models;
 
 public class Mis_menu {
     private String mc_div;
+    private String mc_id;
+
+    public String getMc_id() {
+        return mc_id;
+    }
 
     public String getMc_div() {
         return mc_div;

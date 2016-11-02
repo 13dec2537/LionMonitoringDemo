@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
@@ -37,6 +39,7 @@ public class FragmentMonitorItem extends Fragment {
     private LinearLayout mLinearlayout;
     private Switch mSwitch;
     private Thread thread;
+    private Boolean ScrollControlThread = true;
     private SharedPreferences spApp_Gone,sp_reload;
     private  SharedPreferences.Editor editor_App_Gone,editor_reload;
 
@@ -58,6 +61,7 @@ public class FragmentMonitorItem extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
         progressBar = (ProgressBar) getView().findViewById(R.id.progessbarDk100);
         mSwitch = (Switch)getView().findViewById(R.id.switch_nt);
         mManager = new ManagerRetrofit();
@@ -89,12 +93,30 @@ public class FragmentMonitorItem extends Fragment {
                 }
             }
         });
+        mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                ScrollControlThread = false;
+                Log.d("log","Scroll : false ");
+                if(action == MotionEvent.ACTION_DOWN || action == MotionEvent.ACTION_UP){
+                    Log.d("log","Scroll : true ");
+                    ScrollControlThread = true;
+                }
+                return false;
+            }
+        });
         thread = new Thread() {
             @Override
             public void run() {
                 try {
                     while (true) {
-                        CallData(getArguments().getString("process",""));
+                        Log.d("log",String.valueOf(ScrollControlThread));
+//                        if(ScrollControlThread){
+                            if(true){
+                            CallData(getArguments().getString("process",""));
+                            Log.d("log","Call Data");
+                        }
                         sleep(5000);
                     }
                 } catch (InterruptedException e) {
@@ -114,7 +136,7 @@ public class FragmentMonitorItem extends Fragment {
     }
 
     private void CallData(String process) {
-        Call<List<Mis_monitoringitem>> call = mManager.getmService().CallbackStation(process);
+        Call<List<Mis_monitoringitem>> call = mManager.getmService().CallbackMonitoring(process);
         call.enqueue(new Callback<List<Mis_monitoringitem>>() {
             @Override
             public void onResponse(Call<List<Mis_monitoringitem>> call, Response<List<Mis_monitoringitem>> response) {

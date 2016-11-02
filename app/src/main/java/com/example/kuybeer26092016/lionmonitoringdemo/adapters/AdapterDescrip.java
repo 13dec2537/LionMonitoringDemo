@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,7 +17,6 @@ import android.widget.TextView;
 import com.example.kuybeer26092016.lionmonitoringdemo.R;
 import com.example.kuybeer26092016.lionmonitoringdemo.activitys.HistoryActivity;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_descrip;
-import com.example.kuybeer26092016.lionmonitoringdemo.service.AnimationListitem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +26,10 @@ import java.util.List;
  */
 
 public class AdapterDescrip extends RecyclerView.Adapter<AdapterDescrip.ViewHolder> {
-    private List<Mis_descrip> mList = new ArrayList<>();
-    private Context context;
     private static SharedPreferences sp;
     private static SharedPreferences.Editor editor;
+    private List<Mis_descrip> mList = new ArrayList<>();
+    private Context context;
     private int  prevPosition = 0;
     private boolean Runanim;
     private int CountList = 0;
@@ -38,8 +38,19 @@ public class AdapterDescrip extends RecyclerView.Adapter<AdapterDescrip.ViewHold
         this.context = context;
     }
 
-
-
+    static String setColor(String act, String min , String max){
+        Double act_int = Double.valueOf(act);
+        Double min_int = Double.valueOf(min);
+        Double max_int = Double.valueOf(max);
+        String color = "";
+        if(act_int>=min_int && act_int<= max_int){
+            color = "#B2FF59";
+        }
+        else{
+            color = "#F44336";
+        }
+        return  color;
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -49,11 +60,11 @@ public class AdapterDescrip extends RecyclerView.Adapter<AdapterDescrip.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        MyCustomFonts(holder.mAct,holder.mMinMax);
         sp  = context.getSharedPreferences("DataAccount",context.MODE_PRIVATE);
         editor = sp.edit();
         Runanim = sp.getBoolean("Runanim",false);
         if(Runanim){
-            Animation_List(position,holder);
             CountList++;
             if(CountList==mList.size()){
                 editor.putBoolean("Runanim",false);
@@ -95,8 +106,15 @@ public class AdapterDescrip extends RecyclerView.Adapter<AdapterDescrip.ViewHold
         this.notifyDataSetChanged();
     }
 
+    private void MyCustomFonts(TextView mAct_1, TextView mAct_2) {
+        Typeface MyCustomFont = Typeface.createFromAsset(context.getAssets(),"fonts/DS-DIGIT.TTF");
+        mAct_1.setTypeface(MyCustomFont);
+        mAct_2.setTypeface(MyCustomFont);
+
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView mPram,mAct,mUnit,mMinMax;
+        private TextView mPram,mAct,mUnit,mMinMax,mStantdard,mNow;
         private LinearLayout mLinearAll;
         public ViewHolder(View itemView) {
             super(itemView);
@@ -104,29 +122,9 @@ public class AdapterDescrip extends RecyclerView.Adapter<AdapterDescrip.ViewHold
             mAct = (TextView)itemView.findViewById(R.id.XML_Actvalue);
             mUnit = (TextView)itemView.findViewById(R.id.XML_Unitname);
             mMinMax = (TextView)itemView.findViewById(R.id.XML_Standardvalue);
+            mStantdard = (TextView)itemView.findViewById(R.id.XML_txtstandard);
+            mNow = (TextView)itemView.findViewById(R.id.XML_txtnow);
             mLinearAll = (LinearLayout) itemView.findViewById(R.id.XML_Linaer);
         }
-    }
-    static String setColor(String act, String min , String max){
-        Double act_int = Double.valueOf(act);
-        Double min_int = Double.valueOf(min);
-        Double max_int = Double.valueOf(max);
-        String color = "";
-        if(act_int>=min_int && act_int<= max_int){
-            color = "#2E7D32";
-        }
-        else{
-            color = "#d81114";
-        }
-        return  color;
-    }
-    private void Animation_List(Integer position, AdapterDescrip.ViewHolder holder) {
-        if(position > prevPosition){
-            AnimationListitem.animate(holder , true);
-        }else{
-            AnimationListitem.animate(holder , false);
-        }
-        prevPosition = position;
-        Log.d("TAG","RUN : " + String.valueOf(prevPosition));
     }
 }

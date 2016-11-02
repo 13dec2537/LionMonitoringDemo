@@ -66,12 +66,11 @@ public class MainActivity extends AppCompatActivity
         Picasso.with(this).load(mImage)
                 .networkPolicy(NetworkPolicy.NO_CACHE)
                 .memoryPolicy(MemoryPolicy.NO_CACHE)
-                .rotate(90)
                 .resize(128,128)
                 .centerCrop()
 
                 .placeholder(R.drawable.placeholder_img_engine).error(R.drawable.placeholder_img_engine).into(imageView);
-        Snackbar("Login compile !");
+        Snackbar("Login complete !");
         CallManu();
         CallFragByPosition();
     }
@@ -293,9 +292,9 @@ public class MainActivity extends AppCompatActivity
     public void mAlertDialogLogout(){
 
         SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE);
-        sweetAlertDialog.setTitleText("Log Out!");
+        sweetAlertDialog.setTitleText("Log Out ?");
         sweetAlertDialog.setCanceledOnTouchOutside(true);
-        sweetAlertDialog.setContentText("Are you sure went tto log out!");
+        sweetAlertDialog.setContentText("Are you sure went to log out ?");
         sweetAlertDialog.setCancelText("Cancel");
         sweetAlertDialog.setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override

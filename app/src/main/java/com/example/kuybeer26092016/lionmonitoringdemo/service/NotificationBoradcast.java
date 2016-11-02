@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.example.kuybeer26092016.lionmonitoringdemo.activitys.MainActivity;
-import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_updateNT;
+import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_notification;
 import com.example.kuybeer26092016.lionmonitoringdemo.models.Mis_history;
 
 import retrofit2.Call;
@@ -58,15 +58,15 @@ public class NotificationBoradcast extends BroadcastReceiver{
                 .build();
         Service service = retrofit.create(Service.class);
         Mis_history misdata = new Mis_history();
-        Call<Mis_updateNT> call = service.Callback_AddData("1", mMo_id);
-        call.enqueue(new Callback<Mis_updateNT>() {
+        Call<Mis_notification> call = service.Callback_Setstatusnotfication("1", mMo_id);
+        call.enqueue(new Callback<Mis_notification>() {
             @Override
-            public void onResponse(Call<Mis_updateNT> call, Response<Mis_updateNT> response) {
+            public void onResponse(Call<Mis_notification> call, Response<Mis_notification> response) {
 
             }
 
             @Override
-            public void onFailure(Call<Mis_updateNT> call, Throwable t) {
+            public void onFailure(Call<Mis_notification> call, Throwable t) {
 
             }
         });

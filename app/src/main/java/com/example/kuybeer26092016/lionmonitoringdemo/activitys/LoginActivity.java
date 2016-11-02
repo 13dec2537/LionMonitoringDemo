@@ -39,7 +39,7 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     private final String BASE_IMAGE = "http://www.thaidate4u.com/service/json/img/";
-    private String Username, Password, imageUrl, Division = "0";
+    private String Username, Password, imageUrl, Division = "0",Id;
     private Boolean ClearDataAccount = false;
     private Boolean mLogin_Again;
     private Button btnlogin,btnregister;
@@ -174,6 +174,7 @@ public class LoginActivity extends AppCompatActivity {
                             imageUrl = "http://www.thaidate4u.com/service/json/img/aoh.jpg";
                         }
                         Division = tower2List.get(i).getDivision();
+                        Id = tower2List.get(i).getId();
                         Mis_login misMclist = tower2List.get(i);
                         mAdapter.addLogin(misMclist);
                         Intent intent = new Intent(getApplicationContext(),MainActivity.class);
@@ -181,6 +182,7 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("imageUrl",imageUrl);
                         editor.putString("division",Division);
                         editor.putString("Userdivision",Division);
+                        editor.putString("id",Id);
                         editor.putBoolean("RunAnim",true);
                         editor.commit();
                         intent.putExtra("Ianim","1");

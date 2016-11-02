@@ -34,19 +34,21 @@
                 <!--app:civ_shadow_color="#929292"-->
                 <!--android:layout_width="125dp"-->
                 <!--android:layout_height="125dp" />-->
+
             <com.mikhaellopez.circularimageview.CircularImageView
-                android:id="@+id/image"
+                android:id="@+id/XML_images"
                 android:layout_width="125dp"
                 android:layout_height="125dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:rotation="90"
                 android:src="@drawable/person"
                 app:civ_border_color="#ffffff"
                 app:civ_border_width="1dp"
                 app:civ_shadow="true"
                 app:civ_shadow_color="#929292"
                 app:civ_shadow_radius="5" />
+
+
 
 
         </LinearLayout>
@@ -135,7 +137,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/ani_btn_editname"
-                    android:drawableLeft="@drawable/setting"
+                    android:drawableLeft="@drawable/ic_setting"
                     android:paddingEnd="10dp"
                     android:paddingLeft="20dp"
                     android:paddingStart="20dp"

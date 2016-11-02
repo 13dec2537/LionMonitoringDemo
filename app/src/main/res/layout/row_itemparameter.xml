@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    app:cardCornerRadius="5dp"
+    android:layout_margin="2dp">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:textColor="#9f9f9f"
+            android:id="@+id/XML_PARAMETERNAME"
+            android:textSize="20dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:layout_height="match_parent"
+            android:padding="5dp"
+            app:srcCompat="@drawable/ic_minus"
+            android:id="@+id/XML_ICDELETE"
+            android:layout_weight="1"
+            android:layout_width="100dp" />
+    </LinearLayout>
+
+</android.support.v7.widget.LinearLayoutCompat>

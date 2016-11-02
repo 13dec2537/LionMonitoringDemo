@@ -130,8 +130,7 @@ public class RegisterActivity extends AppCompatActivity {
                     final List<Mis_menu> Listitem = response.body();
                     try{
                         for (int i = 0 ; i< Listitem.size() ; i ++){
-                            list.add(Listitem.get(i).getMc_div());
-                            Log.d("C","PASS");
+                                list.add(Listitem.get(i).getMc_div());
                         }
                         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>
                                 (getApplicationContext(), R.layout.spinner_item,list);
@@ -140,7 +139,6 @@ public class RegisterActivity extends AppCompatActivity {
                         spDivision.setAdapter(dataAdapter);
 
                     }catch (Exception e){
-                        Log.d("C","ERROR");
                     }
                 }
             }
@@ -313,9 +311,7 @@ public class RegisterActivity extends AppCompatActivity {
                 seleletedPhoto = photoPath;
                 try {
                     Bitmap bitmap = ImageLoader.init().from(photoPath).requestSize(128, 128).getBitmap();
-                    Bitmap bitmapRe = Bitmap.createScaledBitmap(bitmap,128,128,true);
-                    image.setImageBitmap(getRotateBitmap(bitmapRe,90));
-
+                    image.setImageBitmap(getRotateBitmap(Bitmap.createScaledBitmap(bitmap, 128, 128, false),90));
                 } catch (FileNotFoundException e) {
                     Toast.makeText(getApplicationContext(),
                             "Something Wrong while loading photos", Toast.LENGTH_SHORT).show();
@@ -330,8 +326,7 @@ public class RegisterActivity extends AppCompatActivity {
 //                UploadImage ();
                 try {
                     Bitmap bitmap = ImageLoader.init().from(photoPath).requestSize(128, 128).getBitmap();
-                    Bitmap bitmapRe = Bitmap.createScaledBitmap(bitmap,128,128,true);
-                    image.setImageBitmap(bitmapRe);
+                    image.setImageBitmap(getRotateBitmap(Bitmap.createScaledBitmap(bitmap, 128, 128, false),0));
                 } catch (FileNotFoundException e) {
                     Toast.makeText(getApplicationContext(),
                             "Something Wrong while choosing photos", Toast.LENGTH_SHORT).show();
@@ -351,9 +346,9 @@ public class RegisterActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        overridePendingTransition(R.anim.popup_silde_exit_bottom,R.anim.anim_no);
-    }
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        overridePendingTransition(R.anim.popup_silde_exit_bottom,R.anim.anim_no);
+//    }
 }

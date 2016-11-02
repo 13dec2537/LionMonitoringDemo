@@ -26,7 +26,14 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="Username">Change Username</string>
     <string name="Password">Change Password</string>
-    <string name="edit_engine">Edit Engine</string>
+    <string name="edit_engine">Edit Process</string>
     <string name="opendrawer">Open</string>
     <string name="closedrawer">close</string>
+    <string name="edit_station">Edit Station</string>
+    <string name="station">STATION</string>
+    <string name="cancel">Cancel</string>
+    <string name="done">DONE</string>
+    <string name="parameter">Parameter</string>
+    <string name="process">Process</string>
+    <string name="processname">PROCESSNAME</string>
 </resources>
